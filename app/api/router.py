@@ -49,6 +49,4 @@ router.include_router(shap_explanation_router, prefix="/shap-explanations", tags
 router.include_router(team_endpoint_ownership_router, prefix="/team-endpoint-ownerships", tags=["team_endpoint_ownerships"])
 router.include_router(telemetry_source_router, prefix="/telemetry-sources", tags=["telemetry_sources"])
 
-#router.include_router(rca_report_router, prefix="/rca-reports", tags=["rca_reports"])
-#router.include_router(log_entry_router, prefix="/log-entries", tags=["log_entries"])
-#router.include_router(mcp_router, prefix="/mcp", tags=["mcp"])
+

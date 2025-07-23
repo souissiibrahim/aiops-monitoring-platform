@@ -28,4 +28,5 @@ class TeamEndpointOwnershipInDB(TeamEndpointOwnershipBase):
     deleted_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        #orm_mode = True
+        from_attributes = True

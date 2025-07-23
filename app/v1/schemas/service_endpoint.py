@@ -26,4 +26,5 @@ class ServiceEndpointInDB(ServiceEndpointBase):
     deleted_at: Optional[datetime]
 
     class Config:
-        orm_mode = True
+        #orm_mode = True
+        from_attributes = True
