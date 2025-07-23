@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 78,
+    "service": "Redis",
+    "timestamp": "2025-06-23T11:45:00",
+    "root_cause": "Insufficient Redis node resources (CPU, memory, or disk) leading to high cache miss rates",
+    "recommendation": "Increase Redis node resources (CPU, memory, or disk) or consider adding more Redis nodes to the cluster to improve cache hit rates and reduce the load on individual nodes."
+  },
+  "timestamp": "2025-06-23T11:45:00"
+}

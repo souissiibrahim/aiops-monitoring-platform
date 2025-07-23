@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 83,
+    "service": "Docker Engine",
+    "timestamp": "2025-06-23T18:00:00",
+    "root_cause": "Insufficient memory allocation for the container",
+    "recommendation": "Increase the memory limit for the container or optimize the application to use less memory"
+  },
+  "timestamp": "2025-06-23T18:00:00"
+}

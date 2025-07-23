@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 84,
+    "service": "Prometheus",
+    "timestamp": "2025-06-23T18:20:00",
+    "root_cause": "The root cause of the incident is a timeout issue with the scraping of metrics from the node-exporter service, likely due to a high load or slow response time from the service.",
+    "recommendation": "To fix this issue, consider increasing the timeout value for the scraping operation or optimizing the node-exporter service to improve its response time. Additionally, implementing a retry mechanism with exponential backoff can help to mitigate the impact of temporary service unavailability."
+  },
+  "timestamp": "2025-06-23T18:20:00"
+}

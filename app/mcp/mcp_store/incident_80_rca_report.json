@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 80,
+    "service": "MongoDB",
+    "timestamp": "2025-06-23T16:40:00",
+    "root_cause": "Network partition or high latency between replica set members, causing frequent elections and instability",
+    "recommendation": "Check network connectivity and latency between replica set members, consider implementing a network partition tolerance mechanism or increasing the election timeout to reduce the frequency of elections."
+  },
+  "timestamp": "2025-06-23T16:40:00"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 86,
+    "service": "Node Exporter",
+    "timestamp": "2025-06-24T11:00:00",
+    "root_cause": "High memory usage on backend-node-3 is likely due to a memory leak or inefficient resource allocation.",
+    "recommendation": "Monitor memory usage and investigate potential memory leaks. Consider implementing memory profiling tools to identify the source of the issue. Additionally, review resource allocation and consider scaling or upgrading the node to improve performance."
+  },
+  "timestamp": "2025-06-24T11:00:00"
+}

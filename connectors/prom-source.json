@@ -1,0 +1,11 @@
+{
+    "name": "prom-source-connector",
+    "config": {
+      "connector.class": "org.apache.kafka.connect.file.FileStreamSourceConnector",
+      "tasks.max": "1",
+      "topic": "prom-metrics",
+      "file": "/prometheus_metrics.json",
+      "poll.interval.ms": "5000"
+    }
+  }
+  

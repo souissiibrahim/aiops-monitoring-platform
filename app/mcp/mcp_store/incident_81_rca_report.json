@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 81,
+    "service": "Windows EventLog",
+    "timestamp": "2025-06-23T17:10:00",
+    "root_cause": "The EventLog service is experiencing a crash loop due to a memory leak in the EventLog service itself, likely caused by a recent software update or configuration change.",
+    "recommendation": "Restart the EventLog service and monitor its performance. If the issue persists, review the system logs for any error messages related to memory allocation or configuration changes. Consider rolling back the recent software update or reverting to a previous configuration."
+  },
+  "timestamp": "2025-06-23T17:10:00"
+}

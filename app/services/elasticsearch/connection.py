@@ -1,6 +1,5 @@
-# app/services/elasticsearch/connection.py
 from elasticsearch import Elasticsearch
-from app.config import Settings  
+from app.config import Settings
 
 def get_elasticsearch_connection():
     return Elasticsearch(

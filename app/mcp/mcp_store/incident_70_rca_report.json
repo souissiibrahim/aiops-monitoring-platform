@@ -1,0 +1,10 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 70,
+    "root_cause": "High load on the payment processing system, likely due to a sudden increase in transaction volume",
+    "recommendation": "Implement a load balancer to distribute incoming requests across multiple instances, and consider implementing a queueing system to handle spikes in transaction volume"
+  },
+  "timestamp": "2025-06-20T19:15:00"
+}

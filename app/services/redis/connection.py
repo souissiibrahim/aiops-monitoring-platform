@@ -1,6 +1,5 @@
-
-from app.config import Settings  
 import redis
+from app.config import Settings
 
 def get_redis_connection():
     return redis.StrictRedis(

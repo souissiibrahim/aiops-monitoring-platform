@@ -1,0 +1,10 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 99,
+    "root_cause": "Test overload",
+    "recommendation": "Increase instance size"
+  },
+  "timestamp": "2025-06-18T17:30:00Z"
+}

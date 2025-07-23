@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 82,
+    "service": "Kubelet",
+    "timestamp": "2025-06-23T17:30:00",
+    "root_cause": "Insufficient memory allocation on worker-node-3",
+    "recommendation": "Increase memory resources on worker-node-3 or consider horizontal pod autoscaling to dynamically adjust resources based on workload demands."
+  },
+  "timestamp": "2025-06-23T17:30:00"
+}

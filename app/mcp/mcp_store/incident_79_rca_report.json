@@ -1,0 +1,12 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 79,
+    "service": "Nginx",
+    "timestamp": "2025-06-23T15:20:00",
+    "root_cause": "Backend service is not responding or is experiencing high latency, causing the upstream service to timeout while reading the response header.",
+    "recommendation": "Check the backend service for any issues, such as high CPU usage, memory leaks, or network connectivity problems. Also, consider implementing a timeout configuration that is more suitable for the backend service's response time."
+  },
+  "timestamp": "2025-06-23T15:20:00"
+}

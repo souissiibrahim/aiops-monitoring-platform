@@ -1,0 +1,18 @@
+FROM flink:1.17
+
+ARG kafka_connector_version=4.0.0-2.0
+
+# 1. Install Python
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
+    rm -rf /var/lib/apt/lists/*
+
+# 2. Install PyFlink
+RUN pip3 install apache-flink==1.17.*
+
+# 3. Add the Kafka connector JAR
+RUN wget -P /opt/flink/lib https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/$kafka_connector_version/flink-sql-connector-kafka-$kafka_connector_version.jar
+
+# 4. Copy Python jobs
+COPY ./jobs /opt/flink/pyjobs

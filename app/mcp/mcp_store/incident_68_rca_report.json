@@ -1,0 +1,10 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 68,
+    "root_cause": "Authentication issue with Docker registry",
+    "recommendation": "Verify Docker registry credentials and ensure they are correct and up-to-date"
+  },
+  "timestamp": "2025-06-20T20:15:00"
+}

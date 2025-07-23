@@ -1,0 +1,10 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 71,
+    "root_cause": "Insufficient load balancing capacity on the payment gateway server",
+    "recommendation": "Increase the number of load balancer instances or upgrade to a more powerful load balancer to handle the increased traffic"
+  },
+  "timestamp": "2025-06-20T19:30:00"
+}

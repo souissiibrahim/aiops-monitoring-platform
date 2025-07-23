@@ -1,0 +1,10 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": 73,
+    "root_cause": "Filebeat configuration issue due to incorrect log file path",
+    "recommendation": "Verify and correct the log file path in the Filebeat configuration file (e.g. filebeat.yml) to ensure it points to the correct location of the log files."
+  },
+  "timestamp": "2025-06-20T19:30:00"
+}
