@@ -15,6 +15,7 @@ class IncidentBase(BaseModel):
     end_timestamp: Optional[datetime] = None
     description: Optional[str] = None
     escalation_level: Optional[str] = "Level1"
+    title: Optional[str] = None
 
 
 class IncidentCreate(IncidentBase):
