@@ -14,6 +14,9 @@ from app.db.models.telemetry_source import TelemetrySource
 from app.db.repositories.telemetry_source_repository import TelemetrySourceRepository
 from app.services.elasticsearch.telemetry_source_service import index_telemetry_source
 from app.utils.response import success_response, error_response
+from sqlalchemy import func
+from app.db.models.endpoint_type import EndpointType
+
 
 router = APIRouter()
 
@@ -35,6 +38,38 @@ def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_
     sources = TelemetrySourceRepository(db, redis).get_all_soft_deleted()
     return success_response(serialize(sources, TelemetrySourceInDB), "Deleted telemetry sources fetched successfully.")
 
+
+
+@router.get("/count-by-type")
+def count_devices_by_type(db: Session = Depends(get_db)):
+    results = (
+        db.query(EndpointType.name, func.count(TelemetrySource.source_id))
+        .join(TelemetrySource, TelemetrySource.endpoint_type_id == EndpointType.endpoint_type_id)
+        .filter(TelemetrySource.is_deleted == False)
+        .group_by(EndpointType.name)
+        .all()
+    )
+
+    device_counts = {name: count for name, count in results}
+    return success_response(device_counts, "Device counts by endpoint type.")
+
+
+@router.get("/inventory")
+def get_device_inventory(db: Session = Depends(get_db)):
+    devices = db.query(TelemetrySource).filter(TelemetrySource.is_deleted == False).all()
+
+    response = []
+    for d in devices:
+        response.append({
+            "device_id": str(d.source_id),
+            "name": d.name,
+            "type": d.endpoint_type.name if d.endpoint_type else None,
+            "location": d.location.name if d.location else None,
+            "ip_address": d.metadata_info.get("ip") if d.metadata_info else None,
+            "status": d.metadata_info.get("status") if d.metadata_info else None  # Optional
+        })
+
+    return success_response(response, "Device inventory fetched successfully.")
 
 @router.get("/{source_id}")
 def get_by_id(source_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
@@ -97,3 +132,4 @@ def index_all_to_elasticsearch(db: Session = Depends(get_db)):
     for source in sources:
         index_telemetry_source(source)
     return success_response({"count": len(sources)}, "Telemetry sources indexed to Elasticsearch.")
+

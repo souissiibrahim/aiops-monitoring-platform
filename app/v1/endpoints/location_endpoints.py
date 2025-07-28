@@ -10,6 +10,8 @@ from app.db.repositories.location_repository import LocationRepository
 from app.db.models.location import Location
 from app.services.elasticsearch.location_service import index_location
 from app.utils.response import success_response, error_response
+from sqlalchemy import func
+from app.db.models.telemetry_source import TelemetrySource
 
 router = APIRouter()
 
@@ -30,6 +32,28 @@ def get_all(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
 def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     locations = LocationRepository(db, redis).get_all_soft_deleted()
     return success_response(serialize(locations, LocationInDB), "Soft deleted locations fetched successfully.")
+
+@router.get("/locations/summary")
+def get_location_summary(db: Session = Depends(get_db)):
+    results = (
+        db.query(Location, func.count(TelemetrySource.source_id))
+        .outerjoin(TelemetrySource, TelemetrySource.location_id == Location.location_id)
+        .filter(Location.is_deleted == False)
+        .group_by(Location.location_id)
+        .all()
+    )
+
+    summary = []
+    for location, count in results:
+        summary.append({
+            "location_id": str(location.location_id),
+            "name": location.name,
+            "city": location.country or location.region_code,
+            "total_devices": count,
+            "status": "Operational"
+        })
+
+    return success_response(summary, "Location summary fetched successfully.")
 
 
 @router.get("/{location_id}")
