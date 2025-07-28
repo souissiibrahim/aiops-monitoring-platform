@@ -71,6 +71,26 @@ def get_device_inventory(db: Session = Depends(get_db)):
 
     return success_response(response, "Device inventory fetched successfully.")
 
+@router.get("/geo-summary")
+def get_device_map_summary(db: Session = Depends(get_db)):
+    sources = db.query(TelemetrySource).filter(TelemetrySource.is_deleted == False).all()
+
+    result = []
+    for src in sources:
+        result.append({
+            "device_id": str(src.source_id),
+            "name": src.name,
+            "type": src.endpoint_type.name if src.endpoint_type else None,
+            "location": src.location.name if src.location else None,
+            "country": src.location.country if src.location else None,
+            "latitude": src.location.latitude if src.location else None,
+            "longitude": src.location.longitude if src.location else None,
+            "ip_address": src.metadata_info.get("ip") if src.metadata_info else None,
+            "status": None 
+        })
+
+    return success_response(result, "Device geolocation summary fetched.")
+
 @router.get("/{source_id}")
 def get_by_id(source_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     source = TelemetrySourceRepository(db, redis).get_by_id(source_id)

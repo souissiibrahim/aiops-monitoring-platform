@@ -55,6 +55,30 @@ def get_location_summary(db: Session = Depends(get_db)):
 
     return success_response(summary, "Location summary fetched successfully.")
 
+@router.get("/locations/{location_id}/details")
+def get_location_details(location_id: UUID, db: Session = Depends(get_db)):
+    location = db.query(Location).filter(Location.location_id == location_id).first()
+
+    if not location:
+        return error_response("Location not found", 404)
+
+    telemetry_names = [
+        ts.name for ts in location.telemetry_sources if not ts.is_deleted
+    ]
+
+    response = {
+        "location": {
+            "id": str(location.location_id),
+            "name": location.name,
+            "region_code": location.region_code,
+            "country": location.country,
+            "latitude": location.latitude,
+            "longitude": location.longitude
+        },
+        "devices": telemetry_names
+    }
+
+    return success_response(response, f"Details for location '{location.name}' fetched.")
 
 @router.get("/{location_id}")
 def get_by_id(location_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
