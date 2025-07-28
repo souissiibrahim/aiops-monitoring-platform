@@ -22,6 +22,7 @@ class Incident(TimestampMixin, Base):
     end_timestamp = Column(DateTime, nullable=True)
     description = Column(Text, nullable=True)
     escalation_level = Column(String(20), default="Level1")
+    title = Column(String(255), nullable=True)
 
     # === Relationships ===
     service = relationship("Service", back_populates="incidents")
