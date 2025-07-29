@@ -30,6 +30,14 @@ def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_
     actions = ResponseActionRepository(db, redis).get_all_soft_deleted()
     return success_response(serialize(actions, ResponseActionInDB), "Soft deleted response actions fetched successfully.")
 
+@router.get("/count/running")
+def count_running_response_actions(db: Session = Depends(get_db)):
+    count = db.query(ResponseAction).filter(
+        ResponseAction.status.in_(["Pending", "In Progress"]),
+        ResponseAction.is_deleted == False
+    ).count()
+    return success_response({"running_now": count}, "Running response actions counted.")
+
 
 @router.get("/{action_id}")
 def get_by_id(action_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
