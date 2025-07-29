@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 
-from app.v1.schemas.response_action import ResponseActionCreate, ResponseActionInDB, ResponseActionUpdate
+from app.v1.schemas.response_action import ResponseActionCreate, ResponseActionRead, ResponseActionUpdate
 from app.db.session import get_db
 from app.services.redis.connection import get_redis_connection
 from app.services.elasticsearch.connection import get_elasticsearch_connection
@@ -22,13 +22,13 @@ def serialize(obj, schema):
 @router.get("/")
 def get_all(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     actions = ResponseActionRepository(db, redis).get_all()
-    return success_response(serialize(actions, ResponseActionInDB), "Response actions fetched successfully.")
+    return success_response(serialize(actions, ResponseActionRead), "Response actions fetched successfully.")
 
 
 @router.get("/deleted")
 def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     actions = ResponseActionRepository(db, redis).get_all_soft_deleted()
-    return success_response(serialize(actions, ResponseActionInDB), "Soft deleted response actions fetched successfully.")
+    return success_response(serialize(actions, ResponseActionRead), "Soft deleted response actions fetched successfully.")
 
 @router.get("/count/running")
 def count_running_response_actions(db: Session = Depends(get_db)):
@@ -44,7 +44,7 @@ def get_by_id(action_id: UUID, db: Session = Depends(get_db), redis=Depends(get_
     action = ResponseActionRepository(db, redis).get_by_id(action_id)
     if not action:
         return error_response("Response action not found", 404)
-    return success_response(serialize(action, ResponseActionInDB), "Response action fetched successfully.")
+    return success_response(serialize(action, ResponseActionRead), "Response action fetched successfully.")
 
 
 @router.post("/")
@@ -54,7 +54,7 @@ def create(data: ResponseActionCreate, db: Session = Depends(get_db), redis=Depe
         index_response_action(action)
     except Exception as e:
         print(f"❌ Failed to index response action: {e}")
-    return success_response(serialize(action, ResponseActionInDB), "Response action created successfully.", 201)
+    return success_response(serialize(action, ResponseActionRead), "Response action created successfully.", 201)
 
 
 @router.put("/{action_id}")
@@ -67,7 +67,7 @@ def update(action_id: UUID, data: ResponseActionUpdate, db: Session = Depends(ge
         index_response_action(result)
     except Exception as e:
         print(f"❌ Failed to reindex response action: {e}")
-    return success_response(serialize(result, ResponseActionInDB), "Response action updated successfully.")
+    return success_response(serialize(result, ResponseActionRead), "Response action updated successfully.")
 
 
 @router.delete("/soft/{action_id}")
@@ -75,7 +75,7 @@ def soft_delete(action_id: UUID, db: Session = Depends(get_db), redis=Depends(ge
     result = ResponseActionRepository(db, redis).soft_delete(action_id)
     if not result:
         return error_response("Response action not found", 404)
-    return success_response(serialize(result, ResponseActionInDB), "Response action soft deleted successfully.")
+    return success_response(serialize(result, ResponseActionRead), "Response action soft deleted successfully.")
 
 
 @router.put("/restore/{action_id}")
@@ -83,7 +83,7 @@ def restore(action_id: UUID, db: Session = Depends(get_db), redis=Depends(get_re
     result = ResponseActionRepository(db, redis).restore(action_id)
     if not result:
         return error_response("Response action not found", 404)
-    return success_response(serialize(result, ResponseActionInDB), "Response action restored successfully.")
+    return success_response(serialize(result, ResponseActionRead), "Response action restored successfully.")
 
 
 @router.delete("/hard/{action_id}")
@@ -91,13 +91,13 @@ def hard_delete(action_id: UUID, db: Session = Depends(get_db), redis=Depends(ge
     result = ResponseActionRepository(db, redis).hard_delete(action_id)
     if not result:
         return error_response("Response action not found", 404)
-    return success_response(serialize(result, ResponseActionInDB), "Response action permanently deleted successfully.")
+    return success_response(serialize(result, ResponseActionRead), "Response action permanently deleted successfully.")
 
 
 @router.get("/search/{keyword}")
 def search(keyword: str, db: Session = Depends(get_db), redis=Depends(get_redis_connection), es=Depends(get_elasticsearch_connection)):
     results = ResponseActionRepository(db, redis).search(keyword, es)
-    return success_response(serialize(results, ResponseActionInDB), f"Search results for keyword '{keyword}'.")
+    return success_response(serialize(results, ResponseActionRead), f"Search results for keyword '{keyword}'.")
 
 
 @router.post("/index-all")

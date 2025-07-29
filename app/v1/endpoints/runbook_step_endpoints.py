@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 
-from app.v1.schemas.runbook_step import RunbookStepCreate, RunbookStepUpdate, RunbookStepInDB
+from app.v1.schemas.runbook_step import RunbookStepCreate, RunbookStepUpdate, RunbookStepRead
 from app.db.session import get_db
 from app.services.redis.connection import get_redis_connection
 from app.services.elasticsearch.connection import get_elasticsearch_connection
@@ -23,13 +23,13 @@ def serialize(obj, schema):
 @router.get("/")
 def get_all(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     steps = RunbookStepRepository(db, redis).get_all()
-    return success_response(serialize(steps, RunbookStepInDB), "Runbook steps fetched successfully.")
+    return success_response(serialize(steps, RunbookStepRead), "Runbook steps fetched successfully.")
 
 
 @router.get("/deleted")
 def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     steps = RunbookStepRepository(db, redis).get_all_soft_deleted()
-    return success_response(serialize(steps, RunbookStepInDB), "Soft deleted runbook steps fetched successfully.")
+    return success_response(serialize(steps, RunbookStepRead), "Soft deleted runbook steps fetched successfully.")
 
 
 @router.get("/{step_id}")
@@ -37,14 +37,14 @@ def get_by_id(step_id: UUID, db: Session = Depends(get_db), redis=Depends(get_re
     step = RunbookStepRepository(db, redis).get_by_id(step_id)
     if not step:
         return error_response("Runbook step not found", 404)
-    return success_response(serialize(step, RunbookStepInDB), "Runbook step fetched successfully.")
+    return success_response(serialize(step, RunbookStepRead), "Runbook step fetched successfully.")
 
 
 @router.post("/")
 def create(data: RunbookStepCreate, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     step = RunbookStepRepository(db, redis).create(data.dict())
     index_runbook_step(step)
-    return success_response(serialize(step, RunbookStepInDB), "Runbook step created successfully.", 201)
+    return success_response(serialize(step, RunbookStepRead), "Runbook step created successfully.", 201)
 
 
 @router.put("/{step_id}")
@@ -54,7 +54,7 @@ def update(step_id: UUID, data: RunbookStepUpdate, db: Session = Depends(get_db)
         return error_response("Runbook step not found", 404)
     db.refresh(result)
     index_runbook_step(result)
-    return success_response(serialize(result, RunbookStepInDB), "Runbook step updated successfully.")
+    return success_response(serialize(result, RunbookStepRead), "Runbook step updated successfully.")
 
 
 @router.delete("/soft/{step_id}")
@@ -62,7 +62,7 @@ def soft_delete(step_id: UUID, db: Session = Depends(get_db), redis=Depends(get_
     result = RunbookStepRepository(db, redis).soft_delete(step_id)
     if not result:
         return error_response("Runbook step not found", 404)
-    return success_response(serialize(result, RunbookStepInDB), "Runbook step soft deleted successfully.")
+    return success_response(serialize(result, RunbookStepRead), "Runbook step soft deleted successfully.")
 
 
 @router.put("/restore/{step_id}")
@@ -70,7 +70,7 @@ def restore(step_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redi
     result = RunbookStepRepository(db, redis).restore(step_id)
     if not result:
         return error_response("Runbook step not found", 404)
-    return success_response(serialize(result, RunbookStepInDB), "Runbook step restored successfully.")
+    return success_response(serialize(result, RunbookStepRead), "Runbook step restored successfully.")
 
 
 @router.delete("/hard/{step_id}")
@@ -78,13 +78,13 @@ def hard_delete(step_id: UUID, db: Session = Depends(get_db), redis=Depends(get_
     result = RunbookStepRepository(db, redis).hard_delete(step_id)
     if not result:
         return error_response("Runbook step not found", 404)
-    return success_response(serialize(result, RunbookStepInDB), "Runbook step permanently deleted successfully.")
+    return success_response(serialize(result, RunbookStepRead), "Runbook step permanently deleted successfully.")
 
 
 @router.get("/search/{keyword}")
 def search(keyword: str, db: Session = Depends(get_db), redis=Depends(get_redis_connection), es=Depends(get_elasticsearch_connection)):
     results = RunbookStepRepository(db, redis).search(keyword, es)
-    return success_response(serialize(results, RunbookStepInDB), f"Search results for keyword '{keyword}'.")
+    return success_response(serialize(results, RunbookStepRead), f"Search results for keyword '{keyword}'.")
 
 
 @router.post("/index-all")

@@ -6,7 +6,7 @@ from app.db.session import get_db
 from app.services.redis.connection import get_redis_connection
 from app.services.elasticsearch.connection import get_elasticsearch_connection
 from app.v1.schemas.telemetry_source import (
-    TelemetrySourceInDB,
+    TelemetrySourceRead,
     TelemetrySourceCreate,
     TelemetrySourceUpdate,
 )
@@ -30,13 +30,13 @@ def serialize(obj, schema):
 @router.get("/")
 def get_all(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     sources = TelemetrySourceRepository(db, redis).get_all()
-    return success_response(serialize(sources, TelemetrySourceInDB), "Telemetry sources fetched successfully.")
+    return success_response(serialize(sources, TelemetrySourceRead), "Telemetry sources fetched successfully.")
 
 
 @router.get("/deleted")
 def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     sources = TelemetrySourceRepository(db, redis).get_all_soft_deleted()
-    return success_response(serialize(sources, TelemetrySourceInDB), "Deleted telemetry sources fetched successfully.")
+    return success_response(serialize(sources, TelemetrySourceRead), "Deleted telemetry sources fetched successfully.")
 
 
 
@@ -96,14 +96,14 @@ def get_by_id(source_id: UUID, db: Session = Depends(get_db), redis=Depends(get_
     source = TelemetrySourceRepository(db, redis).get_by_id(source_id)
     if not source:
         return error_response("Telemetry source not found", 404)
-    return success_response(serialize(source, TelemetrySourceInDB), "Telemetry source fetched successfully.")
+    return success_response(serialize(source, TelemetrySourceRead), "Telemetry source fetched successfully.")
 
 
 @router.post("/")
 def create(data: TelemetrySourceCreate, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     source = TelemetrySourceRepository(db, redis).create(data.dict())
     index_telemetry_source(source)
-    return success_response(serialize(source, TelemetrySourceInDB), "Telemetry source created successfully.", 201)
+    return success_response(serialize(source, TelemetrySourceRead), "Telemetry source created successfully.", 201)
 
 
 @router.put("/{source_id}")
@@ -113,7 +113,7 @@ def update(source_id: UUID, data: TelemetrySourceUpdate, db: Session = Depends(g
         return error_response("Telemetry source not found", 404)
     db.refresh(updated)
     index_telemetry_source(updated)
-    return success_response(serialize(updated, TelemetrySourceInDB), "Telemetry source updated successfully.")
+    return success_response(serialize(updated, TelemetrySourceRead), "Telemetry source updated successfully.")
 
 
 @router.delete("/soft/{source_id}")
@@ -121,7 +121,7 @@ def soft_delete(source_id: UUID, db: Session = Depends(get_db), redis=Depends(ge
     result = TelemetrySourceRepository(db, redis).soft_delete(source_id)
     if not result:
         return error_response("Telemetry source not found", 404)
-    return success_response(serialize(result, TelemetrySourceInDB), "Telemetry source soft-deleted successfully.")
+    return success_response(serialize(result, TelemetrySourceRead), "Telemetry source soft-deleted successfully.")
 
 
 @router.put("/restore/{source_id}")
@@ -129,7 +129,7 @@ def restore(source_id: UUID, db: Session = Depends(get_db), redis=Depends(get_re
     result = TelemetrySourceRepository(db, redis).restore(source_id)
     if not result:
         return error_response("Telemetry source not found", 404)
-    return success_response(serialize(result, TelemetrySourceInDB), "Telemetry source restored successfully.")
+    return success_response(serialize(result, TelemetrySourceRead), "Telemetry source restored successfully.")
 
 
 @router.delete("/hard/{source_id}")
@@ -137,13 +137,13 @@ def hard_delete(source_id: UUID, db: Session = Depends(get_db), redis=Depends(ge
     result = TelemetrySourceRepository(db, redis).hard_delete(source_id)
     if not result:
         return error_response("Telemetry source not found", 404)
-    return success_response(serialize(result, TelemetrySourceInDB), "Telemetry source permanently deleted successfully.")
+    return success_response(serialize(result, TelemetrySourceRead), "Telemetry source permanently deleted successfully.")
 
 
 @router.get("/search/{keyword}")
 def search(keyword: str, db: Session = Depends(get_db), redis=Depends(get_redis_connection), es=Depends(get_elasticsearch_connection)):
     results = TelemetrySourceRepository(db, redis).search(keyword, es)
-    return success_response(serialize(results, TelemetrySourceInDB), f"Search results for '{keyword}'.")
+    return success_response(serialize(results, TelemetrySourceRead), f"Search results for '{keyword}'.")
 
 
 @router.post("/index-all")
