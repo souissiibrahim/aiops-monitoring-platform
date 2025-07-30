@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
 
 from app.v1.schemas.rca_analysis import RCAAnalysisCreate, RCAAnalysisRead
 from app.db.session import get_db
 from app.services.redis.connection import get_redis_connection
-from app.db.repositories.rca_analysis_repository import RCAAnalysisRepository
 from app.db.models.rca_analysis import RCAAnalysis
+from app.db.models.incident import Incident
 from app.services.elasticsearch.rca_analysis_service import index_rca
 from app.services.elasticsearch.connection import get_elasticsearch_connection
 from app.utils.response import success_response, error_response
@@ -22,19 +22,25 @@ def serialize(obj, schema):
 
 @router.get("/")
 def get_all(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    rcas = RCAAnalysisRepository(db, redis).get_all()
+    rcas = db.query(RCAAnalysis) \
+        .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team)) \
+        .filter(RCAAnalysis.is_deleted == False).all()
     return success_response(serialize(rcas, RCAAnalysisRead), "RCA records fetched successfully.")
 
 
 @router.get("/deleted")
 def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    rcas = RCAAnalysisRepository(db, redis).get_all_soft_deleted()
+    rcas = db.query(RCAAnalysis) \
+        .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team)) \
+        .filter(RCAAnalysis.is_deleted == True).all()
     return success_response(serialize(rcas, RCAAnalysisRead), "Deleted RCA records fetched successfully.")
 
 
 @router.get("/{rca_id}")
 def get_by_id(rca_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    rca = RCAAnalysisRepository(db, redis).get_by_id(rca_id)
+    rca = db.query(RCAAnalysis) \
+        .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team)) \
+        .filter_by(rca_id=rca_id).first()
     if not rca:
         return error_response("RCA not found", 404)
     return success_response(serialize(rca, RCAAnalysisRead), "RCA record fetched successfully.")
@@ -42,42 +48,80 @@ def get_by_id(rca_id: UUID, db: Session = Depends(get_db), redis=Depends(get_red
 
 @router.post("/")
 def create(data: RCAAnalysisCreate, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    rca = RCAAnalysisRepository(db, redis).create(data.dict())
+    rca = RCAAnalysis(**data.dict())
+    db.add(rca)
+    db.commit()
+    db.refresh(rca)
+
+    # Link RCA to Incident by setting root_cause_id
+    incident = db.query(Incident).filter(Incident.incident_id == rca.incident_id).first()
+    if incident:
+        incident.root_cause_id = rca.rca_id
+        db.commit()
+
+    # Reload with relationships
+    rca = db.query(RCAAnalysis) \
+        .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team)) \
+        .filter_by(rca_id=rca.rca_id).first()
+
     index_rca(rca)
     return success_response(serialize(rca, RCAAnalysisRead), "RCA record created successfully.", 201)
 
 
 @router.put("/{rca_id}")
 def update(rca_id: UUID, data: RCAAnalysisCreate, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    result = RCAAnalysisRepository(db, redis).update(rca_id, data.dict(exclude_unset=True))
-    if not result:
+    rca = db.query(RCAAnalysis).filter_by(rca_id=rca_id).first()
+    if not rca:
         return error_response("RCA not found", 404)
-    index_rca(result)
-    return success_response(serialize(result, RCAAnalysisRead), "RCA record updated successfully.")
+
+    for key, value in data.dict(exclude_unset=True).items():
+        setattr(rca, key, value)
+
+    db.commit()
+    db.refresh(rca)
+
+    # Link RCA to Incident by setting root_cause_id
+    incident = db.query(Incident).filter(Incident.incident_id == rca.incident_id).first()
+    if incident:
+        incident.root_cause_id = rca.rca_id
+        db.commit()
+
+    rca = db.query(RCAAnalysis) \
+        .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team)) \
+        .filter_by(rca_id=rca_id).first()
+
+    index_rca(rca)
+    return success_response(serialize(rca, RCAAnalysisRead), "RCA record updated successfully.")
 
 
 @router.delete("/soft/{rca_id}")
 def soft_delete(rca_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    result = RCAAnalysisRepository(db, redis).soft_delete(rca_id)
-    if not result:
+    rca = db.query(RCAAnalysis).filter_by(rca_id=rca_id).first()
+    if not rca:
         return error_response("RCA not found", 404)
-    return success_response(serialize(result, RCAAnalysisRead), "RCA record soft deleted successfully.")
+    rca.is_deleted = True
+    db.commit()
+    return success_response(serialize(rca, RCAAnalysisRead), "RCA record soft deleted successfully.")
 
 
 @router.put("/restore/{rca_id}")
 def restore(rca_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    result = RCAAnalysisRepository(db, redis).restore(rca_id)
-    if not result:
+    rca = db.query(RCAAnalysis).filter_by(rca_id=rca_id).first()
+    if not rca:
         return error_response("RCA not found", 404)
-    return success_response(serialize(result, RCAAnalysisRead), "RCA record restored successfully.")
+    rca.is_deleted = False
+    db.commit()
+    return success_response(serialize(rca, RCAAnalysisRead), "RCA record restored successfully.")
 
 
 @router.delete("/hard/{rca_id}")
 def hard_delete(rca_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
-    result = RCAAnalysisRepository(db, redis).hard_delete(rca_id)
-    if not result:
+    rca = db.query(RCAAnalysis).filter_by(rca_id=rca_id).first()
+    if not rca:
         return error_response("RCA not found", 404)
-    return success_response(serialize(result, RCAAnalysisRead), "RCA record permanently deleted.")
+    db.delete(rca)
+    db.commit()
+    return success_response({}, "RCA record permanently deleted.")
 
 
 @router.get("/search/{keyword}")

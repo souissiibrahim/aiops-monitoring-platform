@@ -24,4 +24,5 @@ class Team(TimestampMixin, Base):
     # response_actions = relationship("ResponseAction", back_populates="executed_by_team")
     # rca_analysis = relationship("RCAAnalysis", back_populates="analyst_team")
     team_endpoint_ownerships = relationship("TeamEndpointOwnership", back_populates="team", cascade="all, delete-orphan")
+    rca_analyses = relationship("RCAAnalysis", back_populates="team")
 

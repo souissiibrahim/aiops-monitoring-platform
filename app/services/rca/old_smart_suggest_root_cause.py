@@ -7,25 +7,30 @@ from sentence_transformers import SentenceTransformer
 
 from app.langchain.graphs.rca_graph import run_rca_graph
 
+
 load_dotenv()
 
 FAISS_INDEX_PATH = "faiss_index/index.faiss"
 KNOWN_LOGS_PATH = "faiss_index/known_logs.jsonl"
 
+# Load embedding model
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 
+# === ✅ Get embedding
 def get_embedding(text: str):
     vector = embedding_model.encode([text])[0]
     return np.array(vector, dtype="float32")
 
 
+# === ✅ Load or create FAISS index
 def load_faiss_index(dimension=384):
     if os.path.exists(FAISS_INDEX_PATH):
         return faiss.read_index(FAISS_INDEX_PATH)
     return faiss.IndexFlatL2(dimension)
 
 
+# === ✅ Match query with FAISS
 def match_with_faiss(query_embedding, k=1):
     index = load_faiss_index()
     if index.ntotal == 0:
@@ -34,7 +39,7 @@ def match_with_faiss(query_embedding, k=1):
     query = np.array([query_embedding], dtype="float32")
     distances, indices = index.search(query, k)
 
-    if distances[0][0] > 0.4:  # FAISS match threshold
+    if distances[0][0] > 0.4:  # Threshold to accept the match
         return None, None
 
     with open(KNOWN_LOGS_PATH, "r") as f:
@@ -44,26 +49,27 @@ def match_with_faiss(query_embedding, k=1):
     return match["root_cause"], match["recommendation"]
 
 
+# === ✅ Main function: Suggest Root Cause
 def suggest_root_cause(logs: list):
+    # Clean logs to ensure they are strings
     logs_clean = [log if isinstance(log, str) else str(log) for log in logs]
     full_log_text = "\n".join(logs_clean)
 
     embedding = get_embedding(full_log_text)
 
-    # ✅ 1. Try FAISS match first
+    # ✅ First: check in FAISS (historical match)
     root_cause, recommendation = match_with_faiss(embedding)
     if root_cause and recommendation:
         return {
             "root_cause": root_cause,
-            "recommendation": recommendation,
             "confidence": 0.99,
-            "model": "FAISS"
+            "recommendation": recommendation
         }
 
-    # ✅ 2. Fall back to LangGraph
+    # ✅ Second: if no match, use LangGraph (Groq LLM)
     result = run_rca_graph(logs_clean)
 
-    # ✅ 3. Save result to FAISS memory
+    # ✅ Third: save to FAISS memory (logs + result)
     os.makedirs(os.path.dirname(KNOWN_LOGS_PATH), exist_ok=True)
     with open(KNOWN_LOGS_PATH, "a") as f:
         f.write(json.dumps({
@@ -73,9 +79,4 @@ def suggest_root_cause(logs: list):
             "recommendation": result["recommendation"]
         }) + "\n")
 
-    return {
-        "root_cause": result["root_cause"],
-        "recommendation": result["recommendation"],
-        "confidence": 0.85,  
-        "model": "LangGraph"
-    }
+    return result

@@ -1,29 +1,31 @@
 import os
 import json
-import requests  # ✅ For HTTP POST to MCP server
+import requests
 from datetime import datetime
 
 from app.services.rca.smart_suggest_root_cause import suggest_root_cause
 from app.utils.rca_formatter import generate_rca_markdown
 from app.db.session import SessionLocal
-from app.db.models.rca_report import RCAReport
 from app.db.models.incident import Incident
+from app.db.models.rca_analysis import RCAAnalysis
+from app.db.models.telemetry_source import TelemetrySource
 from app.utils.slack_notifier import send_to_slack
 from app.services.rca.update_faiss_index import append_to_faiss
-from app.utils.jira_notifier import create_jira_ticket
 
 
-def send_mcp_message_to_server(incident_id, service, root_cause, recommendation, timestamp):
+def send_mcp_message_to_server(incident_id, service, root_cause, recommendation, confidence, model, timestamp):
     mcp_payload = {
         "type": "rca_report",
         "source": "rca_agent",
-        "timestamp": timestamp,  # ✅ Add this line
+        "timestamp": timestamp,
         "payload": {
-            "incident_id": incident_id,
+            "incident_id": str(incident_id),
             "service": service,
             "timestamp": timestamp,
             "root_cause": root_cause,
-            "recommendation": recommendation
+            "recommendation": recommendation,
+            "confidence": confidence,
+            "model": model
         }
     }
 
@@ -39,10 +41,10 @@ def send_mcp_message_to_server(incident_id, service, root_cause, recommendation,
 
 
 def get_unprocessed_incidents(db):
-    return db.query(Incident).filter(~Incident.rca_reports.any()).all()
+    return db.query(Incident).filter(Incident.root_cause_id == None).all()
 
 
-def save_markdown_report(incident_id: int, markdown: str):
+def save_markdown_report(incident_id: str, markdown: str):
     reports_dir = "rca_reports"
     os.makedirs(reports_dir, exist_ok=True)
     report_path = os.path.join(reports_dir, f"incident_{incident_id}_rca.md")
@@ -59,68 +61,71 @@ def run_rca_agent():
         print(f"🔎 Found {len(incidents)} incident(s) needing RCA.")
 
         for incident in incidents:
-            logs = [log.message for log in incident.log_entries]
+            # 🔁 Simulated logs (replace later with real logs from Loki)
+            logs = [
+                f"ERROR: CPU usage on node {incident.source_id} is 98.5%",
+                "WARNING: Slow DB query detected",
+                "INFO: Service response time exceeded threshold"
+            ]
 
-            if not logs:
-                print(f"⚠️ Skipping incident {incident.id}: no logs available.")
-                continue
+            print(f"🧠 Running RCA on incident {incident.incident_id}...")
 
-            print(f"🧠 Running RCA on incident {incident.id}...")
             result = suggest_root_cause(logs)
 
-            rca_report = RCAReport(
-                incident_id=incident.id,
-                root_cause=result["root_cause"],
-                recommendation=result["recommendation"],
-                confidence=result["confidence"],
-                created_at=datetime.utcnow(),
-                updated_at=datetime.utcnow()
+            # Try to get root cause node ID from incident's telemetry source
+            root_node = db.query(TelemetrySource).filter_by(source_id=incident.source_id).first()
+            root_node_id = root_node.source_id if root_node else None
+
+            rca = RCAAnalysis(
+                incident_id=incident.incident_id,
+                analysis_method=result.get("model", "Unknown"),
+                root_cause_node_id=root_node_id,
+                confidence_score=result.get("confidence", 0.85),
+                contributing_factors={"logs_count": len(logs)},
+                recommendations=[result["recommendation"]],
+                analysis_timestamp=datetime.utcnow(),
+                analyst_team_id=None  # Optional
             )
 
-            db.add(rca_report)
+            db.add(rca)
             db.commit()
-            print(f"✅ RCA report saved for incident {incident.id}.")
+            db.refresh(rca)
+
+            # Link incident to RCA
+            incident.root_cause_id = rca.rca_id
+            db.commit()
+            print(f"✅ RCAAnalysis saved and linked to incident {incident.incident_id}.")
             append_to_faiss(logs, result["root_cause"], result["recommendation"])
 
-            log_entry = incident.log_entries[0] if incident.log_entries else None
-            service = log_entry.service if log_entry else "Unknown"
-            timestamp = log_entry.timestamp.isoformat() if log_entry else datetime.utcnow().isoformat()
+            service = incident.service.name if incident.service else "Unknown"
+            timestamp = datetime.utcnow().isoformat()
 
             markdown = generate_rca_markdown(
-                incident_id=incident.id,
+                incident_id=incident.incident_id,
                 service=service,
                 timestamp=timestamp,
                 logs=logs,
                 root_cause=result["root_cause"],
                 recommendation=result["recommendation"],
-                confidence=result["confidence"]
+                confidence=result["confidence"],
+                model=result.get("model", "Unknown")
             )
 
-            save_markdown_report(incident.id, markdown)
+            save_markdown_report(incident.incident_id, markdown)
 
-            # ✅ Send Slack notification
-            #try:
-             #   send_to_slack(f"📢 New RCA Report for Incident `{incident.id}`:\n```{markdown}```")
-              #  print(f"📨 Slack notification sent for incident {incident.id}.")
-            #except Exception as slack_err:
-             #   print(f"❌ Failed to send Slack message for incident {incident.id}: {slack_err}")
+            try:
+                send_to_slack(f"📢 New RCA Report for Incident `{incident.incident_id}`:\n```{markdown}```")
+                print(f"📨 Slack notification sent for incident {incident.incident_id}.")
+            except Exception as slack_err:
+                print(f"❌ Failed to send Slack message: {slack_err}")
 
-            # ✅ Create Jira Ticket
-            #try:
-             #   ticket_key = create_jira_ticket(
-              #      summary=f"[Incident {incident.id}] RCA: {result['root_cause']}",
-               #     description=markdown
-               # )
-               # print(f"🪪 Jira ticket {ticket_key} created for incident {incident.id}")
-            #except Exception as jira_err:
-              #  print(f"❌ Failed to create Jira ticket for incident {incident.id}: {jira_err}")
-
-            # ✅ Send to MCP server
             send_mcp_message_to_server(
-                incident_id=incident.id,
+                incident_id=incident.incident_id,
                 service=service,
                 root_cause=result["root_cause"],
                 recommendation=result["recommendation"],
+                confidence=result["confidence"],
+                model=result.get("model", "Unknown"),
                 timestamp=timestamp
             )
 

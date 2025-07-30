@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-def generate_rca_markdown(incident_id: int, service: str, timestamp: str, logs: list[str], root_cause: str, recommendation: str, confidence: float) -> str:
+def generate_rca_markdown(incident_id: int, service: str, timestamp: str, logs: list[str], root_cause: str, recommendation: str, confidence: float, model: str = "Unknown") -> str:
     """
     Generate a markdown-formatted RCA report.
     
@@ -34,7 +34,7 @@ def generate_rca_markdown(incident_id: int, service: str, timestamp: str, logs: 
 **Service:** `{service}`  
 **Timestamp:** `{timestamp}`  
 **Confidence:** `{confidence:.2f}`
-
+**Model Used:** `{model}`
 ---
 
 ### 📋 Logs
