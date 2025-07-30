@@ -14,7 +14,7 @@ class ResponseActionBase(BaseModel):
     incident_id: UUID
     runbook_id: UUID
     step_id: UUID
-    team: Optional[TeamInDB]
+    executed_by_team_id: Optional[UUID]
     status: Optional[str] = "Pending"
     execution_log: Optional[str]
     started_at: Optional[datetime]

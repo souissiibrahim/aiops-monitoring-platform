@@ -21,6 +21,7 @@ from app.v1.endpoints.severity_level_endpoints import router as severity_level_r
 from app.v1.endpoints.shap_explanation_endpoints import router as shap_explanation_router
 from app.v1.endpoints.team_endpoint_ownership_endpoints import router as team_endpoint_ownership_router
 from app.v1.endpoints.telemetry_source_endpoints import router as telemetry_source_router
+from app.v1.endpoints.auto_remediation_endpoints import router as auto_remediation_router
 
 #from app.v1.endpoints.rca_report_endpoints import router as rca_report_router
 #from app.v1.endpoints.log_entry_endpoints import router as log_entry_router
@@ -48,5 +49,6 @@ router.include_router(severity_level_router, prefix="/severity-levels", tags=["s
 router.include_router(shap_explanation_router, prefix="/shap-explanations", tags=["shap_explanations"])
 router.include_router(team_endpoint_ownership_router, prefix="/team-endpoint-ownerships", tags=["team_endpoint_ownerships"])
 router.include_router(telemetry_source_router, prefix="/telemetry-sources", tags=["telemetry_sources"])
+router.include_router(auto_remediation_router, prefix="/auto-remediation", tags=["Auto Remediation"])
 
 
