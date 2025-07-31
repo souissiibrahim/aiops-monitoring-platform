@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "eb9086fc-b836-42ab-9f5a-0390273961a2",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T22:07:42.581681",
+    "root_cause": "Configuration drift caused by manual changes to environment variables, specifically the `API_URL` variable, which differs from the deployment spec.",
+    "recommendation": "Implement automated configuration management and validation to ensure consistency across environments and prevent manual changes to critical configuration variables.",
+    "confidence": 0.85,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-07-31T22:07:42.581681"
+}

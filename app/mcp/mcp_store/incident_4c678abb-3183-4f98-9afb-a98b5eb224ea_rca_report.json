@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "4c678abb-3183-4f98-9afb-a98b5eb224ea",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T22:29:44.893856",
+    "root_cause": "Redis cache miss rate exceeded 80%, leading to increased latency in the `/send-notification` endpoint",
+    "recommendation": "Optimize Redis cache configuration to reduce miss rate, or consider implementing a caching layer with better performance",
+    "confidence": 0.85,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-07-31T22:29:44.893856"
+}

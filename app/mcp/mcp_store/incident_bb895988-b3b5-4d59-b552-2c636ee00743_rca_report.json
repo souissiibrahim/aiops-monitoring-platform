@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "bb895988-b3b5-4d59-b552-2c636ee00743",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T14:37:25.297031",
+    "root_cause": "Insufficient memory allocation on worker-node-3",
+    "recommendation": "Increase memory resources on worker-node-3 or consider horizontal pod autoscaling to dynamically adjust resources based on workload demands.",
+    "confidence": 1.0,
+    "model": "FAISS"
+  },
+  "timestamp": "2025-07-31T14:37:25.297031"
+}

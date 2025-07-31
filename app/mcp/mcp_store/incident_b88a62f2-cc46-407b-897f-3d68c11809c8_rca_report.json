@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "b88a62f2-cc46-407b-897f-3d68c11809c8",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T11:50:53.569065",
+    "root_cause": "Memory leak in the node-auth-prod-01 container",
+    "recommendation": "Investigate and fix the memory leak in the node-auth-prod-01 container. This can be done by analyzing the container's logs, checking for any memory-intensive processes, and optimizing the container's resources.",
+    "confidence": 0.85,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-07-31T11:50:53.569065"
+}

@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "c47c8d48-43d8-432d-b1a4-ac94e76a42af",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T13:49:00.812366",
+    "root_cause": "Database node `node-auth-prod-01` is experiencing high query execution times, leading to connection pool saturation and lock wait timeouts.",
+    "recommendation": "Investigate and optimize database queries on `node-auth-prod-01` to reduce execution times, and consider increasing the connection pool size or adjusting the timeout settings.",
+    "confidence": 0.85,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-07-31T13:49:00.812366"
+}

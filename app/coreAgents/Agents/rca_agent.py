@@ -61,45 +61,47 @@ def run_rca_agent():
         print(f"🔎 Found {len(incidents)} incident(s) needing RCA.")
 
         for incident in incidents:
-            # 🔁 Simulated logs (replace later with real logs from Loki)
-            logs = [
-                f"ERROR: CPU usage on node {incident.source_id} is 98.5%",
-                "WARNING: Slow DB query detected",
-                "INFO: Service response time exceeded threshold"
-            ]
+            source = db.query(TelemetrySource).filter_by(source_id=incident.source_id).first()
+            source_name = source.name if source else str(incident.source_id)
+            service = incident.service.name if incident.service else "Unknown"
+            incident_type = incident.incident_type.name if incident.incident_type else "Unknown"
 
+            # ⛏️ Simulated logs (replace with real logs from Loki later)
+            logs = [
+                f"ERROR: Latency spike detected on `/send-notification` endpoint",
+                "WARNING: Redis cache miss rate exceeded 80%",
+                "INFO: Upstream service `user-profile-service` response delayed by 2.9s"
+            ]
             print(f"🧠 Running RCA on incident {incident.incident_id}...")
 
-            result = suggest_root_cause(logs)
-
-            # Try to get root cause node ID from incident's telemetry source
-            root_node = db.query(TelemetrySource).filter_by(source_id=incident.source_id).first()
-            root_node_id = root_node.source_id if root_node else None
+            result = suggest_root_cause(
+                logs,
+                incident_type=incident_type,
+                metric_type="Network",  # You can change this dynamically based on anomaly type later
+                service_name=service
+            )
 
             rca = RCAAnalysis(
                 incident_id=incident.incident_id,
                 analysis_method=result.get("model", "Unknown"),
-                root_cause_node_id=root_node_id,
-                confidence_score=result.get("confidence", 0.85),
+                root_cause_node_id=incident.source_id,
+                confidence_score=result.get("confidence", 0.0),
                 contributing_factors={"logs_count": len(logs)},
                 recommendations=[result["recommendation"]],
                 analysis_timestamp=datetime.utcnow(),
-                analyst_team_id=None  # Optional
+                analyst_team_id=None
             )
 
             db.add(rca)
             db.commit()
             db.refresh(rca)
 
-            # Link incident to RCA
             incident.root_cause_id = rca.rca_id
             db.commit()
             print(f"✅ RCAAnalysis saved and linked to incident {incident.incident_id}.")
             append_to_faiss(logs, result["root_cause"], result["recommendation"])
 
-            service = incident.service.name if incident.service else "Unknown"
             timestamp = datetime.utcnow().isoformat()
-
             markdown = generate_rca_markdown(
                 incident_id=incident.incident_id,
                 service=service,
@@ -110,14 +112,13 @@ def run_rca_agent():
                 confidence=result["confidence"],
                 model=result.get("model", "Unknown")
             )
-
             save_markdown_report(incident.incident_id, markdown)
 
-            try:
+            """try:
                 send_to_slack(f"📢 New RCA Report for Incident `{incident.incident_id}`:\n```{markdown}```")
                 print(f"📨 Slack notification sent for incident {incident.incident_id}.")
             except Exception as slack_err:
-                print(f"❌ Failed to send Slack message: {slack_err}")
+                print(f"❌ Failed to send Slack message: {slack_err}")"""
 
             send_mcp_message_to_server(
                 incident_id=incident.incident_id,

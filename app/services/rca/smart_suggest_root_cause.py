@@ -29,39 +29,49 @@ def load_faiss_index(dimension=384):
 def match_with_faiss(query_embedding, k=1):
     index = load_faiss_index()
     if index.ntotal == 0:
-        return None, None
+        return None, None, 0.0  # No match, confidence 0
 
     query = np.array([query_embedding], dtype="float32")
     distances, indices = index.search(query, k)
 
-    if distances[0][0] > 0.4:  # FAISS match threshold
-        return None, None
+    distance = distances[0][0]
+    if distance > 0.4:  # above your similarity threshold
+        return None, None, 0.0
 
     with open(KNOWN_LOGS_PATH, "r") as f:
         known_logs = [json.loads(line) for line in f]
 
     match = known_logs[indices[0][0]]
-    return match["root_cause"], match["recommendation"]
+
+    # ✅ Compute a confidence from distance
+    confidence = round(1 - distance, 2)  # e.g., distance 0.15 → 0.85 confidence
+
+    return match["root_cause"], match["recommendation"], confidence
 
 
-def suggest_root_cause(logs: list):
+def suggest_root_cause(logs: list[str], incident_type: str, metric_type: str, service_name: str):
     logs_clean = [log if isinstance(log, str) else str(log) for log in logs]
     full_log_text = "\n".join(logs_clean)
 
     embedding = get_embedding(full_log_text)
 
     # ✅ 1. Try FAISS match first
-    root_cause, recommendation = match_with_faiss(embedding)
+    root_cause, recommendation, confidence = match_with_faiss(embedding)
     if root_cause and recommendation:
         return {
             "root_cause": root_cause,
             "recommendation": recommendation,
-            "confidence": 0.99,
+            "confidence": confidence,
             "model": "FAISS"
         }
 
-    # ✅ 2. Fall back to LangGraph
-    result = run_rca_graph(logs_clean)
+    # ✅ 2. Fall back to LangGraph with real context
+    result = run_rca_graph(
+        logs_clean,
+        incident_type=incident_type,
+        metric_type=metric_type,
+        service_name=service_name
+    )
 
     # ✅ 3. Save result to FAISS memory
     os.makedirs(os.path.dirname(KNOWN_LOGS_PATH), exist_ok=True)
@@ -73,9 +83,4 @@ def suggest_root_cause(logs: list):
             "recommendation": result["recommendation"]
         }) + "\n")
 
-    return {
-        "root_cause": result["root_cause"],
-        "recommendation": result["recommendation"],
-        "confidence": 0.85,  
-        "model": "LangGraph"
-    }
+    return result

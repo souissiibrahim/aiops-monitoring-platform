@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "7fbbdae7-bd9d-47a3-b718-ec1832adfca1",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T15:43:57.336254",
+    "root_cause": "High load average detected on web-node, causing the upstream server to return 503 Service Unavailable",
+    "recommendation": "Scale up the web-node or optimize the application to reduce the load average, ensuring the number of active connections does not exceed the limit",
+    "confidence": 0.85,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-07-31T15:43:57.336254"
+}

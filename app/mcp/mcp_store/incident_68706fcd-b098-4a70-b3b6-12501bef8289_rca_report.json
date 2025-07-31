@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "68706fcd-b098-4a70-b3b6-12501bef8289",
+    "service": "auth-service",
+    "timestamp": "2025-07-31T14:17:32.430973",
+    "root_cause": "DNS resolution failure for `auth-service.local` on `node-auth-prod-01`",
+    "recommendation": "Check DNS configuration and ensure that `auth-service.local` is properly resolved to the correct IP address. If the issue persists, investigate network connectivity issues between `node-auth-prod-01` and the DNS server.",
+    "confidence": 0.85,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-07-31T14:17:32.430973"
+}

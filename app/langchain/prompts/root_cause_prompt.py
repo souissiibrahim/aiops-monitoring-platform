@@ -1,12 +1,17 @@
 from langchain.prompts import PromptTemplate
 
 root_cause_prompt = PromptTemplate(
-    input_variables=["logs"],
+    input_variables=["logs", "incident_type", "metric_type", "service_name"],
     template="""
 You are an expert DevOps AI assistant. Your job is to perform Root Cause Analysis (RCA) based on system logs.
 
+## Context:
+- Incident Type: {incident_type}
+- Metric Type: {metric_type}
+- Service: {service_name}
+
 ## Your tasks:
-1. Carefully analyze the logs.
+1. Carefully analyze the logs and the incident context.
 2. Identify the root cause of the incident.
 3. Suggest a clear and actionable recommendation to fix or prevent the issue.
 4. Provide a confidence level (between 0 and 1) based on how clear the logs are.
@@ -24,7 +29,7 @@ Respond strictly in the following JSON format (no extra text):
 {{
   "root_cause": "...",
   "recommendation": "...",
-  "confidence": 0.85
+  "confidence": float between 0.0 and 1.0
 }}
 """
 )
