@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "8d0719d9-c64e-44f8-af84-4f9e8b8e7755",
+    "service": "api-gateway",
+    "timestamp": "2025-07-31T08:31:02.071815",
+    "root_cause": "Postgresdb crashed due to a memory allocation failure caused by excessive memory usage by a specific query",
+    "recommendation": "Optimize the query to reduce memory usage, and consider implementing query optimization techniques such as query rewriting or caching",
+    "confidence": 0.99,
+    "model": "FAISS"
+  },
+  "timestamp": "2025-07-31T08:31:02.071815"
+}

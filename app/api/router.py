@@ -22,10 +22,10 @@ from app.v1.endpoints.shap_explanation_endpoints import router as shap_explanati
 from app.v1.endpoints.team_endpoint_ownership_endpoints import router as team_endpoint_ownership_router
 from app.v1.endpoints.telemetry_source_endpoints import router as telemetry_source_router
 from app.v1.endpoints.auto_remediation_endpoints import router as auto_remediation_router
+from app.mcp.mcp_server import mcp_router  
 
 #from app.v1.endpoints.rca_report_endpoints import router as rca_report_router
 #from app.v1.endpoints.log_entry_endpoints import router as log_entry_router
-#from app.mcp.mcp_server import mcp_router  
 router = APIRouter()
 router.include_router(incident_router, prefix="/incidents", tags=["incidents"])
 router.include_router(rca_analysis_router, prefix="/rca-analysis", tags=["rca_analysis"])
@@ -50,5 +50,6 @@ router.include_router(shap_explanation_router, prefix="/shap-explanations", tags
 router.include_router(team_endpoint_ownership_router, prefix="/team-endpoint-ownerships", tags=["team_endpoint_ownerships"])
 router.include_router(telemetry_source_router, prefix="/telemetry-sources", tags=["telemetry_sources"])
 router.include_router(auto_remediation_router, prefix="/auto-remediation", tags=["Auto Remediation"])
+router.include_router(mcp_router, prefix="/mcp")
 
 
