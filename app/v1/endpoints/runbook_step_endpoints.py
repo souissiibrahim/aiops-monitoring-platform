@@ -32,6 +32,18 @@ def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_
     return success_response(serialize(steps, RunbookStepRead), "Soft deleted runbook steps fetched successfully.")
 
 
+@router.get("/runbook/{runbook_id}/steps")
+def get_steps_by_runbook_id(runbook_id: UUID, db: Session = Depends(get_db)):
+    steps = db.query(RunbookStep).filter(
+        RunbookStep.runbook_id == runbook_id,
+        RunbookStep.is_deleted == False
+    ).all()
+
+    return success_response(
+        [RunbookStepRead.from_orm(step).model_dump(mode="json") for step in steps],
+        "Runbook steps fetched by runbook ID."
+    )
+
 @router.get("/{step_id}")
 def get_by_id(step_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
     step = RunbookStepRepository(db, redis).get_by_id(step_id)
