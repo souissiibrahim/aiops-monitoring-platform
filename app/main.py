@@ -17,6 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 def initialize_database():
     Base.metadata.create_all(bind=engine)

@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "c060b845-0430-4dcd-ba50-d91b958035e5",
+    "service": "auth-service",
+    "timestamp": "2025-08-01T11:41:08.705421",
+    "root_cause": "The root cause of the issue is that the filesystem /dev/sda1 on server prod-node-7 is 95% full, which may be causing issues with the server's performance and availability.",
+    "recommendation": "- Recommendation is to free up disk space on /dev/sda1 by deleting unnecessary files, moving files to a different disk, or expanding the disk size. Additionally, consider implementing a disk space monitoring and alerting system to prevent similar issues in the future. (confidence: 1.0)",
+    "confidence": 1.0,
+    "model": "FAISS"
+  },
+  "timestamp": "2025-08-01T11:41:08.705421"
+}

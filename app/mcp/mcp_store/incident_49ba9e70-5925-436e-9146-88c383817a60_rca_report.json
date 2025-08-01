@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "49ba9e70-5925-436e-9146-88c383817a60",
+    "service": "auth-service",
+    "timestamp": "2025-08-01T11:45:11.181404",
+    "root_cause": "Network connectivity issue between analytics-node-07 and logging-gateway",
+    "recommendation": "- Check and verify the network connectivity between analytics-node-07 and logging-gateway (confidence: 0.9)\n- Implement a more robust retry mechanism for log push to logging-gateway to handle temporary connection timeouts (confidence: 0.8)\n- Increase the log buffer size on analytics-node-07 to reduce the likelihood of log buffer overflow (confidence: 0.7)",
+    "confidence": 0.9,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-08-01T11:45:11.181404"
+}

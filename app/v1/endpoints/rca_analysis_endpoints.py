@@ -10,6 +10,8 @@ from app.db.models.incident import Incident
 from app.services.elasticsearch.rca_analysis_service import index_rca
 from app.services.elasticsearch.connection import get_elasticsearch_connection
 from app.utils.response import success_response, error_response
+from sqlalchemy import or_
+import os
 
 router = APIRouter()
 
@@ -34,6 +36,101 @@ def get_all_soft_deleted(db: Session = Depends(get_db), redis=Depends(get_redis_
         .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team)) \
         .filter(RCAAnalysis.is_deleted == True).all()
     return success_response(serialize(rcas, RCAAnalysisRead), "Deleted RCA records fetched successfully.")
+
+
+@router.get("/rca-stats/dashboard")
+def get_rca_dashboard_metrics(db: Session = Depends(get_db)):
+   
+    active = db.query(Incident)\
+        .filter(Incident.root_cause_id != None)\
+        .filter(Incident.status.has(Incident.status.property.mapper.class_.name.ilike("%open%")))\
+        .count()
+
+    
+    completed_incidents = db.query(Incident)\
+        .filter(Incident.root_cause_id != None)\
+        .filter(Incident.end_timestamp != None)\
+        .filter(
+            or_(
+                Incident.status.has(Incident.status.property.mapper.class_.name.ilike("%resolved%")),
+                Incident.status.has(Incident.status.property.mapper.class_.name.ilike("%closed%"))
+            )
+        ).all()
+
+    
+    avg_resolution = 0.0
+    if completed_incidents:
+        total_secs = sum(
+            (i.end_timestamp - i.start_timestamp).total_seconds()
+            for i in completed_incidents
+            if i.start_timestamp and i.end_timestamp
+        )
+        if total_secs > 0:
+            avg_resolution = round((total_secs / len(completed_incidents)) / 3600, 1)
+
+    
+    kb_count = 0
+    kb_path = "faiss_index/known_logs.jsonl"
+    if os.path.exists(kb_path):
+        with open(kb_path, "r") as f:
+            kb_count = sum(1 for _ in f)
+
+    return success_response({
+        "active": active or 0,
+        "completed": len(completed_incidents) or 0,
+        "avg_resolution_hours": avg_resolution or 0,
+        "kb_count": kb_count or 0
+    }, "Dashboard RCA stats loaded.")
+
+
+@router.get("/dashboard-summaries")
+def get_dashboard_summaries(db: Session = Depends(get_db)):
+    rcas = db.query(RCAAnalysis)\
+        .options(joinedload(RCAAnalysis.incident), joinedload(RCAAnalysis.team))\
+        .filter(RCAAnalysis.is_deleted == False)\
+        .order_by(RCAAnalysis.analysis_timestamp.desc())\
+        .all()
+
+    summaries = []
+
+    for rca in rcas:
+        incident = rca.incident
+        team_name = rca.team.name if rca.team else "AI Agent"
+
+        title = incident.title if incident else "Unknown"
+        incident_id = str(incident.incident_id) if incident else "Unknown"
+        started = incident.start_timestamp.isoformat() if incident and incident.start_timestamp else "Unknown"
+        status = incident.status.name if incident and incident.status else "Unknown"
+        severity = incident.severity_level.name if incident and incident.severity_level else "Unknown"
+        root_cause = incident.description if incident and incident.description else "N/A"
+
+        if incident and incident.end_timestamp and incident.start_timestamp:
+            duration = str(incident.end_timestamp - incident.start_timestamp)
+        else:
+            duration = "Ongoing"
+
+        tags = []
+        if status != "Unknown":
+            tags.append(status)
+        if severity != "Unknown":
+            tags.append(severity)
+        tags.append(rca.analysis_method or "Unknown")
+
+        summaries.append({
+            "rca_id": str(rca.rca_id),
+            "title": title,
+            "incident_id": incident_id,
+            "investigator": team_name,
+            "started": started,
+            "duration": duration,
+            "status": status,
+            "severity": severity,
+            "root_cause": root_cause,
+            "recommendations": rca.recommendations or [],
+            "tags": tags
+        })
+
+    return success_response(summaries, "Dashboard RCA summaries loaded.")
 
 
 @router.get("/{rca_id}")

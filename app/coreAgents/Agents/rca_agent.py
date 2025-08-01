@@ -62,32 +62,36 @@ def run_rca_agent():
 
         for incident in incidents:
             source = db.query(TelemetrySource).filter_by(source_id=incident.source_id).first()
-            source_name = source.name if source else str(incident.source_id)
             service = incident.service.name if incident.service else "Unknown"
             incident_type = incident.incident_type.name if incident.incident_type else "Unknown"
+            source_name = source.name if source else str(incident.source_id)
 
             # ⛏️ Simulated logs (replace with real logs from Loki later)
             logs = [
-                f"ERROR: Latency spike detected on `/send-notification` endpoint",
-                "WARNING: Redis cache miss rate exceeded 80%",
-                "INFO: Upstream service `user-profile-service` response delayed by 2.9s"
-            ]
+                "WARNING: Log buffer overflow on analytics-node-07",
+                "ERROR: Failed to send logs to Loki endpoint: connection timed out",
+                "INFO: Retry attempts exceeded for log push to logging-gateway"
+                ]
             print(f"🧠 Running RCA on incident {incident.incident_id}...")
 
             result = suggest_root_cause(
                 logs,
                 incident_type=incident_type,
-                metric_type="Network",  # You can change this dynamically based on anomaly type later
+                metric_type="Network",
                 service_name=service
             )
+
+            # Sort by highest confidence
+            sorted_recommendations = sorted(result["recommendations"], key=lambda r: r["confidence"], reverse=True)
+            top_confidence = sorted_recommendations[0]["confidence"] if sorted_recommendations else 0.0
 
             rca = RCAAnalysis(
                 incident_id=incident.incident_id,
                 analysis_method=result.get("model", "Unknown"),
                 root_cause_node_id=incident.source_id,
-                confidence_score=result.get("confidence", 0.0),
+                confidence_score=top_confidence,
                 contributing_factors={"logs_count": len(logs)},
-                recommendations=[result["recommendation"]],
+                recommendations=sorted_recommendations,
                 analysis_timestamp=datetime.utcnow(),
                 analyst_team_id=None
             )
@@ -99,33 +103,33 @@ def run_rca_agent():
             incident.root_cause_id = rca.rca_id
             db.commit()
             print(f"✅ RCAAnalysis saved and linked to incident {incident.incident_id}.")
-            append_to_faiss(logs, result["root_cause"], result["recommendation"])
+
+            append_to_faiss(logs, result["root_cause"], sorted_recommendations[0]["text"])
 
             timestamp = datetime.utcnow().isoformat()
+
+            markdown_recommendations = "\n".join(
+                [f"- {r['text']} (confidence: {r['confidence']})" for r in sorted_recommendations]
+            )
+
             markdown = generate_rca_markdown(
                 incident_id=incident.incident_id,
                 service=service,
                 timestamp=timestamp,
                 logs=logs,
                 root_cause=result["root_cause"],
-                recommendation=result["recommendation"],
-                confidence=result["confidence"],
+                recommendation=markdown_recommendations,
+                confidence=top_confidence,
                 model=result.get("model", "Unknown")
             )
             save_markdown_report(incident.incident_id, markdown)
-
-            """try:
-                send_to_slack(f"📢 New RCA Report for Incident `{incident.incident_id}`:\n```{markdown}```")
-                print(f"📨 Slack notification sent for incident {incident.incident_id}.")
-            except Exception as slack_err:
-                print(f"❌ Failed to send Slack message: {slack_err}")"""
 
             send_mcp_message_to_server(
                 incident_id=incident.incident_id,
                 service=service,
                 root_cause=result["root_cause"],
-                recommendation=result["recommendation"],
-                confidence=result["confidence"],
+                recommendation=markdown_recommendations,
+                confidence=top_confidence,
                 model=result.get("model", "Unknown"),
                 timestamp=timestamp
             )

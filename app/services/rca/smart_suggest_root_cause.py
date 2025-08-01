@@ -29,24 +29,28 @@ def load_faiss_index(dimension=384):
 def match_with_faiss(query_embedding, k=1):
     index = load_faiss_index()
     if index.ntotal == 0:
-        return None, None, 0.0  # No match, confidence 0
+        return None, None, []
 
     query = np.array([query_embedding], dtype="float32")
     distances, indices = index.search(query, k)
 
     distance = distances[0][0]
-    if distance > 0.4:  # above your similarity threshold
-        return None, None, 0.0
+    if distance > 0.4:
+        return None, None, []
 
     with open(KNOWN_LOGS_PATH, "r") as f:
         known_logs = [json.loads(line) for line in f]
 
     match = known_logs[indices[0][0]]
+    confidence = round(1 - distance, 2)
 
-    # ✅ Compute a confidence from distance
-    confidence = round(1 - distance, 2)  # e.g., distance 0.15 → 0.85 confidence
-
-    return match["root_cause"], match["recommendation"], confidence
+    # Wrap in new recommendation structure
+    return match["root_cause"], [
+        {
+            "text": match["recommendation"],
+            "confidence": confidence
+        }
+    ], "FAISS"
 
 
 def suggest_root_cause(logs: list[str], incident_type: str, metric_type: str, service_name: str):
@@ -55,17 +59,16 @@ def suggest_root_cause(logs: list[str], incident_type: str, metric_type: str, se
 
     embedding = get_embedding(full_log_text)
 
-    # ✅ 1. Try FAISS match first
-    root_cause, recommendation, confidence = match_with_faiss(embedding)
-    if root_cause and recommendation:
+    # 1. Try FAISS
+    root_cause, recommendations, model = match_with_faiss(embedding)
+    if root_cause and recommendations:
         return {
             "root_cause": root_cause,
-            "recommendation": recommendation,
-            "confidence": confidence,
-            "model": "FAISS"
+            "recommendations": recommendations,
+            "model": model
         }
 
-    # ✅ 2. Fall back to LangGraph with real context
+    # 2. Fall back to LangGraph
     result = run_rca_graph(
         logs_clean,
         incident_type=incident_type,
@@ -73,14 +76,25 @@ def suggest_root_cause(logs: list[str], incident_type: str, metric_type: str, se
         service_name=service_name
     )
 
-    # ✅ 3. Save result to FAISS memory
+    # Validate result format from LangGraph
+    if "recommendations" not in result or not isinstance(result["recommendations"], list):
+        result["recommendations"] = [{
+            "text": result.get("recommendation", "No recommendation provided."),
+            "confidence": result.get("confidence", 0.0)
+        }]
+
+    # 3. Save to known logs
     os.makedirs(os.path.dirname(KNOWN_LOGS_PATH), exist_ok=True)
     with open(KNOWN_LOGS_PATH, "a") as f:
         f.write(json.dumps({
             "embedding": embedding.tolist(),
             "logs": full_log_text,
             "root_cause": result["root_cause"],
-            "recommendation": result["recommendation"]
+            "recommendation": result["recommendations"][0]["text"]  # Only saving top one for memory
         }) + "\n")
 
-    return result
+    return {
+        "root_cause": result["root_cause"],
+        "recommendations": result["recommendations"],
+        "model": result.get("model", "LangGraph")
+    }

@@ -5,6 +5,7 @@ from uuid import uuid4
 from app.db.models.incident import Incident
 from app.db.base import Base, TimestampMixin
 from app.db.models.telemetry_source import TelemetrySource
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 class RCAAnalysis(TimestampMixin, Base):
@@ -19,7 +20,7 @@ class RCAAnalysis(TimestampMixin, Base):
 
     confidence_score = Column(Float, nullable=True)
     contributing_factors = Column(JSON, nullable=True)
-    recommendations = Column(ARRAY(Text), nullable=True)
+    recommendations = Column(JSONB, nullable=True)
     analysis_timestamp = Column(DateTime, nullable=False)
 
     analyst_team_id = Column(UUID(as_uuid=True), ForeignKey("teams.team_id"), nullable=True)

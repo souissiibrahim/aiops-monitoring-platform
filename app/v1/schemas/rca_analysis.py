@@ -9,13 +9,20 @@ from app.v1.schemas.team import TeamInDB
 if TYPE_CHECKING:
     from app.v1.schemas.incident import IncidentRead  
 
+
+class RecommendationItem(BaseModel):
+    text: str
+    confidence: float
+
+
 class RCAAnalysisBase(BaseModel):
     incident_id: UUID
     analysis_method: str
     root_cause_node_id: Optional[UUID] = None
     confidence_score: Optional[float] = None
     contributing_factors: Optional[Dict[str, float]] = None
-    recommendations: Optional[List[str]] = None
+    #recommendations: Optional[List[str]] = None
+    recommendations: Optional[List[RecommendationItem]] = None
     analysis_timestamp: datetime
     analyst_team_id: Optional[UUID] = None
 
@@ -36,7 +43,8 @@ class RCAAnalysisLite(BaseModel):
     root_cause_node_id: Optional[UUID]
     confidence_score: Optional[float]
     contributing_factors: Optional[Dict[str, float]]
-    recommendations: Optional[List[str]]
+    #recommendations: Optional[List[str]]
+    recommendations: Optional[List[RecommendationItem]] = None
     analysis_timestamp: datetime
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
@@ -51,7 +59,8 @@ class RCAAnalysisRead(BaseModel):
     root_cause_node_id: Optional[UUID]
     confidence_score: Optional[float]
     contributing_factors: Optional[Dict[str, float]]
-    recommendations: Optional[List[str]]
+    #recommendations: Optional[List[str]]
+    recommendations: Optional[List[RecommendationItem]] = None
     analysis_timestamp: datetime
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
@@ -59,6 +68,6 @@ class RCAAnalysisRead(BaseModel):
     incident: Optional["IncidentRead"]
     team: Optional[TeamInDB] = Field(default=None)
     root_cause_node: Optional[TelemetrySourceRead] = Field(default=None)
-    
+
     class Config:
         from_attributes = True

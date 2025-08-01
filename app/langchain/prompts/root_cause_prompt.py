@@ -13,8 +13,8 @@ You are an expert DevOps AI assistant. Your job is to perform Root Cause Analysi
 ## Your tasks:
 1. Carefully analyze the logs and the incident context.
 2. Identify the root cause of the incident.
-3. Suggest a clear and actionable recommendation to fix or prevent the issue.
-4. Provide a confidence level (between 0 and 1) based on how clear the logs are.
+3. Suggest 2 to 3 clear and actionable recommendations to fix or prevent the issue.
+4. Assign a confidence score (between 0 and 1) for **each** recommendation based on how clearly the logs support it.
 
 ## Rules for confidence:
 - Confidence >= 0.9 → If the logs clearly point to a root cause with no ambiguity.
@@ -28,8 +28,16 @@ You are an expert DevOps AI assistant. Your job is to perform Root Cause Analysi
 Respond strictly in the following JSON format (no extra text):
 {{
   "root_cause": "...",
-  "recommendation": "...",
-  "confidence": float between 0.0 and 1.0
+  "recommendations": [
+    {{
+      "text": "...",
+      "confidence": float
+    }},
+    {{
+      "text": "...",
+      "confidence": float
+    }}
+  ]
 }}
 """
 )
