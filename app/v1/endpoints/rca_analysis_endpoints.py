@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
+from typing import List
 
 from app.v1.schemas.rca_analysis import RCAAnalysisCreate, RCAAnalysisRead
 from app.db.session import get_db
@@ -132,6 +133,56 @@ def get_dashboard_summaries(db: Session = Depends(get_db)):
 
     return success_response(summaries, "Dashboard RCA summaries loaded.")
 
+@router.get("/rca-analysis/knowledge-base", response_model=List[dict])
+def get_knowledge_base_cards(db: Session = Depends(get_db)):
+    rca_entries = db.query(RCAAnalysis).options(
+        joinedload(RCAAnalysis.incident).joinedload(Incident.incident_type)
+    ).filter(RCAAnalysis.is_deleted == False).order_by(RCAAnalysis.created_at.desc()).all()
+
+    result = []
+    for rca in rca_entries:
+        if not isinstance(rca.recommendations, list) or not rca.recommendations:
+            continue
+
+        top_reco = max(rca.recommendations, key=lambda r: r.get("confidence", 0.0))
+
+        result.append({
+            "title": rca.incident.description if rca.incident and rca.incident.description else "Unknown root cause",
+            "description": top_reco.get("text", "No recommendation"),
+            "category": (
+                rca.incident.incident_type.name
+                if rca.incident and rca.incident.incident_type
+                else "Unknown"
+            ),
+            "last_updated": (rca.updated_at or rca.created_at).isoformat(),
+            "relevance": round(top_reco.get("confidence", 0.0), 2)
+        })
+
+    return result
+
+
+
+@router.get("/timeline-analysis")
+def get_timeline_events(db: Session = Depends(get_db)):
+    incidents = db.query(Incident)\
+        .options(
+            joinedload(Incident.source),
+            joinedload(Incident.severity_level)
+        )\
+        .filter(Incident.root_cause_id != None)\
+        .order_by(Incident.start_timestamp.asc())\
+        .all()
+
+    timeline_events = []
+    for i in incidents:
+        timeline_events.append({
+            "title": i.title or "No title",
+            "source": i.source.name if i.source else "Unknown",
+            "impact": i.severity_level.name if i.severity_level else "Unknown",
+            "timestamp": i.start_timestamp.isoformat() if i.start_timestamp else "Unknown"
+        })
+
+    return success_response(timeline_events, "Timeline analysis loaded.")
 
 @router.get("/{rca_id}")
 def get_by_id(rca_id: UUID, db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
