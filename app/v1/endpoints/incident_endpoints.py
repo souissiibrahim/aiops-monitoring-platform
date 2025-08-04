@@ -62,28 +62,40 @@ def get_open_incidents_count(db: Session = Depends(get_db)):
     open_status = db.query(IncidentStatus).filter(IncidentStatus.name == "Open").first()
 
     if not open_status:
-        return error_response("Status 'Open' not found", 404)
+        return success_response(
+            {"open_incident_count": 0},
+            "Status 'Open' not found, returning count as 0."
+        )
 
     count = db.query(func.count(Incident.incident_id)).filter(
         Incident.status_id == open_status.status_id,
         Incident.is_deleted == False
-    ).scalar()
+    ).scalar() or 0
 
-    return success_response({"open_incident_count": count}, "Open incidents count fetched successfully.")
+    return success_response(
+        {"open_incident_count": count},
+        "Open incidents count fetched successfully."
+    )
 
 @router.get("/count/investigating")
 def get_investigating_incidents_count(db: Session = Depends(get_db)):
     investigating_status = db.query(IncidentStatus).filter(IncidentStatus.name == "Investigating").first()
+
     if not investigating_status:
-        return error_response("Investigating status not found", 404)
+        return success_response(
+            {"count": 0},
+            "Status 'Investigating' not found, returning count as 0."
+        )
 
     count = db.query(func.count(Incident.incident_id)).filter(
         Incident.status_id == investigating_status.status_id,
         Incident.is_deleted == False
-    ).scalar()
+    ).scalar() or 0
 
-    return success_response({"count": count}, "Investigating incidents count fetched.")
-
+    return success_response(
+        {"count": count},
+        "Investigating incidents count fetched successfully."
+    )
 
 @router.get("/active")
 def get_active_incidents(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):

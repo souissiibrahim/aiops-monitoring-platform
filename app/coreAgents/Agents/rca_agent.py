@@ -68,10 +68,12 @@ def run_rca_agent():
 
             # ⛏️ Simulated logs (replace with real logs from Loki later)
             logs = [
-                "WARNING: Log buffer overflow on analytics-node-07",
-                "ERROR: Failed to send logs to Loki endpoint: connection timed out",
-                "INFO: Retry attempts exceeded for log push to logging-gateway"
-                ]
+                "WARNING: Unexpected DNS response for api.internal.company.com — IP does not match known records",
+                "ERROR: DNSSEC validation failed for multiple queries",
+                "INFO: Switching to fallback DNS server due to suspected spoofing",
+                "ALERT: Multiple conflicting A records returned for critical domain",
+                "CRITICAL: Resolver flagged domain as potentially compromised — possible DNS cache poisoning"
+            ]
             print(f"🧠 Running RCA on incident {incident.incident_id}...")
 
             result = suggest_root_cause(
@@ -118,7 +120,7 @@ def run_rca_agent():
                 timestamp=timestamp,
                 logs=logs,
                 root_cause=result["root_cause"],
-                recommendation=markdown_recommendations,
+                recommendations=sorted_recommendations,
                 confidence=top_confidence,
                 model=result.get("model", "Unknown")
             )

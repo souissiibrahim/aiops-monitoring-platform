@@ -1,22 +1,33 @@
 # app/utils/rca_formatter.py
 
 from datetime import datetime
+from typing import List, Dict, Union
 
-def generate_rca_markdown(incident_id: int, service: str, timestamp: str, logs: list[str], root_cause: str, recommendation: str, confidence: float, model: str = "Unknown") -> str:
+def generate_rca_markdown(
+    incident_id: Union[int, str],
+    service: str,
+    timestamp: str,
+    logs: List[str],
+    root_cause: str,
+    recommendations: List[Dict[str, Union[str, float]]],
+    confidence: float,
+    model: str = "Unknown"
+) -> str:
     """
-    Generate a markdown-formatted RCA report.
-    
+    Generate a markdown-formatted RCA report with multiple recommendations.
+
     Parameters:
         - incident_id: ID of the incident
         - service: name of the service involved
         - timestamp: timestamp of the incident (string or datetime)
         - logs: list of log messages
         - root_cause: the identified root cause
-        - recommendation: suggested fix
-        - confidence: confidence score from LLM or FAISS
+        - recommendations: list of recommendation dicts with text and confidence
+        - confidence: top confidence score
+        - model: model name (LLM or FAISS)
 
     Returns:
-        A string containing the markdown-formatted report.
+        A markdown string.
     """
 
     # Format logs as bullet list
@@ -27,14 +38,20 @@ def generate_rca_markdown(incident_id: int, service: str, timestamp: str, logs: 
         try:
             timestamp = datetime.fromisoformat(timestamp)
         except Exception:
-            timestamp = timestamp  # keep it as-is if not ISO format
+            timestamp = timestamp  # leave as-is
+
+    # Format multiple recommendations
+    formatted_recommendations = "\n".join([
+        f"- {r['text']} (confidence: {r['confidence']})"
+        for r in recommendations
+    ])
 
     return f"""## 🛠️ RCA Report for Incident #{incident_id}
 
 **Service:** `{service}`  
 **Timestamp:** `{timestamp}`  
-**Confidence:** `{confidence:.2f}`
-**Model Used:** `{model}`
+**Top Confidence:** `{confidence:.2f}`  
+**Model Used:** `{model}`  
 ---
 
 ### 📋 Logs
@@ -47,9 +64,8 @@ def generate_rca_markdown(incident_id: int, service: str, timestamp: str, logs: 
 
 ---
 
-### ✅ Recommendation
-**{recommendation}**
+### ✅ Recommendations
+{formatted_recommendations}
 
 ---
 """
-

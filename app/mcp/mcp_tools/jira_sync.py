@@ -13,7 +13,6 @@ class JiraMCPHandler(FileSystemEventHandler):
         if event.is_directory or not event.src_path.endswith(".json"):
             return
 
-        # Retry reading the file up to 5 times
         for _ in range(5):
             try:
                 with open(event.src_path, "r") as f:
@@ -34,7 +33,7 @@ class JiraMCPHandler(FileSystemEventHandler):
             service = payload.get("service", "Unknown")
             timestamp = payload.get("timestamp", "Unknown")
             root_cause = payload.get("root_cause", "N/A")
-            recommendation = payload.get("recommendation", "N/A")
+            recommendation_md = payload.get("recommendation", "N/A")
 
             if not incident_id:
                 print(f"⚠️ No incident_id in MCP file: {event.src_path}")
@@ -54,8 +53,8 @@ class JiraMCPHandler(FileSystemEventHandler):
 🧠 *Root Cause:*
 {root_cause}
 
-✅ *Recommendation:*
-{recommendation}
+✅ *Recommendations:*
+{recommendation_md}
 
 ---
 

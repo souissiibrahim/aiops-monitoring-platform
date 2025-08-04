@@ -22,7 +22,7 @@ class SlackMCPHandler(FileSystemEventHandler):
             service = payload.get("service", "Unknown")
             timestamp = payload.get("timestamp", "Unknown")
             root_cause = payload.get("root_cause", "N/A")
-            recommendation = payload.get("recommendation", "N/A")
+            recommendation_md = payload.get("recommendation", "N/A")
 
             blocks = [
                 {
@@ -43,7 +43,7 @@ class SlackMCPHandler(FileSystemEventHandler):
                 },
                 {
                     "type": "section",
-                    "text": {"type": "mrkdwn", "text": f"*✅ Recommendation:*\n{recommendation}"}
+                    "text": {"type": "mrkdwn", "text": f"*✅ Recommendations:*\n{recommendation_md}"}
                 },
                 {
                     "type": "context",

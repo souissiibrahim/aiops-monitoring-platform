@@ -50,8 +50,16 @@ class ConfluenceMCPHandler(FileSystemEventHandler):
             service = payload.get("service", "Unknown")
             timestamp = payload.get("timestamp", "Unknown")
             root_cause = payload.get("root_cause", "N/A")
-            recommendation = payload.get("recommendation", "N/A")
+            recommendation_md = payload.get("recommendation", "N/A")
             generated_at = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+
+            # Convert markdown-style list to HTML <ul>
+            recommendation_items = [
+                f"<li>{line[2:].strip()}</li>"
+                for line in recommendation_md.splitlines()
+                if line.strip().startswith("- ")
+            ]
+            recommendation_html = "<ul>" + "".join(recommendation_items) + "</ul>" if recommendation_items else recommendation_md
 
             # === Format RCA block in Confluence storage-format HTML ===
             rca_block = f"""
@@ -61,7 +69,7 @@ class ConfluenceMCPHandler(FileSystemEventHandler):
   <tr><th align="left">📍 Service</th><td>{service}</td></tr>
   <tr><th align="left">🕒 Timestamp</th><td>{timestamp}</td></tr>
   <tr><th align="left">🔍 Root Cause</th><td>{root_cause}</td></tr>
-  <tr><th align="left">✅ Recommendation</th><td>{recommendation}</td></tr>
+  <tr><th align="left">✅ Recommendations</th><td>{recommendation_html}</td></tr>
 </table>
 
 <p><strong>📁 Metadata:</strong></p>
@@ -75,7 +83,6 @@ class ConfluenceMCPHandler(FileSystemEventHandler):
 """
 
             try:
-                # Check if page exists
                 existing_page = confluence.get_page_by_title(CONFLUENCE_SPACE, CONFLUENCE_PAGE_TITLE, expand="body.storage")
 
                 if existing_page:
@@ -90,7 +97,6 @@ class ConfluenceMCPHandler(FileSystemEventHandler):
                     )
                     print(f"✅ Appended RCA report to Confluence page: {CONFLUENCE_PAGE_TITLE}")
                 else:
-                    # Create new page
                     confluence.create_page(
                         space=CONFLUENCE_SPACE,
                         title=CONFLUENCE_PAGE_TITLE,

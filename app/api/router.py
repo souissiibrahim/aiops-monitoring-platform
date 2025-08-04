@@ -23,6 +23,7 @@ from app.v1.endpoints.team_endpoint_ownership_endpoints import router as team_en
 from app.v1.endpoints.telemetry_source_endpoints import router as telemetry_source_router
 from app.v1.endpoints.auto_remediation_endpoints import router as auto_remediation_router
 from app.mcp.mcp_server import mcp_router  
+from app.v1.endpoints import agent_endpoints
 
 #from app.v1.endpoints.rca_report_endpoints import router as rca_report_router
 #from app.v1.endpoints.log_entry_endpoints import router as log_entry_router
@@ -51,5 +52,6 @@ router.include_router(team_endpoint_ownership_router, prefix="/team-endpoint-own
 router.include_router(telemetry_source_router, prefix="/telemetry-sources", tags=["telemetry_sources"])
 router.include_router(auto_remediation_router, prefix="/auto-remediation", tags=["Auto Remediation"])
 router.include_router(mcp_router, prefix="/mcp")
+router.include_router(agent_endpoints.router, prefix="/agents", tags=["Agents"])
 
 
