@@ -15,6 +15,8 @@ from app.db.models.incident_type import IncidentType
 from app.db.models.severity_level import SeverityLevel
 from app.db.models.service_endpoint import ServiceEndpoint
 from app.services.elasticsearch.anomaly_service import index_anomaly
+from app.db.models.incident_status import IncidentStatus
+
 
 KAFKA_TOPIC = "anomalies"
 KAFKA_BOOTSTRAP = "localhost:29092"
@@ -39,6 +41,10 @@ def get_source_id_by_metric(db: Session, metric: str) -> UUID:
 def get_incident_type_id(db: Session, metric: str) -> UUID:
     itype = db.query(IncidentType).filter(IncidentType.name.ilike(f"%{metric}%")).first()
     return itype.incident_type_id if itype else None
+
+def get_default_status_id(db: Session) -> UUID:
+    status = db.query(IncidentStatus).filter_by(name="Open").first()
+    return status.status_id if status else None
 
 def get_severity_id(db: Session, value: float, confidence: float) -> UUID:
     if value > 0.9 or confidence > 0.95:
@@ -126,7 +132,7 @@ while True:
                         "source_id": source_id,
                         "incident_type_id": incident_type_id,
                         "severity_level_id": severity_id,
-                        "status_id": None,
+                        "status_id": get_default_status_id(db),
                         "start_timestamp": ts,
                         "description": f"Auto-promoted from anomaly ({metric})",
                         "title": f"Anomaly in {metric}",

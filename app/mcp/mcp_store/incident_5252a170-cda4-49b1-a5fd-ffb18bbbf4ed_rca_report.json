@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "5252a170-cda4-49b1-a5fd-ffb18bbbf4ed",
+    "service": "auth-service",
+    "timestamp": "2025-08-05T21:50:59.032691",
+    "root_cause": "High IO wait detected on node-auth-prod-01 (avg=85%) due to slow block device access on /var/lib/docker, causing disk read time on /dev/sda1 to exceed the threshold.",
+    "recommendation": "- Check and optimize the storage backend configuration on node-auth-prod-01 to reduce disk IO latency. (confidence: 0.9)\n- Monitor and analyze the disk usage and performance on /dev/sda1 to identify potential bottlenecks and consider upgrading or replacing the disk if necessary. (confidence: 0.8)\n- Implement disk caching or buffering mechanisms to reduce the impact of disk IO latency on the auth-service. (confidence: 0.7)",
+    "confidence": 0.9,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-08-05T21:50:59.032691"
+}

@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from app.services.rca.smart_suggest_root_cause import suggest_root_cause
 from app.utils.rca_formatter import generate_rca_markdown
@@ -11,6 +11,8 @@ from app.db.models.rca_analysis import RCAAnalysis
 from app.db.models.telemetry_source import TelemetrySource
 from app.utils.slack_notifier import send_to_slack
 from app.services.rca.update_faiss_index import append_to_faiss
+from kafka import KafkaConsumer
+
 
 
 def send_mcp_message_to_server(incident_id, service, root_cause, recommendation, confidence, model, timestamp):
@@ -53,6 +55,57 @@ def save_markdown_report(incident_id: str, markdown: str):
     print(f"📝 Markdown RCA report saved: {report_path}")
     return report_path
 
+def fetch_logs_for_incident_by_service(service_name, incident_start_time,
+                                       topic="logs-cleaned", bootstrap_servers="localhost:29092"):
+    print(f"🛰️ Fetching logs for '{service_name}' near {incident_start_time}...")
+    logs = []
+
+    consumer = KafkaConsumer(
+        topic,
+        bootstrap_servers=bootstrap_servers,
+        #group_id=f"rca-agent-{datetime.utcnow().timestamp()}",
+        group_id=None,
+        auto_offset_reset="earliest",
+        #enable_auto_commit=True
+        enable_auto_commit=False,
+        consumer_timeout_ms=3000
+    )
+
+    # Ensure incident timestamp is timezone-aware (UTC)
+    incident_ts = incident_start_time.replace(tzinfo=timezone.utc)
+    start_window = incident_ts - timedelta(minutes=2)
+    end_window = incident_ts + timedelta(minutes=3)
+    deadline = datetime.utcnow().timestamp() + 5  # max 5 seconds to scan
+
+    try:
+        for msg in consumer:
+            try:
+                entry = json.loads(msg.value.decode("utf-8"))
+            except Exception as e:
+                print(f"⚠️ Skipping bad Kafka message: {e}")
+                continue
+
+            if entry.get("service_name") != service_name:
+                continue
+
+            try:
+                log_ts = datetime.fromisoformat(entry["timestamp"].replace("Z", "+00:00"))
+            except Exception as e:
+                print(f"⚠️ Invalid log timestamp format: {e}")
+                continue
+
+            if start_window <= log_ts <= end_window:
+                logs.append(entry.get("message", ""))
+
+            if datetime.utcnow().timestamp() > deadline:
+                break
+    finally:
+        consumer.close()
+
+    print(f"📄 Retrieved {len(logs)} logs.")
+    for i, log in enumerate(logs, 1):
+        print(f"🧾 Log {i}: {log}")
+    return logs if logs else ["INFO: No logs found."]
 
 def run_rca_agent():
     db = SessionLocal()
@@ -67,13 +120,16 @@ def run_rca_agent():
             source_name = source.name if source else str(incident.source_id)
 
             # ⛏️ Simulated logs (replace with real logs from Loki later)
-            logs = [
-                "WARNING: Unexpected DNS response for api.internal.company.com — IP does not match known records",
-                "ERROR: DNSSEC validation failed for multiple queries",
-                "INFO: Switching to fallback DNS server due to suspected spoofing",
-                "ALERT: Multiple conflicting A records returned for critical domain",
-                "CRITICAL: Resolver flagged domain as potentially compromised — possible DNS cache poisoning"
-            ]
+            #logs = [
+             #   "WARNING: Unexpected DNS response for api.internal.company.com — IP does not match known records",
+              #  "ERROR: DNSSEC validation failed for multiple queries",
+              #  "INFO: Switching to fallback DNS server due to suspected spoofing",
+              #  "ALERT: Multiple conflicting A records returned for critical domain",
+              #  "CRITICAL: Resolver flagged domain as potentially compromised — possible DNS cache poisoning"
+            #]
+
+            logs = fetch_logs_for_incident_by_service(service, incident.start_timestamp)
+
             print(f"🧠 Running RCA on incident {incident.incident_id}...")
 
             result = suggest_root_cause(
