@@ -6,8 +6,11 @@ from kafka import KafkaProducer
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-PROMETHEUS_BASE_URL = "https://prometheus.u-cloudsolutions.xyz/api/v1"
-VERIFY_SSL = False
+#PROMETHEUS_BASE_URL = "https://prometheus.u-cloudsolutions.xyz/api/v1"
+#VERIFY_SSL = False
+
+PROMETHEUS_BASE_URL = "http://172.24.68.64:9090/api/v1"
+VERIFY_SSL = True
 
 
 def fetch_all_metrics():

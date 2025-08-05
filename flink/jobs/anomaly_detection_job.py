@@ -15,6 +15,7 @@ MODEL_DIR = "/opt/flink/pyjobs/model"
 MODEL_PATH = os.path.join(MODEL_DIR, "autoencoder_model")
 THRESHOLD_PATH = os.path.join(MODEL_DIR, "threshold.json")
 SCALER_PATH = os.path.join(MODEL_DIR, "scaler.joblib")
+ENCODER_PATH = os.path.join(MODEL_DIR, "encoder.joblib")
 FEATURES_PATH = os.path.join(MODEL_DIR, "feature_names.json")
 KAFKA_INPUT_TOPIC = "cleaned-metrics"
 KAFKA_OUTPUT_TOPIC = "anomalies"
@@ -24,10 +25,14 @@ KAFKA_BOOTSTRAP = "kafka:9092"
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
+    encoder = joblib.load(ENCODER_PATH)
+
     with open(THRESHOLD_PATH, "r") as f:
         THRESHOLD = float(json.load(f)["threshold"])
+
     with open(FEATURES_PATH, "r") as f:
         FEATURE_NAMES = json.load(f)
+
 except Exception as e:
     raise RuntimeError(f"❌ Initialization failed: {e}")
 
@@ -58,13 +63,19 @@ def detect_anomaly(json_str):
     try:
         data = json.loads(json_str)
 
-        # Build feature vector with correct order, default to 0.0
-        raw_features = [data.get(metric, 0.0) for metric in FEATURE_NAMES]
-        scaled_features = scaler.transform([raw_features])
+        metric_name = data.get("metric_name", "")
+        value = float(data.get("value", 0.0))
+        delay = float(data.get("collection_delay", 0.0))
+
+        # Encode numeric + one-hot
+        numeric_features = scaler.transform([[value, delay]])
+        categorical_features = encoder.transform([[metric_name]])
+
+        features = np.concatenate([numeric_features, categorical_features], axis=1)
 
         # Predict reconstruction and compute MSE loss
-        reconstruction = model.predict(scaled_features, verbose=0)
-        loss = float(np.mean(np.square(scaled_features - reconstruction)))
+        reconstruction = model.predict(features, verbose=0)
+        loss = float(np.mean(np.square(features - reconstruction)))
 
         # Annotate result
         data["anomaly_score"] = loss
@@ -91,4 +102,4 @@ ds = ds.map(detect_anomaly, output_type=Types.STRING())
 ds.sink_to(sink)
 
 # --- Execute Flink Job ---
-env.execute("Real-Time Anomaly Detection with AutoEncoder")
+env.execute("Real-Time Anomaly Detection with Row-Based AutoEncoder")
