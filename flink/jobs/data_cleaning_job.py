@@ -83,8 +83,9 @@ def parse_and_clean(record):
         value = data["data"]["value"]
         timestamp = float(value[0])
         val = float(value[1])
+        instance = data["data"]["metric"].get("instance", "unknown")
 
-        print(f"🧪 Parsed: {name} @ {timestamp} = {val}")
+        print(f"🧪 Parsed: {name} @ {timestamp} = {val} (instance={instance})")
 
         if not is_metric_relevant(name):
             print("🚫 Ignored by relevance filter:", name)
@@ -94,7 +95,7 @@ def parse_and_clean(record):
             print("⚠️ Filtered by outlier check:", val)
             return None
 
-        key = f"{name}:{timestamp}"
+        key = f"{name}:{timestamp}:{instance}"
         if key in seen_keys:
             print("🔁 Duplicate skipped:", key)
             return None
@@ -105,7 +106,7 @@ def parse_and_clean(record):
         confidence = 1.0 if val <= 90 and delay <= 10 else 0.6
 
         print("✅ Cleaned:", name, val)
-        return (name, timestamp, val, delay, confidence)
+        return (name, timestamp, val, delay, confidence, instance)
 
     except Exception as e:
         print("❌ Error parsing:", e)
@@ -117,13 +118,14 @@ def is_valid(record):
 
 # ------------------ Step 3: Serialize Cleaned -------------------
 def serialize_cleaned(record):
-    name, timestamp, val, delay, confidence = record
+    name, timestamp, val, delay, confidence, instance = record
     return json.dumps({
         "metric_name": name,
         "timestamp": timestamp,
         "value": val,
         "collection_delay": delay,
-        "confidence": confidence
+        "confidence": confidence,
+        "instance": instance
     })
 
 # ------------------ Step 4: Send to Kafka -----------------------
@@ -145,7 +147,8 @@ stream \
         Types.FLOAT(),   # timestamp
         Types.FLOAT(),   # value
         Types.FLOAT(),   # delay
-        Types.FLOAT()    # confidence
+        Types.FLOAT(),    # confidence
+        Types.STRING()   # instance
     ])) \
     .filter(is_valid) \
     .map(serialize_cleaned, output_type=Types.STRING()) \

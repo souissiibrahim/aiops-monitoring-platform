@@ -1,7 +1,9 @@
 import json
 import time
+import joblib
+import pandas as pd
 from datetime import datetime
-from uuid import UUID
+from uuid import UUID, uuid4
 from kafka import KafkaConsumer
 from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
@@ -17,6 +19,9 @@ from app.db.models.service_endpoint import ServiceEndpoint
 from app.services.elasticsearch.anomaly_service import index_anomaly
 from app.db.models.incident_status import IncidentStatus
 
+model = joblib.load("scripts/incident_type_classifier.pkl")
+label_encoder = joblib.load("scripts/incident_type_label_encoder.pkl")
+feature_columns = joblib.load("scripts/incident_type_feature_columns.pkl")
 
 KAFKA_TOPIC = "anomalies"
 KAFKA_BOOTSTRAP = "localhost:29092"
@@ -32,15 +37,7 @@ consumer = KafkaConsumer(
 
 print("🚀 Anomaly Kafka ingester running...")
 
-# Hardcoded mapping for now
-HARDCODED_SOURCE_ID = UUID("a9783660-6107-4a78-a5fc-9333cd786952")
-
-def get_source_id_by_metric(db: Session, metric: str) -> UUID:
-    return HARDCODED_SOURCE_ID
-
-def get_incident_type_id(db: Session, metric: str) -> UUID:
-    itype = db.query(IncidentType).filter(IncidentType.name.ilike(f"%{metric}%")).first()
-    return itype.incident_type_id if itype else None
+#HARDCODED_SOURCE_ID = UUID("a9783660-6107-4a78-a5fc-9333cd786952")
 
 def get_default_status_id(db: Session) -> UUID:
     status = db.query(IncidentStatus).filter_by(name="Open").first()
@@ -58,6 +55,51 @@ def get_severity_id(db: Session, value: float, confidence: float) -> UUID:
     level = db.query(SeverityLevel).filter_by(name=name).first()
     return level.severity_level_id if level else None
 
+def map_metric_to_known(metric: str, known_metrics: list) -> str:
+    for known in known_metrics:
+        if known in metric:
+            return known
+    return "unknown"
+
+def prepare_features(data: dict) -> pd.DataFrame:
+    metric = data.get("metric_name", "")
+    known_metrics = [col.replace("metric_name_", "") for col in feature_columns if col.startswith("metric_name_")]
+    mapped_metric = map_metric_to_known(metric, known_metrics)
+
+    df = pd.DataFrame([{
+        "metric_name": data.get("metric_name", ""),
+        "value": data.get("value", 0.0),
+        "confidence": data.get("confidence", 0.0),
+        "anomaly_score": data.get("anomaly_score", 0.0)
+    }])
+    df = pd.get_dummies(df, columns=["metric_name"])
+    #df = df.reindex(columns=model.get_booster().feature_names, fill_value=0)
+    df = df.reindex(columns=feature_columns, fill_value=0)
+    return df
+
+def predict_incident_type_name(data: dict) -> str:
+    X = prepare_features(data)
+    encoded = model.predict(X)[0]
+    return label_encoder.inverse_transform([int(encoded)])[0]
+
+def get_or_create_incident_type(db: Session, name: str, description: str, category: str) -> UUID:
+    existing = db.query(IncidentType).filter_by(name=name).first()
+    if existing:
+        return existing.incident_type_id
+    new_type = IncidentType(
+        name=name,
+        description=description,
+        category=category
+    )
+    db.add(new_type)
+    db.commit()
+    db.refresh(new_type)
+    print(f"🆕 Created new IncidentType: {name}")
+    return new_type.incident_type_id
+
+def get_source_by_instance(db: Session, instance: str) -> TelemetrySource:
+    return db.query(TelemetrySource).filter(TelemetrySource.name == instance).first()
+
 while True:
     db: Session = SessionLocal()
     repo = AnomalyRepository(db, None)
@@ -70,9 +112,10 @@ while True:
                 print(f"❌ Invalid JSON: {e} | Raw: {msg}")
                 continue
 
-            print("📥 Received:", data)
+            print("📅 Received::", data)
 
             metric = data.get("metric_name")
+            instance = data.get("instance", None)
             try:
                 value = float(data["value"])
                 confidence = float(data.get("confidence", 1.0))
@@ -81,13 +124,17 @@ while True:
                 print(f"❌ Invalid data format: {e}")
                 continue
 
-            source_id = get_source_id_by_metric(db, metric)
-            if not source_id:
-                print("❌ No source_id found.")
+            if not instance:
+                print("⚠️ No instance field found in anomaly.")
+                continue
+
+            source = get_source_by_instance(db, instance)
+            if not source:
+                print(f"❌ No source found for instance '{instance}'")
                 continue
 
             exists = db.query(Anomaly).filter_by(
-                source_id=source_id,
+                source_id=source.source_id,
                 metric_type=metric,
                 timestamp=ts,
                 value=value
@@ -97,7 +144,7 @@ while True:
                 continue
 
             anomaly = repo.create({
-                "source_id": source_id,
+                "source_id": source.source_id,
                 "metric_type": metric,
                 "value": value,
                 "confidence_score": confidence,
@@ -106,7 +153,8 @@ while True:
                 "anomaly_metadata": {
                     "collection_delay": data.get("collection_delay"),
                     "anomaly_score": data.get("anomaly_score"),
-                    "detected_at": data.get("detected_at")
+                    "detected_at": data.get("detected_at"),
+                    "instance": instance
                 }
             })
 
@@ -117,19 +165,26 @@ while True:
                 print(f"⚠️ Failed to index anomaly: {e}")
 
             if data.get("is_anomaly") and confidence > 0.8:
-                incident_type_id = get_incident_type_id(db, metric)
+                incident_type_name = predict_incident_type_name(data)
+                incident_type_id = get_or_create_incident_type(
+                    db,
+                    name=incident_type_name,
+                    description=f"Predicted from anomaly: {metric}",
+                    category="Performance"
+                )
                 severity_id = get_severity_id(db, value, confidence)
+
                 service = (
                     db.query(Service)
                     .join(ServiceEndpoint, Service.service_id == ServiceEndpoint.service_id)
-                    .filter(ServiceEndpoint.source_id == source_id)
+                    .filter(ServiceEndpoint.source_id == source.source_id)
                     .first()
                 )
 
                 if incident_type_id and severity_id and service:
                     incident = incident_repo.create({
                         "service_id": service.service_id,
-                        "source_id": source_id,
+                        "source_id": source.source_id,
                         "incident_type_id": incident_type_id,
                         "severity_level_id": severity_id,
                         "status_id": get_default_status_id(db),
