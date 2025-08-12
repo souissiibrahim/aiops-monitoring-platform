@@ -2,20 +2,39 @@ import os
 import json
 import requests
 from datetime import datetime, timedelta, timezone
+from typing import Dict, Any, List, Optional
 
+from kafka import KafkaConsumer
 from app.services.rca.smart_suggest_root_cause import suggest_root_cause
 from app.utils.rca_formatter import generate_rca_markdown
 from app.db.session import SessionLocal
 from app.db.models.incident import Incident
 from app.db.models.rca_analysis import RCAAnalysis
-from app.db.models.telemetry_source import TelemetrySource
-from app.utils.slack_notifier import send_to_slack
+from app.db.models.telemetry_source import TelemetrySource  # kept if you later use it
+from app.utils.slack_notifier import send_to_slack  # optional: used for ops signals
 from app.services.rca.update_faiss_index import append_to_faiss
-from kafka import KafkaConsumer
 
+# -------------------------------------------------------------------
+# Config
+# -------------------------------------------------------------------
+MCP_URL = os.getenv("MCP_URL", "http://localhost:8000/mcp/")
+KAFKA_BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "localhost:29092")
+LOGS_TOPIC = os.getenv("LOGS_TOPIC", "logs-cleaned")
 
+# -------------------------------------------------------------------
+# MCP helpers
+# -------------------------------------------------------------------
 
-def send_mcp_message_to_server(incident_id, service, root_cause, recommendation, confidence, model, timestamp):
+def send_mcp_message_to_server(
+    incident_id: str,
+    service: str,
+    root_cause: str,
+    recommendation: str,
+    confidence: float,
+    model: str,
+    timestamp: str,
+) -> None:
+    """Send the human-readable RCA report event to MCP (type=rca_report)."""
     mcp_payload = {
         "type": "rca_report",
         "source": "rca_agent",
@@ -27,26 +46,58 @@ def send_mcp_message_to_server(incident_id, service, root_cause, recommendation,
             "root_cause": root_cause,
             "recommendation": recommendation,
             "confidence": confidence,
-            "model": model
-        }
+            "model": model,
+        },
     }
 
-    print("📦 MCP Payload:")
-    print(json.dumps(mcp_payload, indent=2))
-
     try:
-        res = requests.post("http://localhost:8000/mcp/", json=mcp_payload)
+        res = requests.post(MCP_URL, json=mcp_payload, timeout=20)
         res.raise_for_status()
-        print(f"📡 MCP message sent for incident {incident_id}: {res.json()}")
+        print(f"📡 MCP rca_report sent for incident {incident_id}: {res.json()}")
     except Exception as err:
-        print(f"❌ Failed to send MCP message for incident {incident_id}: {err}")
+        print(f"❌ Failed to send MCP rca_report for incident {incident_id}: {err}")
 
 
-def get_unprocessed_incidents(db):
-    return db.query(Incident).filter(Incident.root_cause_id == None).all()
+def send_mcp_remediation_request(
+    *,
+    incident_id: str,
+    service: str,
+    incident_type_id: Optional[str],
+    root_cause: Optional[str],
+    top_rec_text: str,
+    top_rec_conf: float,
+) -> None:
+    """Send the remediation request; selector will use incident_type_id deterministically."""
+    payload = {
+        "type": "remediation_request",
+        "source": "rca_agent",
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "payload": {
+            "incident_id": str(incident_id),
+            "service": service,
+            "incident_type_id": incident_type_id,   # <-- ID is what the selector needs
+            "root_cause": root_cause,
+            "recommendation_text": top_rec_text,
+            "recommendation_confidence": float(top_rec_conf),
+        },
+    }
+    try:
+        res = requests.post(MCP_URL, json=payload, timeout=20)
+        res.raise_for_status()
+        print(f"🤝 MCP remediation_request sent. Result: {res.json()}")
+    except Exception as err:
+        print(f"❌ Failed to send remediation_request: {err}")
+
+# -------------------------------------------------------------------
+# DB helpers
+# -------------------------------------------------------------------
+
+def get_unprocessed_incidents(db) -> List[Incident]:
+    """Incidents that have no RCA yet."""
+    return db.query(Incident).filter(Incident.root_cause_id == None).all()  # noqa: E711
 
 
-def save_markdown_report(incident_id: str, markdown: str):
+def save_markdown_report(incident_id: str, markdown: str) -> str:
     reports_dir = "rca_reports"
     os.makedirs(reports_dir, exist_ok=True)
     report_path = os.path.join(reports_dir, f"incident_{incident_id}_rca.md")
@@ -55,20 +106,26 @@ def save_markdown_report(incident_id: str, markdown: str):
     print(f"📝 Markdown RCA report saved: {report_path}")
     return report_path
 
-def fetch_logs_for_incident_by_service(service_name, incident_start_time,
-                                       topic="logs-cleaned", bootstrap_servers="localhost:29092"):
+# -------------------------------------------------------------------
+# Logs fetcher (Kafka)
+# -------------------------------------------------------------------
+
+def fetch_logs_for_incident_by_service(
+    service_name: str,
+    incident_start_time: datetime,
+    topic: str = LOGS_TOPIC,
+    bootstrap_servers: str = KAFKA_BOOTSTRAP,
+) -> List[str]:
     print(f"🛰️ Fetching logs for '{service_name}' near {incident_start_time}...")
-    logs = []
+    logs: List[str] = []
 
     consumer = KafkaConsumer(
         topic,
         bootstrap_servers=bootstrap_servers,
-        #group_id=f"rca-agent-{datetime.utcnow().timestamp()}",
-        group_id=None,
+        group_id=None,                  # stateless scan
         auto_offset_reset="earliest",
-        #enable_auto_commit=True
         enable_auto_commit=False,
-        consumer_timeout_ms=3000
+        consumer_timeout_ms=3000,
     )
 
     # Ensure incident timestamp is timezone-aware (UTC)
@@ -103,93 +160,116 @@ def fetch_logs_for_incident_by_service(service_name, incident_start_time,
         consumer.close()
 
     print(f"📄 Retrieved {len(logs)} logs.")
-    for i, log in enumerate(logs, 1):
+    for i, log in enumerate(logs[:10], 1):  # cap stdout noise
         print(f"🧾 Log {i}: {log}")
     return logs if logs else ["INFO: No logs found."]
 
-def run_rca_agent():
+
+def run_rca_agent() -> None:
     db = SessionLocal()
     try:
         incidents = get_unprocessed_incidents(db)
         print(f"🔎 Found {len(incidents)} incident(s) needing RCA.")
 
         for incident in incidents:
-            source = db.query(TelemetrySource).filter_by(source_id=incident.source_id).first()
-            service = incident.service.name if incident.service else "Unknown"
-            incident_type = incident.incident_type.name if incident.incident_type else "Unknown"
-            source_name = source.name if source else str(incident.source_id)
+            # Basic context
+            service_name = incident.service.name if getattr(incident, "service", None) else "Unknown"
+            incident_type_name = (
+                incident.incident_type.name if getattr(incident, "incident_type", None) else "Unknown"
+            )
+            incident_type_id = str(incident.incident_type_id) if incident.incident_type_id else None
 
-            # ⛏️ Simulated logs (replace with real logs from Loki later)
-            #logs = [
-             #   "WARNING: Unexpected DNS response for api.internal.company.com — IP does not match known records",
-              #  "ERROR: DNSSEC validation failed for multiple queries",
-              #  "INFO: Switching to fallback DNS server due to suspected spoofing",
-              #  "ALERT: Multiple conflicting A records returned for critical domain",
-              #  "CRITICAL: Resolver flagged domain as potentially compromised — possible DNS cache poisoning"
-            #]
+            # Fetch logs near the incident time window
+            logs = fetch_logs_for_incident_by_service(service_name, incident.start_timestamp)
 
-            logs = fetch_logs_for_incident_by_service(service, incident.start_timestamp)
-
-            print(f"🧠 Running RCA on incident {incident.incident_id}...")
-
-            result = suggest_root_cause(
+            print(f"🧠 Running RCA on incident {incident.incident_id} (type={incident_type_name})...")
+            # Call your RCA engine (FAISS-known or Groq-unknown under the hood)
+            rca_result: Dict[str, Any] = suggest_root_cause(
                 logs,
-                incident_type=incident_type,
-                metric_type="Network",
-                service_name=service
+                incident_type=incident_type_name,
+                metric_type="Generic",
+                service_name=service_name,
             )
 
-            # Sort by highest confidence
-            sorted_recommendations = sorted(result["recommendations"], key=lambda r: r["confidence"], reverse=True)
-            top_confidence = sorted_recommendations[0]["confidence"] if sorted_recommendations else 0.0
+            # Recommendations (robust guard for missing/empty)
+            recs: List[Dict[str, Any]] = rca_result.get("recommendations") or []
+            recs_sorted = sorted(recs, key=lambda r: r.get("confidence", 0.0), reverse=True)
+            top_text: str = recs_sorted[0]["text"] if recs_sorted else ""
+            top_conf: float = float(recs_sorted[0].get("confidence", 0.0)) if recs_sorted else 0.0
 
+            # Persist RCA to DB
             rca = RCAAnalysis(
                 incident_id=incident.incident_id,
-                analysis_method=result.get("model", "Unknown"),
+                analysis_method=rca_result.get("model", "Unknown"),
                 root_cause_node_id=incident.source_id,
-                confidence_score=top_confidence,
+                confidence_score=top_conf,
                 contributing_factors={"logs_count": len(logs)},
-                recommendations=sorted_recommendations,
+                recommendations=recs_sorted,
                 analysis_timestamp=datetime.utcnow(),
-                analyst_team_id=None
+                analyst_team_id=None,
             )
-
             db.add(rca)
             db.commit()
             db.refresh(rca)
 
+            # Link incident to RCA
             incident.root_cause_id = rca.rca_id
+            db.add(incident)
             db.commit()
             print(f"✅ RCAAnalysis saved and linked to incident {incident.incident_id}.")
 
-            append_to_faiss(logs, result["root_cause"], sorted_recommendations[0]["text"])
+            # Update FAISS memory if we have good artifacts
+            root_cause_text = rca_result.get("root_cause")
+            if root_cause_text and top_text:
+                try:
+                    append_to_faiss(logs, root_cause_text, top_text)
+                except Exception as e:
+                    print(f"⚠️ append_to_faiss failed: {e}")
 
-            timestamp = datetime.utcnow().isoformat()
-
-            markdown_recommendations = "\n".join(
-                [f"- {r['text']} (confidence: {r['confidence']})" for r in sorted_recommendations]
-            )
+            # Build a concise Markdown report
+            ts_iso = datetime.utcnow().isoformat() + "Z"
+            md_recs_lines = [f"- {r.get('text','')} (confidence: {r.get('confidence',0.0)})" for r in recs_sorted]
+            md_recs = "\n".join(md_recs_lines)
 
             markdown = generate_rca_markdown(
                 incident_id=incident.incident_id,
-                service=service,
-                timestamp=timestamp,
+                service=service_name,
+                timestamp=ts_iso,
                 logs=logs,
-                root_cause=result["root_cause"],
-                recommendations=sorted_recommendations,
-                confidence=top_confidence,
-                model=result.get("model", "Unknown")
+                root_cause=root_cause_text or "Unknown",
+                recommendations=recs_sorted,
+                confidence=top_conf,
+                model=rca_result.get("model", "Unknown"),
             )
-            save_markdown_report(incident.incident_id, markdown)
+            save_markdown_report(str(incident.incident_id), markdown)
 
+            # Send RCA report to MCP (for traceability)
             send_mcp_message_to_server(
-                incident_id=incident.incident_id,
-                service=service,
-                root_cause=result["root_cause"],
-                recommendation=markdown_recommendations,
-                confidence=top_confidence,
-                model=result.get("model", "Unknown"),
-                timestamp=timestamp
+                incident_id=str(incident.incident_id),
+                service=service_name,
+                root_cause=root_cause_text or "Unknown",
+                recommendation=md_recs,
+                confidence=top_conf,
+                model=rca_result.get("model", "Unknown"),
+                timestamp=ts_iso,
+            )
+
+            # Finally: request remediation (auto/human decided by selector thresholds)
+            if not top_text:
+                print("ℹ️ No recommendation text found; skipping remediation request.")
+                continue
+
+            if not incident_type_id:
+                print("ℹ️ Incident has no incident_type_id; skipping remediation request.")
+                continue
+
+            send_mcp_remediation_request(
+                incident_id=str(incident.incident_id),
+                service=service_name,
+                incident_type_id=incident_type_id,   # <-- deterministic selector filter
+                root_cause=root_cause_text,
+                top_rec_text=top_text,
+                top_rec_conf=top_conf,
             )
 
     except Exception as e:

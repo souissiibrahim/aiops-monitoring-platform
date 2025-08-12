@@ -1,0 +1,28 @@
+{
+  "incident_id": "test-123",
+  "service": "web",
+  "incident_type": "DiskSpaceLow",
+  "root_cause": "Disk usage exceeded 90%",
+  "recommendation_text": "Clean disk space and remove temp/log files",
+  "recommendation_confidence": 0.95,
+  "decision": {
+    "auto": true,
+    "why": "Recommendation and FAISS similarity above thresholds",
+    "job": {
+      "job_id": "b58e6bc3-daa2-451c-89a8-8963a2dc4d9d",
+      "name": "Clean Disk Space",
+      "description": "Deletes temp/log files and vacuums journal to free up disk space on the server."
+    },
+    "scores": {
+      "rec_conf": 0.95,
+      "faiss_sim": 0.6057606935501099,
+      "ensemble": 0.8467282080650329
+    }
+  },
+  "execution": {
+    "status": "triggered",
+    "rundeck_execution_id": 58,
+    "when": "2025-08-11T12:25:26.840203"
+  },
+  "human_required": false
+}

@@ -9,11 +9,12 @@ from app.v1.schemas.team import TeamInDB
 
 
 class RunbookBase(BaseModel):
+    runbook_id: Optional[UUID] = None  
     name: str
-    description: Optional[str]
-    incident_type_id: Optional[UUID]
-    service_id: Optional[UUID]
-    team_id: Optional[UUID]
+    description: Optional[str] = None
+    incident_type_id: UUID
+    service_id: Optional[UUID] = None
+    team_id: Optional[UUID] = None
     priority: int
 
 

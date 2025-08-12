@@ -1,0 +1,13 @@
+{
+  "type": "remediation_request",
+  "source": "manual",
+  "payload": {
+    "incident_id": "test-disk-001",
+    "service": "web",
+    "incident_type_id": "a5a48ebf-18e4-44f5-91d1-6bc60c761e63",
+    "root_cause": "Disk usage exceeded 90% on /var",
+    "recommendation_text": "Free disk space by deleting temp files, rotating/clearing logs, and vacuuming the system journal.",
+    "recommendation_confidence": 0.96
+  },
+  "timestamp": "2025-08-12T12:30:00Z"
+}

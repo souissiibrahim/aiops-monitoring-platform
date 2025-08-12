@@ -1,6 +1,41 @@
 version: '3.8'
 
 services:
+
+  rundeck-postgres:
+    image: postgres
+    container_name: rundeck-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: rundeck
+      POSTGRES_PASSWORD: rundeck
+      POSTGRES_DB: rundeck
+    ports:
+      - "5432:5432"
+    volumes:
+      - rundeck_postgres_data:/var/lib/postgresql/data
+
+  rundeck:
+    image: rundeck/rundeck:4.16.0
+    container_name: rundeck
+    restart: unless-stopped
+    ports:
+      - "4440:4440"
+    environment:
+      RUNDECK_GRAILS_URL: "http://localhost:4440"
+      RUNDECK_DATABASE_DRIVER: "org.postgresql.Driver"
+      RUNDECK_DATABASE_URL: "jdbc:postgresql://rundeck-postgres:5432/rundeck"
+      RUNDECK_DATABASE_USERNAME: "rundeck"
+      RUNDECK_DATABASE_PASSWORD: "rundeck"
+      RUNDECK_DATABASE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
+      RUNDECK_ADMIN_USERNAME: admin
+      RUNDECK_ADMIN_PASSWORD: admin
+      RUNDECK_ADMIN_ROLE: admin
+    volumes:
+      - rundeck_data:/home/rundeck/server/data
+    depends_on:
+      - rundeck-postgres
+      
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     container_name: zookeeper
@@ -72,3 +107,5 @@ volumes:
   zookeeper_data:
   kafka_data:
   flink_data:
+  rundeck_data:
+  rundeck_postgres_data:

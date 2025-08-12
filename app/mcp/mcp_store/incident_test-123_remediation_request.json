@@ -1,0 +1,13 @@
+{
+  "type": "remediation_request",
+  "source": "manual",
+  "payload": {
+    "incident_id": "test-123",
+    "service": "web",
+    "incident_type": "DiskSpaceLow",
+    "root_cause": "Disk usage exceeded 90%",
+    "recommendation_text": "Clean disk space and remove temp/log files",
+    "recommendation_confidence": 0.95
+  },
+  "timestamp": "2025-08-11T12:00:00Z"
+}
