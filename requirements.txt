@@ -4,3 +4,5 @@ python-dotenv
 redis
 psycopg2-binary
 elasticsearch
+faiss-cpu
+langgraph
