@@ -8,14 +8,17 @@ from app.db.session import SessionLocal
 from app.db.models.response_action import ResponseAction
 from app.db.models.runbook import Runbook
 from app.db.models.incident import Incident
-from app.services.elasticsearch.response_action_service import index_response_action  # if available
-from app.services.elasticsearch.incident_service import index_incident  # if available
-from Rundeck.rundeck_client import trigger_rundeck_job, get_execution  # ensure get_execution exists
-from app.utils.slack_notifier import send_to_slack  # optional
+from app.services.elasticsearch.response_action_service import index_response_action  
+from app.services.elasticsearch.incident_service import index_incident 
+from Rundeck.rundeck_client import trigger_rundeck_job, get_execution  
+from app.utils.slack_notifier import send_to_slack 
+from app.db.models.incident_status import IncidentStatus
+
 
 IDEMP_WINDOW_MIN = 15
 POLL_INTERVAL_SEC = 4
 MAX_POLL_MIN = 10
+_STATUS_CACHE = {}
 
 def _utcnow():
     return datetime.now(timezone.utc)
@@ -45,16 +48,28 @@ def _upsert_runbook(db: Session, job: Dict[str, Any]) -> Runbook:
         db.flush()
     return rb
 
+
+def _status_id(db: Session, name: str):
+    key = name.lower()
+    if key in _STATUS_CACHE:
+        return _STATUS_CACHE[key]
+    row = db.query(IncidentStatus).filter(IncidentStatus.name == name).first()
+    if row:
+        _STATUS_CACHE[key] = row.status_id
+        return row.status_id
+    return None
+
+
 def _flip_incident_status(db: Session, incident: Incident, name: str):
-    # Your incidents table uses status_id FK. If you’re storing the *name* in a field,
-    # adjust this to resolve name → status_id via `incident_statuses` lookup.
-    incident.status_id = incident.status_id  # keep if you already set; else look up by name if needed.
-    incident.updated_at = _utcnow()
-    db.add(incident)
-    try:
-        index_incident(incident)
-    except Exception:
-        pass
+    sid = _status_id(db, name)
+    if sid:
+        incident.status_id = sid
+        incident.updated_at = _utcnow()
+        db.add(incident)
+        try:
+            index_incident(incident)  # ok if this is a no-op in your env
+        except Exception:
+            pass
 
 def _index_ra(ra: ResponseAction):
     try:

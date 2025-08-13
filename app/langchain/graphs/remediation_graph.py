@@ -121,19 +121,21 @@ def build_remediation_graph():
     g.add_node("human", node_request_human)
 
     g.set_entry_point("match_runbook")
+
+    # Always go match -> decide -> trigger_orchestrator
     g.add_edge("match_runbook", "decide")
+    g.add_edge("decide", "trigger_orchestrator")
 
-    def should_auto(state: RemediationState):
-        # if the orchestrator set ok=False, we'll still route to human after trying
-        return not state.get("human_required", False)
+    # After orchestrator, if human is still required (non-auto or error), send the Slack
+    def needs_human(state: RemediationState):
+        return state.get("human_required", False)
 
-    g.add_conditional_edges("decide", should_auto, {
-        True: "trigger_orchestrator",
-        False: "human",
+    g.add_conditional_edges("trigger_orchestrator", needs_human, {
+        True: "human",
+        False: END,
     })
 
-    # Both paths end here
-    g.add_edge("trigger_orchestrator", END)
+    # Human path ends the graph
     g.add_edge("human", END)
 
     return g.compile()

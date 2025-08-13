@@ -1,0 +1,31 @@
+{
+  "incident_id": "b2c45249-73bb-4ee2-9daf-204160787938",
+  "service": "Payment Gateway",
+  "incident_type_id": "a5a48ebf-18e4-44f5-91d1-6bc60c761e63",
+  "incident_type_name": "DiskSpaceLow",
+  "root_cause": "Disk usage exceeded 90% on /var",
+  "recommendation_text": "Clean disk space by deleting temporary files, rotating and clearing old logs, and vacuuming the system journal.",
+  "recommendation_confidence": 0.96,
+  "decision": {
+    "auto": true,
+    "why": "Filtered by incident_type/service; ranked by similarity+priority",
+    "incident_type_name": "DiskSpaceLow",
+    "job": {
+      "job_id": "b58e6bc3-daa2-451c-89a8-8963a2dc4d9d",
+      "name": "Clean Disk Space",
+      "description": "Clean disk space by deleting temporary files, clearing log files, and vacuuming system journal to free up storage when disk usage is high or server is running out of space."
+    },
+    "scores": {
+      "rec_conf": 0.96,
+      "faiss_sim": 0.686415433883667,
+      "ensemble": 0.8779246301651
+    }
+  },
+  "execution": {
+    "ok": true,
+    "status": "succeeded",
+    "execution_id": 70,
+    "response_action_id": "a8e389bb-b39f-453e-a9be-b2838ec43bb3"
+  },
+  "human_required": false
+}

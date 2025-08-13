@@ -1,0 +1,29 @@
+{
+  "incident_id": "a304ebc9-2758-4def-ac49-d9bf07dabcbd",
+  "service": "Payment Gateway",
+  "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+  "root_cause": "High disk usage on /var due to temporary files and log files",
+  "recommendation_text": "Regularly clean up temporary files and log files to maintain disk space",
+  "recommendation_confidence": 0.9,
+  "decision": {
+    "auto": true,
+    "why": "FAISS fallback passed thresholds",
+    "job": {
+      "job_id": "b58e6bc3-daa2-451c-89a8-8963a2dc4d9d",
+      "name": "Clean Disk Space",
+      "description": "Clean disk space by deleting temporary files, clearing log files, and vacuuming system journal to free up storage when disk usage is high or server is running out of space."
+    },
+    "scores": {
+      "rec_conf": 0.9,
+      "faiss_sim": 0.6109336018562317,
+      "ensemble": 0.8132800805568695
+    }
+  },
+  "execution": {
+    "ok": true,
+    "status": "succeeded",
+    "execution_id": 78,
+    "response_action_id": "7000feff-f445-4461-a666-745613c3271e"
+  },
+  "human_required": false
+}

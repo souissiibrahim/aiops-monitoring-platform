@@ -1,0 +1,13 @@
+{
+  "type": "remediation_request",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "b1bcc2de-ea67-4f40-90db-22dee117dd78",
+    "service": "auth-service",
+    "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+    "root_cause": "High CPU usage on node 33333333-3333-3333-3333-333333333333 due to slow DB query",
+    "recommendation_text": "Optimize the slow DB query or consider adding more resources to the node to reduce CPU usage",
+    "recommendation_confidence": 1.0
+  },
+  "timestamp": "2025-08-13T11:14:19.717125Z"
+}

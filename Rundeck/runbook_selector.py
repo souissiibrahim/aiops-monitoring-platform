@@ -19,7 +19,7 @@ EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 # Thresholds
 REC_CONFIDENCE_MIN = 0.90
 FAISS_SIM_MIN = 0.60
-ENSEMBLE_MIN = 0.84
+ENSEMBLE_MIN = 0.75
 TOP_K = 3
 
 _model = None

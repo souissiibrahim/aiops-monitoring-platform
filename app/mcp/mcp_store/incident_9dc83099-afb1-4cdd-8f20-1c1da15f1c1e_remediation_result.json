@@ -1,0 +1,19 @@
+{
+  "incident_id": "9dc83099-afb1-4cdd-8f20-1c1da15f1c1e",
+  "service": "Payment Gateway",
+  "incident_type_id": "b2d801b8-f85d-4afe-a62b-eb5dcdfd2b5e",
+  "root_cause": "High CPU usage on node 33333333-3333-3333-3333-333333333333 due to slow DB query",
+  "recommendation_text": "Optimize the slow DB query or consider adding more resources to the node to reduce CPU usage",
+  "recommendation_confidence": 1.0,
+  "decision": {
+    "auto": false,
+    "why": "FAISS sim 0.45 < 0.6",
+    "job": null,
+    "scores": {
+      "rec_conf": 1.0,
+      "faiss_sim": 0.4536007046699524,
+      "ensemble": 0.8360802114009857
+    }
+  },
+  "human_required": true
+}

@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "558f3c5c-9f47-4134-8dba-113680f07b85",
+    "service": "auth-service",
+    "timestamp": "2025-08-13T11:14:16.293134Z",
+    "root_cause": "Insufficient logs to determine the root cause of the DiskLatency incident in the auth-service.",
+    "recommendation": "- Verify that the disk storage is properly configured and not experiencing any issues. (confidence: 0.5)\n- Check the auth-service logs for any recent changes or updates that may have caused the disk latency issue. (confidence: 0.4)",
+    "confidence": 0.5,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-08-13T11:14:16.293134Z"
+}

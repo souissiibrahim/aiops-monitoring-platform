@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "b1bcc2de-ea67-4f40-90db-22dee117dd78",
+    "service": "auth-service",
+    "timestamp": "2025-08-13T11:14:19.712706Z",
+    "root_cause": "High CPU usage on node 33333333-3333-3333-3333-333333333333 due to slow DB query",
+    "recommendation": "- Optimize the slow DB query or consider adding more resources to the node to reduce CPU usage (confidence: 1.0)",
+    "confidence": 1.0,
+    "model": "FAISS"
+  },
+  "timestamp": "2025-08-13T11:14:19.712706Z"
+}
