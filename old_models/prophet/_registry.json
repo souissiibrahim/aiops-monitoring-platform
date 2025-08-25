@@ -1,0 +1,1423 @@
+{
+  "trained": [
+    {
+      "metric": "node_disk_writes_merged_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_writes_merged_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11508,
+      "mape": 0.06439313090327735
+    },
+    {
+      "metric": "node_disk_writes_merged_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_writes_merged_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.45022083508852173
+    },
+    {
+      "metric": "node_disk_reads_merged_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_reads_merged_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 4.987456458630921
+    },
+    {
+      "metric": "node_disk_reads_merged_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_reads_merged_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 4.771707507197874
+    },
+    {
+      "metric": "node_memory_Shmem_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Shmem_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 10871,
+      "mape": 3.534346965914736e-05
+    },
+    {
+      "metric": "node_memory_Shmem_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Shmem_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.23779210344083138
+    },
+    {
+      "metric": "node_memory_Dirty_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Dirty_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.6150551460441613
+    },
+    {
+      "metric": "node_memory_Dirty_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Dirty_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11671,
+      "mape": 1.8514609770815227
+    },
+    {
+      "metric": "node_network_transmit_bytes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_network_transmit_bytes_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10704,
+      "mape": 0.012524453050596863
+    },
+    {
+      "metric": "node_network_receive_bytes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_network_receive_bytes_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10988,
+      "mape": 0.010502821486217
+    },
+    {
+      "metric": "node_disk_writes_completed_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_writes_completed_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11524,
+      "mape": 0.11632386851076931
+    },
+    {
+      "metric": "node_disk_writes_completed_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_writes_completed_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.6124677762931351
+    },
+    {
+      "metric": "node_memory_VmallocUsed_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_VmallocUsed_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.0014424552200467595
+    },
+    {
+      "metric": "node_memory_VmallocUsed_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_VmallocUsed_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11614,
+      "mape": 0.0014550867250541857
+    },
+    {
+      "metric": "node_memory_Committed_AS_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Committed_AS_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.0016716658227969095
+    },
+    {
+      "metric": "node_memory_Committed_AS_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Committed_AS_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.005729898350428439
+    },
+    {
+      "metric": "node_memory_Cached_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Cached_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.03578977027367599
+    },
+    {
+      "metric": "node_memory_Cached_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Cached_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.17098823442380193
+    },
+    {
+      "metric": "node_memory_KReclaimable_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_KReclaimable_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.0057912595664555465
+    },
+    {
+      "metric": "node_memory_KReclaimable_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_KReclaimable_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10063,
+      "mape": 0.001777729254769512
+    },
+    {
+      "metric": "container_memory_usage_bytes",
+      "series": "unknown",
+      "model_path": "models/prophet/container_memory_usage_bytes/unknown.pkl",
+      "rows": 1026,
+      "mape": 0.25949895898985076
+    },
+    {
+      "metric": "node_disk_reads_completed_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_reads_completed_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 9669,
+      "mape": 1.5249974792593908
+    },
+    {
+      "metric": "node_disk_reads_completed_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_reads_completed_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11612,
+      "mape": 2.9752505127643034
+    },
+    {
+      "metric": "node_memory_MemFree_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_MemFree_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11554,
+      "mape": 0.1378238647703671
+    },
+    {
+      "metric": "node_memory_MemFree_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_MemFree_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11628,
+      "mape": 0.35789752682430603
+    },
+    {
+      "metric": "node_memory_Slab_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Slab_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.0031092138155783223
+    },
+    {
+      "metric": "node_memory_Slab_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Slab_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 9368,
+      "mape": 0.0001563543229904157
+    },
+    {
+      "metric": "container_network_transmit_bytes_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/container_network_transmit_bytes_total/cadvisor-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11628,
+      "mape": 0.10365410970655586
+    },
+    {
+      "metric": "node_memory_PageTables_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_PageTables_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.00325785358030358
+    },
+    {
+      "metric": "node_memory_PageTables_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_PageTables_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11090,
+      "mape": 0.003380006578431064
+    },
+    {
+      "metric": "container_fs_usage_bytes",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/container_fs_usage_bytes/cadvisor-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.04864143789288137
+    },
+    {
+      "metric": "node_memory_Unevictable_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Unevictable_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 2.7685149243794752e-05
+    },
+    {
+      "metric": "node_memory_Unevictable_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Unevictable_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 6.43187605995592e-05
+    },
+    {
+      "metric": "node_disk_read_bytes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_read_bytes_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 10404,
+      "mape": 1.2968141409458422
+    },
+    {
+      "metric": "node_disk_read_bytes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_read_bytes_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11585,
+      "mape": 2.4547626441362898
+    },
+    {
+      "metric": "container_network_receive_packets_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/container_network_receive_packets_total/cadvisor-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11639,
+      "mape": 0.070536375617474
+    },
+    {
+      "metric": "node_disk_io_time_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_io_time_seconds_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11480,
+      "mape": 0.059483706703063945
+    },
+    {
+      "metric": "node_disk_io_time_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_io_time_seconds_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11614,
+      "mape": 0.7309586886367148
+    },
+    {
+      "metric": "node_memory_KernelStack_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_KernelStack_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.002342844093868922
+    },
+    {
+      "metric": "node_memory_KernelStack_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_KernelStack_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11583,
+      "mape": 0.0021744752325103082
+    },
+    {
+      "metric": "node_disk_write_time_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_write_time_seconds_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11541,
+      "mape": 0.24419229968918005
+    },
+    {
+      "metric": "node_disk_write_time_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_write_time_seconds_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11651,
+      "mape": 0.6415765356469871
+    },
+    {
+      "metric": "node_network_transmit_packets_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_network_transmit_packets_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10731,
+      "mape": 0.01749667362672575
+    },
+    {
+      "metric": "node_disk_io_time_weighted_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_io_time_weighted_seconds_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11532,
+      "mape": 0.23866929808245424
+    },
+    {
+      "metric": "node_disk_io_time_weighted_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_io_time_weighted_seconds_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11621,
+      "mape": 0.6718177679704778
+    },
+    {
+      "metric": "node_memory_AnonPages_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_AnonPages_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.005593115133210612
+    },
+    {
+      "metric": "node_memory_AnonPages_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_AnonPages_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.013904675530698397
+    },
+    {
+      "metric": "node_memory_Writeback_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Writeback_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 4.985685647614596
+    },
+    {
+      "metric": "node_memory_Writeback_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Writeback_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 4.979163351309083
+    },
+    {
+      "metric": "node_memory_Active_file_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Active_file_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.06225337469469819
+    },
+    {
+      "metric": "node_memory_Active_file_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Active_file_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.21495792760332927
+    },
+    {
+      "metric": "node_memory_Inactive_anon_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Inactive_anon_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.027427418297227214
+    },
+    {
+      "metric": "node_memory_Inactive_anon_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Inactive_anon_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.06567786302540256
+    },
+    {
+      "metric": "node_memory_Inactive_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Inactive_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.025632156729611496
+    },
+    {
+      "metric": "node_memory_Inactive_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Inactive_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.08712698769897806
+    },
+    {
+      "metric": "node_disk_read_time_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_read_time_seconds_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 9889,
+      "mape": 1.4866231124400784
+    },
+    {
+      "metric": "node_disk_read_time_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_read_time_seconds_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11612,
+      "mape": 2.76663616380126
+    },
+    {
+      "metric": "node_disk_written_bytes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_written_bytes_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11500,
+      "mape": 0.07623603370121367
+    },
+    {
+      "metric": "node_disk_written_bytes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_written_bytes_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 2.260053988839514
+    },
+    {
+      "metric": "node_memory_Inactive_file_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Inactive_file_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.1654712160705384
+    },
+    {
+      "metric": "node_memory_Inactive_file_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Inactive_file_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.4508484471437251
+    },
+    {
+      "metric": "node_disk_flush_requests_time_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_flush_requests_time_seconds_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11412,
+      "mape": 0.06005516798839335
+    },
+    {
+      "metric": "node_disk_flush_requests_time_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_flush_requests_time_seconds_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11643,
+      "mape": 0.24826885010508745
+    },
+    {
+      "metric": "node_memory_SUnreclaim_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_SUnreclaim_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 10871,
+      "mape": 0.002106651085840962
+    },
+    {
+      "metric": "node_memory_SUnreclaim_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_SUnreclaim_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 9368,
+      "mape": 0.0004060297223408881
+    },
+    {
+      "metric": "node_memory_Mapped_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Mapped_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.03614650508892055
+    },
+    {
+      "metric": "node_memory_Mapped_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Mapped_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11150,
+      "mape": 0.11726463552935132
+    },
+    {
+      "metric": "node_memory_Active_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Active_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.015004157669861228
+    },
+    {
+      "metric": "node_memory_Active_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Active_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.059804709272931904
+    },
+    {
+      "metric": "node_disk_flush_requests_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_flush_requests_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 8951,
+      "mape": 0.005600996712635934
+    },
+    {
+      "metric": "node_disk_flush_requests_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_disk_flush_requests_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11656,
+      "mape": 0.2816444352499038
+    },
+    {
+      "metric": "container_network_receive_bytes_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/container_network_receive_bytes_total/cadvisor-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11642,
+      "mape": 0.1373896154903029
+    },
+    {
+      "metric": "node_memory_AnonHugePages_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_AnonHugePages_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11639,
+      "mape": 0.0028246349276132483
+    },
+    {
+      "metric": "node_memory_AnonHugePages_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_AnonHugePages_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10791,
+      "mape": 2.927797565084115e-05
+    },
+    {
+      "metric": "container_network_transmit_packets_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/container_network_transmit_packets_total/cadvisor-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11624,
+      "mape": 0.061909708317783946
+    },
+    {
+      "metric": "container_blkio_device_usage_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/container_blkio_device_usage_total/cadvisor-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11557,
+      "mape": 1.0118737600145893
+    },
+    {
+      "metric": "node_network_receive_packets_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_network_receive_packets_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10755,
+      "mape": 0.010381343824608376
+    },
+    {
+      "metric": "node_memory_MemAvailable_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_MemAvailable_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.04068397786949228
+    },
+    {
+      "metric": "node_memory_MemAvailable_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_MemAvailable_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.09512786631397034
+    },
+    {
+      "metric": "node_memory_Active_anon_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Active_anon_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.017073326179818948
+    },
+    {
+      "metric": "node_memory_Active_anon_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Active_anon_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 0.05652993660842436
+    },
+    {
+      "metric": "node_memory_SReclaimable_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_SReclaimable_bytes/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 11657,
+      "mape": 0.0057912595664555465
+    },
+    {
+      "metric": "node_memory_SReclaimable_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_SReclaimable_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 10063,
+      "mape": 0.001777729254769512
+    },
+    {
+      "metric": "node_memory_Buffers_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_memory_Buffers_bytes/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11672,
+      "mape": 4.941980849649685
+    },
+    {
+      "metric": "node_cpu_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_cpu_seconds_total/node-exporter-02.u-cloudsolutions.xyz.pkl",
+      "rows": 8661,
+      "mape": 0.03872481141248858
+    },
+    {
+      "metric": "node_cpu_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "model_path": "models/prophet/node_cpu_seconds_total/node-exporter-01.u-cloudsolutions.xyz.pkl",
+      "rows": 11605,
+      "mape": 0.060195324543433286
+    }
+  ],
+  "skipped": [
+    {
+      "metric": "node_memory_Hugepagesize_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Hugepagesize_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Zswapped_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Zswapped_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SecPageTables_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SecPageTables_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_protocol_type",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_protocol_type",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discards_merged_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discards_merged_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SwapTotal_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SwapTotal_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_bytes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_memory_HugePages_Surp",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Surp",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_iface_link",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_iface_link",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_device_id",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_device_id",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_bytes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_memory_Unaccepted_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Unaccepted_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_net_dev_group",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_net_dev_group",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_iface_link_mode",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_iface_link_mode",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discards_completed_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discards_completed_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_FilePmdMapped_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_FilePmdMapped_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HardwareCorrupted_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HardwareCorrupted_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Rsvd",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Rsvd",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier_changes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier_changes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Mlocked_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Mlocked_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "cadvisor_version_info",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "cadvisor_version_info",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Percpu_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Percpu_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_errs_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_errs_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SwapFree_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SwapFree_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_memory_usage_bytes",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "container_memory_usage_bytes",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_network_transmit_carrier_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_carrier_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_drop_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_drop_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_errs_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_errs_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_ShmemHugePages_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_ShmemHugePages_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_up",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_up",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier_up_changes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier_up_changes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_io_now",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_io_now",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_colls_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_colls_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_memory_max_usage_bytes",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_memory_max_usage_bytes",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_memory_CommitLimit_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_CommitLimit_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_transmit_bytes_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_DirectMap1G_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_DirectMap1G_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_mtu_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_mtu_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_fs_usage_bytes",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_frame_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_frame_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_address_assign_type",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_address_assign_type",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_receive_packets_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_transmit_errors_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_transmit_errors_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_drop_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_drop_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_name_assign_type",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_name_assign_type",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_DirectMap4k_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_DirectMap4k_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_DirectMap2M_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_DirectMap2M_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discarded_sectors_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discarded_sectors_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Free",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_HugePages_Free",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_packets_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_memory_MemTotal_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_MemTotal_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_queue_length",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_queue_length",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Bounce_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Bounce_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_VmallocTotal_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_VmallocTotal_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_CmaTotal_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_CmaTotal_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_fifo_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_fifo_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_NFS_Unstable_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_NFS_Unstable_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_nohandler_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_nohandler_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_speed_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_speed_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_WritebackTmp_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_WritebackTmp_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Zswap_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Zswap_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_cpu_usage_seconds_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "container_cpu_usage_seconds_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_network_receive_compressed_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_compressed_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_receive_errors_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_receive_errors_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_dormant",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_dormant",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_iface_id",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_iface_id",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_receive_packets_dropped_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_receive_packets_dropped_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discard_time_seconds_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_disk_discard_time_seconds_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_transmit_packets_dropped_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_transmit_packets_dropped_total",
+      "series": "cadvisor-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_VmallocChunk_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_VmallocChunk_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_FileHugePages_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_FileHugePages_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_receive_bytes_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_network_transmit_packets_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "container_blkio_device_usage_total",
+      "series": "cadvisor-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_flags",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_flags",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_ShmemPmdMapped_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_ShmemPmdMapped_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_packets_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "window_too_short"
+    },
+    {
+      "metric": "node_network_carrier",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Hugetlb_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Hugetlb_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SwapCached_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_SwapCached_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_Buffers_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_fifo_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_fifo_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_multicast_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_receive_multicast_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_compressed_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_transmit_compressed_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier_down_changes_total",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_network_carrier_down_changes_total",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_CmaFree_bytes",
+      "series": "node-exporter-02.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    },
+    {
+      "metric": "node_memory_CmaFree_bytes",
+      "series": "node-exporter-01.u-cloudsolutions.xyz",
+      "reason": "not_enough_variation_or_points"
+    }
+  ]
+}

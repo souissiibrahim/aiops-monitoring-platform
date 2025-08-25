@@ -1,0 +1,31 @@
+{
+  "incident_id": "67a6d9a3-8fba-4f01-8638-bc9841426d89",
+  "service": "Payment Gateway",
+  "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+  "incident_type_name": "DiskLatency",
+  "root_cause": "Insufficient disk space on /var, causing disk latency issues in the Payment Gateway service.",
+  "recommendation_text": "Increase disk space on /var by expanding the partition or adding a new disk.",
+  "recommendation_confidence": 0.9,
+  "decision": {
+    "auto": true,
+    "why": "Filtered by incident_type/service; ranked by similarity+priority",
+    "incident_type_name": "DiskLatency",
+    "job": {
+      "job_id": "b58e6bc3-daa2-451c-89a8-8963a2dc4d9d",
+      "name": "Clean Disk Space",
+      "description": "Clean disk space by deleting temporary files, clearing log files, and vacuuming system journal to free up storage when disk usage is high or server is running out of space."
+    },
+    "scores": {
+      "rec_conf": 0.9,
+      "faiss_sim": 0.4233275055885315,
+      "ensemble": 0.7569982516765594
+    }
+  },
+  "execution": {
+    "ok": true,
+    "status": "succeeded",
+    "execution_id": 228,
+    "response_action_id": "fc2ba98f-f12b-4e9f-aa0c-24dd34e9e765"
+  },
+  "human_required": false
+}

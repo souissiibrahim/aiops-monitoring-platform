@@ -1,0 +1,48 @@
+metrics:
+
+  - name: node_cpu_utilization
+    promql: |
+      1 - avg by(instance) (
+        rate(node_cpu_seconds_total{mode="idle"}[5m])
+      )
+    unit: ratio
+    clip: [0, 1]
+    resample: 60s
+    aggregation: by(instance)
+    incident_type: HighCPUUsage
+
+  - name: node_memory_utilization
+    promql: |
+      (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)
+      / node_memory_MemTotal_bytes
+    unit: ratio
+    clip: [0, 1]
+    resample: 60s
+    aggregation: by(instance)
+    incident_type: MemoryPressure
+
+  - name: node_filesystem_usage
+    promql: |
+      1 - (
+        node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|squashfs"}
+        / node_filesystem_size_bytes{fstype!~"tmpfs|overlay|squashfs"}
+      )
+    unit: ratio
+    clip: [0, 1]
+    resample: 60s
+    aggregation: by(instance)
+    incident_type: DiskSpaceLow
+
+  - name: http_request_latency_p99
+    promql: |
+      histogram_quantile(
+        0.99,
+        sum by (le, instance) (
+          rate(http_request_duration_seconds_bucket[5m])
+        )
+      )
+    unit: seconds
+    clip: [0, 10]   
+    resample: 60s
+    aggregation: by(instance)
+    incident_type: APILatencySLO

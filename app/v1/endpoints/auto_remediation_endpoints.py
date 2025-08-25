@@ -109,7 +109,7 @@ def get_auto_remediation_cards(db: Session = Depends(get_db)):
             "description": runbook.description,
             "trigger_condition": auto_step.success_condition,
             "remediation_action": auto_step.description,
-            "last_triggered": last_triggered,
+            "last_triggered": safe_iso(last_triggered),
             "success_rate": success_rate,
             "labels": [incident_category, status_label]
         })

@@ -1,0 +1,19 @@
+{
+  "incident_id": "ada46a9c-4ceb-4c8f-9952-832905210c7c",
+  "service": "Payment Gateway",
+  "incident_type_id": "32e549cd-a91b-445c-a99c-4f68b69cb111",
+  "root_cause": "Process 'payment_service' consuming excessive CPU across multiple cores",
+  "recommendation_text": "Optimize the 'payment_service' process to reduce CPU consumption",
+  "recommendation_confidence": 0.9,
+  "decision": {
+    "auto": false,
+    "why": "Similarity 0.50 < 0.6 among incident_type candidates",
+    "job": null,
+    "scores": {
+      "rec_conf": 0.9,
+      "faiss_sim": 0.5002487897872925,
+      "ensemble": 0.7800746369361877
+    }
+  },
+  "human_required": true
+}

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, text
 from typing import List, Optional
 from app.db.models.prediction import Prediction
 
@@ -89,3 +89,54 @@ class PredictionRepository:
         except Exception as e:
             print(f"❌ Elasticsearch Prediction search failed: {e}")
             raise
+
+    def link_nearest_pending(
+        self,
+        *,
+        incident_id: str,
+        instance: str,
+        incident_type: str,
+        severity: str,
+        start_ts_utc_iso: str,  # e.g. "2025-08-16T09:40:00Z"
+        window_sec: int = 300,   # ±5 minutes (tune via env)
+    ) -> Optional[str]:
+        """
+        Find the nearest Pending prediction that matches (instance, incident_type, severity)
+        within ±window_sec of start_ts_utc_iso, then set incident_id and mark as Confirmed.
+        Returns the linked prediction_id or None.
+        """
+        sql = text("""
+        WITH cand AS (
+          SELECT p.prediction_id
+          FROM predictions p
+          WHERE p.is_deleted = FALSE
+            AND p.status = 'Pending'
+            AND p.input_features->>'instance' = :instance
+            AND p.prediction_output->>'incident_type_name' = :itype
+            AND p.prediction_output->>'severity_name' = :sev
+            AND ABS(EXTRACT(EPOCH FROM (
+                  ((p.input_features->>'forecast_for')::timestamptz) - (:start_ts)::timestamptz
+                ))) <= :window_sec
+          ORDER BY ABS(EXTRACT(EPOCH FROM (
+                    ((p.input_features->>'forecast_for')::timestamptz) - (:start_ts)::timestamptz
+                  )))
+          LIMIT 1
+        )
+        UPDATE predictions p
+        SET incident_id = :incident_id,
+            status = 'Confirmed',
+            updated_at = NOW()
+        FROM cand
+        WHERE p.prediction_id = cand.prediction_id
+        RETURNING p.prediction_id
+        """)
+        row = self.db.execute(sql, {
+            "incident_id": incident_id,
+            "instance": instance,
+            "itype": incident_type,
+            "sev": severity,
+            "start_ts": start_ts_utc_iso,
+            "window_sec": window_sec
+        }).fetchone()
+        self.db.commit()
+        return row[0] if row else None

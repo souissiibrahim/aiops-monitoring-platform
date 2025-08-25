@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "a4557650-24c8-4bf9-9043-92338af036b7",
+    "service": "Payment Gateway",
+    "timestamp": "2025-08-14T14:01:56.098554Z",
+    "root_cause": "Single process consuming excessive CPU across cores; system slowdown observed",
+    "recommendation": "- Monitor and investigate the top CPU offender process to identify and address the root cause of high CPU usage. (confidence: 0.9)\n- Implement a process monitoring and killing mechanism to automatically terminate high CPU processes and prevent system slowdown. (confidence: 0.8)\n- Consider upgrading the node's CPU or adding more nodes to the cluster to improve overall system performance and reduce the likelihood of CPU saturation. (confidence: 0.6)",
+    "confidence": 0.9,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-08-14T14:01:56.098554Z"
+}

@@ -1,0 +1,19 @@
+{
+  "incident_id": "da5c14f7-c0f7-4e06-9d11-e6668e9fd659",
+  "service": "Payment Gateway",
+  "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+  "root_cause": "Insufficient disk space on /var, causing disk latency issues in the Payment Gateway service.",
+  "recommendation_text": "Increase disk space on /var by expanding the partition or adding a new disk.",
+  "recommendation_confidence": 0.9,
+  "decision": {
+    "auto": false,
+    "why": "Similarity 0.42 < 0.6 among incident_type candidates",
+    "job": null,
+    "scores": {
+      "rec_conf": 0.9,
+      "faiss_sim": 0.4233275055885315,
+      "ensemble": 0.7569982516765594
+    }
+  },
+  "human_required": true
+}

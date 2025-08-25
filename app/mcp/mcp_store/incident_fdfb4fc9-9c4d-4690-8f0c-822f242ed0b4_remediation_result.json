@@ -1,0 +1,29 @@
+{
+  "incident_id": "fdfb4fc9-9c4d-4690-8f0c-822f242ed0b4",
+  "service": "Payment Gateway",
+  "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+  "root_cause": "Single process consuming excessive CPU across cores; system slowdown observed",
+  "recommendation_text": "Monitor and investigate the top CPU offender process to identify and address the root cause of high CPU usage.",
+  "recommendation_confidence": 0.9,
+  "decision": {
+    "auto": true,
+    "why": "FAISS fallback passed thresholds",
+    "job": {
+      "job_id": "7ebebeec-a4ec-441c-86c1-73b3c9f12933",
+      "name": "Kill High CPU Process",
+      "description": "Identify and terminate the process using the highest CPU to recover from performance degradation, system slowdowns, or CPU bottlenecks."
+    },
+    "scores": {
+      "rec_conf": 0.9,
+      "faiss_sim": 0.6747035384178162,
+      "ensemble": 0.8324110615253448
+    }
+  },
+  "execution": {
+    "ok": false,
+    "status": "running",
+    "execution_id": 94,
+    "response_action_id": "fb6a133e-34c8-4646-9509-23ca2a5086bb"
+  },
+  "human_required": true
+}

@@ -2,13 +2,15 @@ import json
 import time
 import joblib
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
 from kafka import KafkaConsumer
 from sqlalchemy.orm import Session
 from app.db.session import SessionLocal
 from app.db.repositories.anomaly_repository import AnomalyRepository
 from app.db.repositories.incident_repository import IncidentRepository
+from app.db.repositories.prediction_repository import PredictionRepository
+
 from app.db.models.anomaly import Anomaly
 from app.db.models.incident import Incident
 from app.db.models.telemetry_source import TelemetrySource
@@ -37,7 +39,6 @@ consumer = KafkaConsumer(
 
 print("🚀 Anomaly Kafka ingester running...")
 
-#HARDCODED_SOURCE_ID = UUID("a9783660-6107-4a78-a5fc-9333cd786952")
 
 def get_default_status_id(db: Session) -> UUID:
     status = db.query(IncidentStatus).filter_by(name="Open").first()
@@ -54,6 +55,10 @@ def get_severity_id(db: Session, value: float, confidence: float) -> UUID:
         name = "Low"
     level = db.query(SeverityLevel).filter_by(name=name).first()
     return level.severity_level_id if level else None
+
+def get_severity_name(db: Session, severity_id: UUID) -> str | None:
+    lvl = db.query(SeverityLevel).filter(SeverityLevel.severity_level_id == severity_id).first()
+    return lvl.name if lvl else None
 
 def map_metric_to_known(metric: str, known_metrics: list) -> str:
     for known in known_metrics:
@@ -100,10 +105,19 @@ def get_or_create_incident_type(db: Session, name: str, description: str, catego
 def get_source_by_instance(db: Session, instance: str) -> TelemetrySource:
     return db.query(TelemetrySource).filter(TelemetrySource.name == instance).first()
 
+def to_utc_z(dt: datetime) -> str:
+    """Return ISO timestamp in UTC with trailing 'Z'."""
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    else:
+        dt = dt.astimezone(timezone.utc)
+    return dt.isoformat().replace("+00:00", "Z")
+
 while True:
     db: Session = SessionLocal()
     repo = AnomalyRepository(db, None)
     incident_repo = IncidentRepository(db, None)
+    pred_repo = PredictionRepository(db, None)
     try:
         for msg in consumer:
             try:
@@ -119,7 +133,8 @@ while True:
             try:
                 value = float(data["value"])
                 confidence = float(data.get("confidence", 1.0))
-                ts = datetime.utcfromtimestamp(float(data["timestamp"]))
+                #ts = datetime.utcfromtimestamp(float(data["timestamp"]))
+                ts = datetime.fromtimestamp(float(data["timestamp"]), tz=timezone.utc)
             except Exception as e:
                 print(f"❌ Invalid data format: {e}")
                 continue
@@ -199,6 +214,34 @@ while True:
                     db.commit()
                     db.refresh(anomaly)
                     print("🚨 Incident promoted and anomaly confirmed!")
+                    try:
+                        # Resolve human-readable names for linking
+                        itype_name = db.query(IncidentType).filter(
+                            IncidentType.incident_type_id == incident_type_id
+                        ).first().name
+                        severity_name = get_severity_name(db, severity_id) or "High"
+                        instance_name = source.name
+                        start_ts_iso = to_utc_z(ts)
+
+                        linked_pid = pred_repo.link_nearest_pending(
+                            incident_id=incident.incident_id,
+                            instance=instance_name,
+                            incident_type=itype_name,
+                            severity=severity_name,
+                            start_ts_utc_iso=start_ts_iso,
+                            window_sec=LINK_WINDOW_SEC,
+                        )
+                        if linked_pid:
+                            print(f"🔗 Linked prediction {linked_pid} → incident {incident.incident_id}")
+                        else:
+                            print(f"🔎 No Pending prediction within ±{LINK_WINDOW_SEC}s for incident {incident.incident_id}")
+
+                    except AttributeError as e:
+                        # If the repository doesn't have link_nearest_pending yet
+                        print(f"ℹ️ Skipping prediction linking (method missing?): {e}")
+                    except Exception as e:
+                        print(f"⚠️ Prediction linking failed: {e}")
+
                 else:
                     print("⚠️ Could not promote incident (missing service or mappings).")
 

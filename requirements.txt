@@ -6,3 +6,5 @@ psycopg2-binary
 elasticsearch
 faiss-cpu
 langgraph
+email-validator
+

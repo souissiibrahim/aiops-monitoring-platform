@@ -1,0 +1,13 @@
+{
+  "type": "remediation_request",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "537b5eaf-e908-4ff9-b082-37f963927bba",
+    "service": "Payment Gateway",
+    "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+    "root_cause": "Single process consuming excessive CPU across cores; system slowdown observed",
+    "recommendation_text": "Kill the high CPU process to restore performance",
+    "recommendation_confidence": 0.9
+  },
+  "timestamp": "2025-08-14T12:45:48.006646Z"
+}

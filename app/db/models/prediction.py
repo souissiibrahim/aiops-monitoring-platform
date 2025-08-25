@@ -22,3 +22,5 @@ class Prediction(TimestampMixin, Base):
 
     # Relationships
     incident = relationship("Incident", back_populates="predictions")
+    model = relationship("Model", lazy="joined", back_populates="predictions")          
+    explanation = relationship("ShapExplanation", lazy="joined", back_populates="predictions")

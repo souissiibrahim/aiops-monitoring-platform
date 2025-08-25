@@ -1,0 +1,13 @@
+{
+  "type": "remediation_request",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "001885a5-0fc0-43be-84c7-afbaa2a6bf0a",
+    "service": "Payment Gateway",
+    "incident_type_id": "32e549cd-a91b-445c-a99c-4f68b69cb111",
+    "root_cause": "Insufficient logs to determine the root cause of the HighCPUUsage incident in the Payment Gateway service.",
+    "recommendation_text": "Collect and analyze system logs to identify the root cause of the HighCPUUsage incident.",
+    "recommendation_confidence": 0.0
+  },
+  "timestamp": "2025-08-14T13:25:59.372316Z"
+}

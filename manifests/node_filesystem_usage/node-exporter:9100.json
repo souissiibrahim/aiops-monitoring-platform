@@ -1,0 +1,21 @@
+{
+  "env": "dev-local",
+  "metric": "node_filesystem_usage",
+  "unit": "ratio",
+  "resample": "60s",
+  "clip": [
+    0,
+    1
+  ],
+  "prom_url": "https://prometheus.u-cloudsolutions.xyz",
+  "promql": "1 - (\n  node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|squashfs\"}\n  / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|squashfs\"}\n)\n",
+  "query_step": "60s",
+  "rate_window": "5m",
+  "instance": "node-exporter:9100",
+  "time_range": {
+    "start": "2025-07-26T11:26:34.118710+00:00",
+    "end": "2025-08-25T11:26:34.118710+00:00"
+  },
+  "aliases_enabled": true,
+  "generated_at": "2025-08-25T11:26:54.349309+00:00"
+}

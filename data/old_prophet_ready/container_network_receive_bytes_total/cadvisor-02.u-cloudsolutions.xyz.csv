@@ -1,0 +1,12 @@
+ds,y,metric,instance
+2025-08-13 11:07:00+00:00,0.0,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:08:00+00:00,0.7658460829400744,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:09:00+00:00,0.7381741288958352,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:10:00+00:00,0.7416666666666668,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:11:00+00:00,0.7398809523809523,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:12:00+00:00,0.7457954608474607,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:13:00+00:00,0.0,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:14:00+00:00,0.0,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:15:00+00:00,0.0,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:16:00+00:00,0.0,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz
+2025-08-13 11:17:00+00:00,0.0,container_network_receive_bytes_total,cadvisor-02.u-cloudsolutions.xyz

@@ -1,0 +1,19 @@
+{
+  "incident_id": "a4557650-24c8-4bf9-9043-92338af036b7",
+  "service": "Payment Gateway",
+  "incident_type_id": "05832959-b694-4afd-99f5-3094d73b18aa",
+  "root_cause": "Single process consuming excessive CPU across cores; system slowdown observed",
+  "recommendation_text": "Monitor and investigate the top CPU offender process to identify and address the root cause of high CPU usage.",
+  "recommendation_confidence": 0.9,
+  "decision": {
+    "auto": false,
+    "why": "Similarity 0.35 < 0.6 among incident_type candidates",
+    "job": null,
+    "scores": {
+      "rec_conf": 0.9,
+      "faiss_sim": 0.3523445129394531,
+      "ensemble": 0.7357033538818359
+    }
+  },
+  "human_required": true
+}

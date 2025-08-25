@@ -1,0 +1,21 @@
+{
+  "env": "dev-local",
+  "metric": "node_memory_utilization",
+  "unit": "ratio",
+  "resample": "60s",
+  "clip": [
+    0,
+    1
+  ],
+  "prom_url": "https://prometheus.u-cloudsolutions.xyz",
+  "promql": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)\n/ node_memory_MemTotal_bytes\n",
+  "query_step": "60s",
+  "rate_window": "5m",
+  "instance": "node-exporter:9100",
+  "time_range": {
+    "start": "2025-07-26T11:26:34.118710+00:00",
+    "end": "2025-08-25T11:26:34.118710+00:00"
+  },
+  "aliases_enabled": true,
+  "generated_at": "2025-08-25T11:26:45.206667+00:00"
+}

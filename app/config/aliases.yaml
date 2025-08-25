@@ -1,0 +1,12 @@
+aliases:
+  # Node Exporter instances
+  node-exporter-01.u-cloudsolutions.xyz: node-exporter:9100
+  node-exporter-02.u-cloudsolutions.xyz: node-exporter:9100
+
+  # cAdvisor instances
+  cadvisor-01.u-cloudsolutions.xyz: cadvisor:8080
+  cadvisor-02.u-cloudsolutions.xyz: cadvisor:8080
+
+  # (Optional) Add local aliases if you train/serve locally
+  node-exporter:9100: node-exporter:9100
+  cadvisor:8080: cadvisor:8080

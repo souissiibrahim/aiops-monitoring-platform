@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "ada46a9c-4ceb-4c8f-9952-832905210c7c",
+    "service": "Payment Gateway",
+    "timestamp": "2025-08-14T13:41:32.409061Z",
+    "root_cause": "Process 'payment_service' consuming excessive CPU across multiple cores",
+    "recommendation": "- Optimize the 'payment_service' process to reduce CPU consumption (confidence: 0.9)\n- Restart the 'payment_service' process to release CPU resources (confidence: 0.8)",
+    "confidence": 0.9,
+    "model": "LangGraph"
+  },
+  "timestamp": "2025-08-14T13:41:32.409061Z"
+}

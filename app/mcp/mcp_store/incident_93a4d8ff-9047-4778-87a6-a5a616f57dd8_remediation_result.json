@@ -1,0 +1,19 @@
+{
+  "incident_id": "93a4d8ff-9047-4778-87a6-a5a616f57dd8",
+  "service": "Payment Gateway",
+  "incident_type_id": "32e549cd-a91b-445c-a99c-4f68b69cb111",
+  "root_cause": "Insufficient logs to determine the root cause of the HighCPUUsage incident in the Payment Gateway service.",
+  "recommendation_text": "Collect and analyze system logs to identify the root cause of the HighCPUUsage incident.",
+  "recommendation_confidence": 1.0,
+  "decision": {
+    "auto": false,
+    "why": "Similarity 0.35 < 0.6 among incident_type candidates",
+    "job": null,
+    "scores": {
+      "rec_conf": 1.0,
+      "faiss_sim": 0.3494926691055298,
+      "ensemble": 0.8048478007316588
+    }
+  },
+  "human_required": true
+}

@@ -1,0 +1,14 @@
+{
+  "type": "rca_report",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "1efe9fa4-27ac-4185-a3d2-e80171129acb",
+    "service": "Payment Gateway",
+    "timestamp": "2025-08-14T10:31:23.770985Z",
+    "root_cause": "High disk usage on /var due to temporary files and log files",
+    "recommendation": "- Regularly clean up temporary files and log files to maintain disk space (confidence: 1.0)",
+    "confidence": 1.0,
+    "model": "FAISS"
+  },
+  "timestamp": "2025-08-14T10:31:23.770985Z"
+}

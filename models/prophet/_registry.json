@@ -1,0 +1,32 @@
+{
+  "trained": [
+    {
+      "metric": "node_cpu_utilization",
+      "instance": "node-exporter:9100",
+      "model_path": "models/prophet/node_cpu_utilization/node-exporter:9100.pkl",
+      "rows": 2668,
+      "mae": 0.0022884283224621402,
+      "rmse": 0.00460410595722545,
+      "mape": 0.02193479302123016
+    },
+    {
+      "metric": "node_filesystem_usage",
+      "instance": "node-exporter:9100",
+      "model_path": "models/prophet/node_filesystem_usage/node-exporter:9100.pkl",
+      "rows": 3477,
+      "mae": 0.0013392462404906889,
+      "rmse": 0.0016522798613408602,
+      "mape": 0.0017671780875431946
+    },
+    {
+      "metric": "node_memory_utilization",
+      "instance": "node-exporter:9100",
+      "model_path": "models/prophet/node_memory_utilization/node-exporter:9100.pkl",
+      "rows": 3477,
+      "mae": 0.007450964635216369,
+      "rmse": 0.01118758599540628,
+      "mape": 0.008317957010128255
+    }
+  ],
+  "skipped": []
+}

@@ -75,7 +75,7 @@ def send_mcp_remediation_request(
         "payload": {
             "incident_id": str(incident_id),
             "service": service,
-            "incident_type_id": incident_type_id,   # <-- ID is what the selector needs
+            "incident_type_id": incident_type_id,   
             "root_cause": root_cause,
             "recommendation_text": top_rec_text,
             "recommendation_confidence": float(top_rec_conf),
@@ -88,9 +88,7 @@ def send_mcp_remediation_request(
     except Exception as err:
         print(f"❌ Failed to send remediation_request: {err}")
 
-# -------------------------------------------------------------------
-# DB helpers
-# -------------------------------------------------------------------
+
 
 def get_unprocessed_incidents(db) -> List[Incident]:
     """Incidents that have no RCA yet."""
