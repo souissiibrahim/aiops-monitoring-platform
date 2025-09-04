@@ -10,6 +10,9 @@ class ModelBase(BaseModel):
     version: Optional[str] = None
     accuracy: Optional[float] = None
 
+    last_trained_at: Optional[datetime] = None
+    last_training_status: Optional[str] = None
+
 
 class ModelCreate(ModelBase):
     pass

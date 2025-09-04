@@ -9,7 +9,7 @@ from app.services.elasticsearch.connection import get_elasticsearch_connection
 from app.db.repositories.model_repository import ModelRepository
 from app.db.models.model import Model
 from app.utils.response import success_response, error_response
-
+from sqlalchemy import func, cast, Float
 from app.services.elasticsearch.model_service import index_model
 
 router = APIRouter()
@@ -20,6 +20,32 @@ def serialize(obj, schema):
         return [schema.from_orm(o).model_dump(mode="json") for o in obj]
     return schema.from_orm(obj).model_dump(mode="json")
 
+
+@router.get("/stats/summary")
+def models_summary(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):
+    acc_as_float = cast(func.nullif(Model.accuracy, ''), Float)
+
+    avg_q = db.query(func.avg(acc_as_float)).filter(
+        Model.is_deleted == False,        
+        acc_as_float > 0                  
+    )
+    avg_accuracy = avg_q.scalar()
+    avg_accuracy = float(avg_accuracy) if avg_accuracy is not None else 0.0
+
+  
+    active_q = db.query(func.count(Model.model_id)).filter(
+        Model.is_deleted == False,           
+        Model.last_training_status == "succeeded"
+    )
+    active_models = int(active_q.scalar() or 0)
+
+    return success_response(
+        {
+            "avg_accuracy": round(avg_accuracy, 4),
+            "active_models": active_models
+        },
+        "Model summary computed successfully."
+    )
 
 @router.get("/")
 def get_all(db: Session = Depends(get_db), redis=Depends(get_redis_connection)):

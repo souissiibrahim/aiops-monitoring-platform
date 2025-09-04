@@ -1,0 +1,13 @@
+{
+  "type": "remediation_request",
+  "source": "rca_agent",
+  "payload": {
+    "incident_id": "16ec29cc-5add-4142-84eb-4fc81795da18",
+    "service": "Payment Gateway",
+    "incident_type_id": "c48d11b6-c2b2-418c-aa31-204e81c842ff",
+    "root_cause": "Conflicting A records for api.payments.internal (10.12.3.45 vs 172.22.14.9) from resolvers 10.0.0.10/10.0.0.11, leading to DNSSEC validation failure and suspected cache poisoning.",
+    "recommendation_text": "Implement DNSSEC validation and cache poisoning protection for the Payment Gateway service.",
+    "recommendation_confidence": 0.95
+  },
+  "timestamp": "2025-09-01T21:19:58.741238Z"
+}

@@ -25,6 +25,11 @@ from app.v1.endpoints.auto_remediation_endpoints import router as auto_remediati
 from app.mcp.mcp_server import mcp_router  
 from app.v1.endpoints import agent_endpoints
 from app.v1.endpoints import remediation_endpoints
+from app.api.routes_chat import router as chat_router
+from app.monitor.watchdog import router as watchdog_router
+from app.v1.endpoints.performance_cards_endpoints import router as performance_cards_router
+from app.v1.endpoints.training_endpoints import router as training_router
+from app.v1.endpoints import running_scripts_endpoints
 
 
 #from app.v1.endpoints.rca_report_endpoints import router as rca_report_router
@@ -56,6 +61,11 @@ router.include_router(auto_remediation_router, prefix="/auto-remediation", tags=
 router.include_router(mcp_router, prefix="/mcp")
 router.include_router(agent_endpoints.router, prefix="/agents", tags=["Agents"])
 router.include_router(remediation_endpoints.router, prefix="/remediations", tags=["remediations"])
+router.include_router(chat_router)
+router.include_router(watchdog_router, prefix="/orchestrator", tags=["health"])
+router.include_router(performance_cards_router, prefix="/performance", tags=["performance"])  
+router.include_router(training_router, prefix="/training", tags=["training"])
+router.include_router(running_scripts_endpoints.router, prefix="/running", tags=["running"])
 
 
 

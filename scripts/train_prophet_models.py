@@ -1,207 +1,215 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os, glob, json, pickle, argparse, warnings
-from datetime import timedelta
-import numpy as np
-import pandas as pd
+import argparse, json, os
+from pathlib import Path
+from itertools import product
+import pandas as pd, numpy as np
 from prophet import Prophet
+from prophet.diagnostics import cross_validation, performance_metrics
+from prophet.plot import plot_cross_validation_metric
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import joblib
 
+def find_csvs(data_root: Path):
+    # If data_root itself contains CSVs, treat it as a single metric dir
+    csvs_here = list(data_root.glob("*.csv"))
+    if csvs_here:
+        metric = data_root.name
+        for csv_path in sorted(csvs_here):
+            instance = csv_path.stem
+            yield metric, instance, csv_path
+        return
 
-DEFAULT_INROOT  = "data/prophet_ready_csv"
-#DEFAULT_INROOT  = "data/prophet_ready"
-DEFAULT_OUTROOT = "models/prophet"
-REGISTRY_NAME   = "_registry.json"
+    # Otherwise, assume data_root contains metric directories
+    for metric_dir in sorted(data_root.glob("*")):
+        if not metric_dir.is_dir():
+            continue
+        for csv_path in sorted(metric_dir.glob("*.csv")):
+            metric = metric_dir.name
+            instance = csv_path.stem
+            yield metric, instance, csv_path
 
-MIN_POINTS = 500  # ~8h @60s; skip if fewer points
-
-
-def safe_make_dir(p: str):
-    os.makedirs(p, exist_ok=True)
-
-
-def is_utilization_metric(metric_name: str) -> bool:
-    """Bounded [0,1] metrics → enable logistic caps."""
-    m = (metric_name or "").lower()
-    return any(k in m for k in [
-        "cpu_utilization", "memory_utilization",
-        "filesystem_usage", "disk_usage", "utilization", "usage"
-    ])
-
-
-def _compute_errors(y_true, y_hat) -> dict:
-    y = pd.Series(pd.to_numeric(y_true, errors="coerce"))
-    yh = pd.Series(pd.to_numeric(y_hat, errors="coerce"))
-    m = pd.DataFrame({"y": y, "yh": yh}).dropna()
-    if m.empty:
-        return {"mae": None, "rmse": None, "mape": None}
-    mae  = float((m["y"] - m["yh"]).abs().mean())
-    rmse = float(np.sqrt(((m["y"] - m["yh"]) ** 2).mean()))
-    mape = float(((m["y"] - m["yh"]).abs() / m["y"].clip(lower=1e-9)).clip(upper=5).mean())
-    return {"mae": mae, "rmse": rmse, "mape": mape}
-
-
-def train_one(csv_path: str, downsample: str | None = None):
-    """Train a Prophet model on a single CSV series and return (info, reason)."""
-
-    # ---- load & basic cleaning
-    try:
-        df = pd.read_csv(csv_path)
-    except Exception as e:
-        return None, f"read_failed:{e}"
-
-    if not {"ds", "y"}.issubset(df.columns):
-        return None, "missing_columns"
-
+def load_series(csv_path: Path):
+    df = pd.read_csv(csv_path)
+    # Expect ds,y,metric,instance but only ds,y are required
+    need = {"ds","y"}
+    if not need.issubset(df.columns):
+        raise ValueError(f"{csv_path} must have columns ds,y,... ; got {df.columns.tolist()}")
+    df["ds"] = pd.to_datetime(df["ds"], utc=True, errors="coerce").dt.tz_localize(None)
     df["y"]  = pd.to_numeric(df["y"], errors="coerce")
-    df["ds"] = pd.to_datetime(df["ds"], errors="coerce", utc=True).dt.tz_convert(None)
-    df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=["ds", "y"])
-    if df.empty:
-        return None, "empty_after_clean"
+    df = df.dropna(subset=["ds","y"]).drop_duplicates(subset=["ds"]).sort_values("ds").reset_index(drop=True)
+    return df
 
-    # guards
-    df = df.sort_values("ds").drop_duplicates("ds")
-    if len(df) < MIN_POINTS:
-        return None, "too_few_points"
-    if (df["ds"].max() - df["ds"].min()) < timedelta(days=3):
-        return None, "window_too_short"
-    if df["y"].nunique() <= 1:
-        return None, "no_variation"
+def train_and_cv_one(
+    df, metric, instance, out_dir,
+    initial, horizon, period,
+    cps_values, sps_values,
+    seasonality_mode, changepoint_range, interval_width,
+    acceptance, rolling_window=0.0
+):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    results, best_key, best_score = [], None, np.inf
+    def write_txt(name, text): (out_dir / name).write_text(text)
 
-    # identify metric/instance
-    metric = (str(df["metric"].iloc[0]).strip()
-              if "metric" in df.columns and isinstance(df["metric"].iloc[0], str)
-              else os.path.basename(os.path.dirname(csv_path)))
-    instance = (str(df["instance"].iloc[0]).strip()
-                if "instance" in df.columns and isinstance(df["instance"].iloc[0], str)
-                else os.path.splitext(os.path.basename(csv_path))[0])
+    for cps, sps in product(cps_values, sps_values):
+        key = f"cps_{cps}_sps_{sps}"
+        cand_dir = out_dir / f"cv_{key}"
+        cand_dir.mkdir(parents=True, exist_ok=True)
 
-    # optional downsample (e.g., '5min', '1h')
-    if downsample:
-        df = (
-            df.set_index("ds")[["y"]]
-              .resample(downsample).mean()
-              .dropna()
-              .reset_index()
-        )
-
-    # ---- model config
-    bounded = is_utilization_metric(metric)
-    if bounded:
-        # keep forecasts in [0,1]
-        df["cap"]   = 1.0
-        df["floor"] = 0.0
         m = Prophet(
-            growth="logistic",
-            seasonality_mode="multiplicative",
-            changepoint_prior_scale=0.05,
-            daily_seasonality=False,
-            weekly_seasonality=False,
+            changepoint_prior_scale=cps,
+            seasonality_prior_scale=sps,
+            seasonality_mode=seasonality_mode,
+            changepoint_range=changepoint_range,
+            interval_width=interval_width,
+            daily_seasonality=True,
+            weekly_seasonality=True,
+            yearly_seasonality=False,
         )
-        fit_cols = ["ds", "y", "cap", "floor"]
-    else:
-        m = Prophet(
-            seasonality_mode="additive",
-            changepoint_prior_scale=0.05,
-            daily_seasonality=False,
-            weekly_seasonality=False,
-        )
-        fit_cols = ["ds", "y"]
+        m.fit(df[["ds","y"]])
 
-    m.add_seasonality(name="daily",  period=1, fourier_order=8)
-    m.add_seasonality(name="weekly", period=7, fourier_order=6)
+        try:
+            df_cv = cross_validation(m, initial=initial, period=period, horizon=horizon, parallel=None)
+        except Exception as e:
+            write_txt(f"ERROR_{key}.txt", f"CV failed: {e}")
+            continue
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        m.fit(df[fit_cols])
+        df_p = performance_metrics(df_cv, rolling_window=rolling_window)
+        df_cv.to_csv(cand_dir / "cv_predictions.csv", index=False)
+        df_p.to_csv(cand_dir / "cv_metrics.csv",     index=False)
 
-    # ---- holdout validation: 7 days (fallback to 1 if span too short)
-    span_days = (df["ds"].max() - df["ds"].min()).days
-    holdout_days = 7 if span_days >= 8 else 1
-    cutoff = df["ds"].max() - timedelta(days=holdout_days)
-    val = df[df["ds"] > cutoff].copy()
-    if not val.empty:
-        pred_cols = ["ds"] + (["cap", "floor"] if bounded else [])
-        fc = m.predict(val[pred_cols])
-        merged = val.merge(fc[["ds", "yhat"]], on="ds", how="left")
-        errors = _compute_errors(merged["y"], merged["yhat"])
-    else:
-        errors = {"mae": None, "rmse": None, "mape": None}
+        for metric_name in ["mae","rmse","mape","smape","coverage"]:
+            try:
+                fig = plot_cross_validation_metric(df_cv, metric=metric_name)
+                fig.savefig(cand_dir / f"plot_{metric_name}.png", bbox_inches="tight")
+                plt.close(fig)
+            except Exception:
+                pass
 
-    # ---- save artifacts
-    outdir = os.path.join(DEFAULT_OUTROOT, metric)
-    safe_make_dir(outdir)
-    model_path = os.path.join(outdir, f"{instance}.pkl")
+        rmse_mean = df_p["rmse"].mean()
+        results.append((key, rmse_mean))
+        if rmse_mean < best_score:
+            best_score = rmse_mean
+            best_key   = key
+            best_model = m
+            best_cv    = df_cv.copy()
+            best_metrics = df_p.copy()
 
-    with open(model_path, "wb") as f:
-        pickle.dump({
-            "model": m,
-            "meta": {
-                "metric": metric,
-                "instance": instance,
-                "rows": int(len(df)),
-                "ds_start": df["ds"].min().isoformat(),
-                "ds_end": df["ds"].max().isoformat(),
-                "downsample": downsample or "none",
-                "bounded_0_1": bounded,
-                "validation_window_days": holdout_days,
-                "errors": errors,
-            }
-        }, f)
+    if results:
+        pd.DataFrame(results, columns=["candidate","rmse_mean"]).sort_values("rmse_mean") \
+          .to_csv(out_dir / "grid_summary.csv", index=False)
 
-    return {
+    if best_key is None:
+        write_txt("SUMMARY.txt", "No successful candidate found during CV.\n")
+        return
+
+    model_path = out_dir / f"best_model_{best_key}.pkl"
+    joblib.dump(best_model, model_path)
+    best_cv.to_csv(out_dir / f"best_cv_predictions_{best_key}.csv", index=False)
+    best_metrics.to_csv(out_dir / f"best_cv_metrics_{best_key}.csv", index=False)
+
+    best_cv["error"] = best_cv["yhat"] - best_cv["y"]
+    mean_error = float(best_cv["error"].mean())
+
+    mae_ok = best_metrics["mae"].mean()  <= acceptance["MAE"]
+    rmse_ok= best_metrics["rmse"].mean() <= acceptance["RMSE"]
+    smape_ok = (best_metrics["smape"].mean()/100.0) <= acceptance["sMAPE"]
+    cov_mean = float(best_metrics["coverage"].mean())
+    cov_low, cov_high = acceptance["COVERAGE"]
+    cov_ok = (cov_mean >= cov_low) and (cov_mean <= cov_high)
+
+    passed = all([mae_ok, rmse_ok, smape_ok, cov_ok])
+    summary = {
         "metric": metric,
         "instance": instance,
-        "model_path": model_path,
-        "rows": int(len(df)),
-        "mae":  errors["mae"],
-        "rmse": errors["rmse"],
-        "mape": errors["mape"],
-    }, None
-
+        "best_candidate": best_key,
+        "model_path": str(model_path),
+        "rmse_mean": float(best_metrics["rmse"].mean()),
+        "mae_mean":  float(best_metrics["mae"].mean()),
+        "mape_mean": float(best_metrics["mape"].mean()),
+        "smape_mean_pct": float(best_metrics["smape"].mean()),
+        "coverage_mean": cov_mean,
+        "mean_error_bias": mean_error,
+        "acceptance_thresholds": acceptance,
+        "passed_acceptance": passed,
+        "notes": "Thresholds assume utilization in [0,1]; adjust as needed."
+    }
+    (out_dir / "SUMMARY.json").write_text(json.dumps(summary, indent=2))
+    write_txt("SUMMARY.txt",
+        (f"[{metric} | {instance}] Best: {best_key}\n"
+         f"  RMSE(mean): {summary['rmse_mean']:.4f}\n"
+         f"  MAE(mean):  {summary['mae_mean']:.4f}\n"
+         f"  sMAPE(%):   {summary['smape_mean_pct']:.2f}\n"
+         f"  Coverage:   {summary['coverage_mean']:.3f}\n"
+         f"  Bias (ME):  {summary['mean_error_bias']:.6f}\n"
+         f"  Acceptance: {'PASS ✅' if passed else 'FAIL ❌'}\n")
+    )
 
 def main():
-    ap = argparse.ArgumentParser("Train Prophet models from cleaned CSVs")
-    ap.add_argument("--inroot", default=DEFAULT_INROOT, help="Root folder of CSVs (metric/instance.csv)")
-    ap.add_argument("--outroot", default=DEFAULT_OUTROOT, help="Where to write models")
-    ap.add_argument("--downsample", default=None, help="Optional resample (e.g., '5min', '1h')")
-    args = ap.parse_args()
+    p = argparse.ArgumentParser(description="Train Prophet with rolling CV on (ds,y,metric,instance) CSVs.")
+    p.add_argument("--data_root", type=str, default="data/prophet_ready_csv")
+    p.add_argument("--out_root",  type=str, default="models/prophet")
+    p.add_argument("--initial",   type=str, default="7 days")
+    p.add_argument("--horizon",   type=str, default="2 days")
+    p.add_argument("--period",    type=str, default="12 hours")
+    p.add_argument("--cps", type=str, default="0.01,0.05,0.1")
+    p.add_argument("--sps", type=str, default="0.1,1.0,5.0")
+    p.add_argument("--seasonality_mode", choices=["additive","multiplicative"], default="additive")
+    p.add_argument("--changepoint_range", type=float, default=0.9)
+    p.add_argument("--interval_width",    type=float, default=0.8)
+    p.add_argument("--mae_thr",  type=float, default=0.05)
+    p.add_argument("--rmse_thr", type=float, default=0.05)
+    p.add_argument("--smape_thr",type=float, default=0.10)
+    p.add_argument("--coverage_low",  type=float, default=0.75)
+    p.add_argument("--coverage_high", type=float, default=0.90)
+    args = p.parse_args()
 
-    inroot  = args.inroot
-    outroot = args.outroot
-    down    = args.downsample
+    data_root = Path(args.data_root)
+    out_root  = Path(args.out_root)
+    cps_values = [float(x) for x in args.cps.split(",")]
+    sps_values = [float(x) for x in args.sps.split(",")]
+    acceptance = {
+        "MAE": args.mae_thr,
+        "RMSE": args.rmse_thr,
+        "S MAPE".replace(" ",""): args.smape_thr,  # keep key as 'sMAPE'
+        "COVERAGE": (args.coverage_low, args.coverage_high),
+    }
+    # fix sMAPE key name
+    acceptance["sMAPE"] = acceptance.pop("SMAPE")
 
-    safe_make_dir(outroot)
+    any_found = False
+    for metric, instance, csv_path in find_csvs(data_root):
+        any_found = True
+        print(f"\n=== Training [{metric}] on [{instance}] ===")
+        print(f"CSV: {csv_path}")
+        df = load_series(csv_path)
+        if len(df) < 100:
+            print(f"WARNING: only {len(df)} points; CV may be unstable.")
+        # colon can be awkward in path names on some systems
+        safe_instance = instance.replace("/", "_")
+        out_dir = out_root / metric / safe_instance
+        try:
+            train_and_cv_one(
+                df=df, metric=metric, instance=instance, out_dir=out_dir,
+                initial=args.initial, horizon=args.horizon, period=args.period,
+                cps_values=cps_values, sps_values=sps_values,
+                seasonality_mode=args.seasonality_mode,
+                changepoint_range=args.changepoint_range,
+                interval_width=args.interval_width,
+                acceptance=acceptance, rolling_window=0.0
+            )
+            print(f"Artifacts saved in: {out_dir}")
+            sj = out_dir / "SUMMARY.json"
+            if sj.exists():
+                print(sj.read_text())
+        except Exception as e:
+            print(f"ERROR training {metric} / {instance}: {e}")
 
-    registry = {"trained": [], "skipped": []}
-
-    metric_dirs = sorted(glob.glob(os.path.join(inroot, "*")))
-    if not metric_dirs:
-        print(f"No metric folders found under {inroot}")
-
-    for metric_dir in metric_dirs:
-        metric = os.path.basename(metric_dir)
-        for csv_path in sorted(glob.glob(os.path.join(metric_dir, "*.csv"))):
-            info, reason = train_one(csv_path, downsample=down)
-            if info:
-                mae  = "NA" if info["mae"]  is None else f"{info['mae']:.6f}"
-                rmse = "NA" if info["rmse"] is None else f"{info['rmse']:.6f}"
-                mape = "NA" if info["mape"] is None else f"{info['mape']:.6f}"
-                print(f"✓ {info['metric']}/{info['instance']}  rows={info['rows']}  "
-                      f"MAE={mae} RMSE={rmse} MAPE={mape}")
-                registry["trained"].append(info)
-            else:
-                base = os.path.splitext(os.path.basename(csv_path))[0]
-                print(f"- skipped {metric}/{base}  ({reason})")
-                registry["skipped"].append({"metric": metric, "instance": base, "reason": reason})
-
-    reg_path = os.path.join(outroot, REGISTRY_NAME)
-    with open(reg_path, "w", encoding="utf-8") as f:
-        json.dump(registry, f, indent=2)
-
-    print(f"\nModels written to: {outroot}")
-    print(f"Registry: {reg_path}")
-
+    if not any_found:
+        print(f"No CSVs found under {data_root}. Expected: <metric>/<instance>.csv")
 
 if __name__ == "__main__":
     main()

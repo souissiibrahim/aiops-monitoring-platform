@@ -1,0 +1,503 @@
+[runner] cmd=/home/ibrahim/fastapi-boilerplate/venv/bin/python3 -m scripts.anomaly_kafka_ingester
+[runner] sys.executable=/home/ibrahim/fastapi-boilerplate/venv/bin/python3
+[runner] cwd=/home/ibrahim/fastapi-boilerplate
+[runner] VIRTUAL_ENV=/home/ibrahim/fastapi-boilerplate/venv
+[runner] PATH=/home/ibrahim/fastapi-boilerplate/venv/bin:/home/ibrahim/fastapi-boilerplate/venv/bin:/home/ibrahim/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/c/Windows/System32:/c/Windows:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files (x86)/VMware/VMware Workstation/bin/:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files/Eclipse Adoptium/jdk-17.0.4.101-hotspot/bin:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0/:/c/Windows/System32/OpenSSH/:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/instantclient12_2:/c/oraclexe/app/oracle/admin/XE:/c/oraclexe:/c/Strawberry/c/bin:/c/Strawberry/perl/site/bin:/c/Strawberry/perl/bin:/c/Program Files/Git/cmd:/c/Program Files/TortoiseGit/bin:/c/xampp/php:/c/ProgramData/chocolatey/bin:/c/composer:/c/Program Files/Java/jdk1.8.0_202/bin/java.exe:/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/c/Program Files/dotnet/:/c/Program Files/Kubernetes/Minikube:/c/Program Files/Docker/Docker/resources/bin:/c/Program Files/nodejs/:/c/Python312/:/c/Users/MSI/Desktop/Pointeuse-jump/venv/Scripts/:/c/Users/MSI/Desktop/sascode/tuto-test/Django-React-Full-Stack-App-main/venv/Scripts:/c/Program Files/Graphviz/bin:/c/Program Files/apache-maven-3.9.9/bin:/c/Users/MSI/scoop/shims:/c/Users/MSI/AppData/Local/Microsoft/WindowsApps:/c/Users/MSI/AppData/Local/GitHubDesktop/bin:/c/Users/MSI/AppData/Roaming/Composer/vendor/bin:/c/Users/MSI/.dotnet/tools:/c/Program Files/JetBrains/IntelliJ IDEA 2023.3.3/bin:/c/Users/MSI/AppData/Roaming/npm:/c/Users/MSI/AppData/Local/Programs/Microsoft VS Code/bin:/c/Users/MSI/AppData/Roaming/Python/Python312/Scripts:/snap/bin
+[runner] PYTHONPATH=/home/ibrahim/fastapi-boilerplate:
+🚀 Anomaly Kafka ingester running...
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/elasticsearch/_sync/client/__init__.py:311: SecurityWarning: Connecting to 'https://51.83.77.21:9200' using TLS with verify_certs=False is insecure
+📅 Received:: {'metric_name': 'cadvisor_version_info', 'timestamp': 1756722760.901, 'value': 1.0, 'collection_delay': 225.161, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.008002350741844784, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:11.883862'}
+  _transport = transport_class(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_cpu_usage_seconds_total', 'timestamp': 1756722760.944, 'value': 38892.3016057, 'collection_delay': 225.37, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.0005879362463427256, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:11.950287'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_fs_usage_bytes', 'timestamp': 1756722761.223, 'value': 0.0, 'collection_delay': 225.644, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.0035510372665498815, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.013096'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_memory_max_usage_bytes', 'timestamp': 1756722761.318, 'value': 7675449344.0, 'collection_delay': 237.618, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.005408505433747914, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.087951'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_memory_usage_bytes', 'timestamp': 1756722761.339, 'value': 7109701632.0, 'collection_delay': 255.619, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.007719656770411398, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.158022'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_receive_bytes_total', 'timestamp': 1756722761.356, 'value': 0.0, 'collection_delay': 267.6, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.008003960698731556, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.234936'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_receive_errors_total', 'timestamp': 1756722761.362, 'value': 0.0, 'collection_delay': 269.597, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.008003561666756625, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.297436'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_receive_packets_dropped_total', 'timestamp': 1756722761.368, 'value': 0.0, 'collection_delay': 271.597, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.007593475601485882, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.367777'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_receive_packets_total', 'timestamp': 1756722761.374, 'value': 0.0, 'collection_delay': 273.598, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.010090229858291538, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:12.430821'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_transmit_bytes_total', 'timestamp': 1756722761.38, 'value': 0.0, 'collection_delay': 275.811, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.007794403780123688, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.492816'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_transmit_errors_total', 'timestamp': 1756722761.386, 'value': 0.0, 'collection_delay': 279.803, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.009265300930588494, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.567223'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_transmit_packets_dropped_total', 'timestamp': 1756722761.393, 'value': 0.0, 'collection_delay': 281.797, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.00887847348623915, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.628069'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'container_network_transmit_packets_total', 'timestamp': 1756722761.398, 'value': 0.0, 'collection_delay': 283.796, 'confidence': 0.6, 'instance': 'cadvisor:8080', 'anomaly_score': 0.00811267229060914, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.687369'}
+  warnings.warn(
+❌ No source found for instance 'cadvisor:8080'
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_cpu_seconds_total', 'timestamp': 1756722761.721, 'value': 0.0, 'collection_delay': 367.691, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009027345120377712, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.747831'}
+  warnings.warn(
+✅ Anomaly 54952102-0c01-4666-87d0-431dec0c4989 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 54952102-0c01-4666-87d0-431dec0c4989 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_discard_time_seconds_total', 'timestamp': 1756722761.726, 'value': 0.0, 'collection_delay': 375.692, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009487037751690193, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.821418'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly ae109354-90ac-46e9-a995-73e632c22ef7 indexed
+  warnings.warn(
+✅ Anomaly ae109354-90ac-46e9-a995-73e632c22ef7 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_discarded_sectors_total', 'timestamp': 1756722761.73, 'value': 0.0, 'collection_delay': 375.808, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010393640282995898, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:12.896537'}
+  warnings.warn(
+✅ Anomaly 074e3339-dccb-4af4-97eb-39a3d71dfb2a indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 074e3339-dccb-4af4-97eb-39a3d71dfb2a indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_discards_completed_total', 'timestamp': 1756722761.734, 'value': 0.0, 'collection_delay': 375.921, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008325455030825834, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:12.993039'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly b5084bbb-6205-443f-9742-e6814cd43bd5 indexed
+  warnings.warn(
+✅ Anomaly b5084bbb-6205-443f-9742-e6814cd43bd5 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_discards_merged_total', 'timestamp': 1756722761.738, 'value': 0.0, 'collection_delay': 376.036, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00930608305701293, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.056949'}
+  warnings.warn(
+✅ Anomaly 12f3d18f-63c1-4270-8d47-1cc1ad07b0b9 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 12f3d18f-63c1-4270-8d47-1cc1ad07b0b9 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_flush_requests_time_seconds_total', 'timestamp': 1756722761.743, 'value': 0.0, 'collection_delay': 376.152, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010205953854607793, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:13.123762'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 1928d82d-4b4b-40aa-962a-d9513e8e451c indexed
+  warnings.warn(
+✅ Anomaly 1928d82d-4b4b-40aa-962a-d9513e8e451c indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_flush_requests_total', 'timestamp': 1756722761.746, 'value': 0.0, 'collection_delay': 377.665, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008037140187955287, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.194523'}
+  warnings.warn(
+✅ Anomaly 0fd505ec-0dcc-4ed3-bd3f-06eafacc080d indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 0fd505ec-0dcc-4ed3-bd3f-06eafacc080d indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_info', 'timestamp': 1756722761.751, 'value': 1.0, 'collection_delay': 377.778, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008353365384498986, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.274584'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 011f1e00-9aa5-4a76-894b-d39bbe23847b indexed
+  warnings.warn(
+✅ Anomaly 011f1e00-9aa5-4a76-894b-d39bbe23847b indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_io_now', 'timestamp': 1756722761.755, 'value': 0.0, 'collection_delay': 377.895, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.0086353550605978, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.385379'}
+  warnings.warn(
+✅ Anomaly 0eadb94f-f429-463e-8b52-7d5b79b7dcaa indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 0eadb94f-f429-463e-8b52-7d5b79b7dcaa indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_io_time_seconds_total', 'timestamp': 1756722761.76, 'value': 6.03, 'collection_delay': 378.01, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008348704484889148, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.574326'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 841c05d0-9100-484a-a7f4-f1e2eff87f7c indexed
+  warnings.warn(
+✅ Anomaly 841c05d0-9100-484a-a7f4-f1e2eff87f7c indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_io_time_weighted_seconds_total', 'timestamp': 1756722761.763, 'value': 7.126, 'collection_delay': 378.14, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009437030492388417, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.633070'}
+  warnings.warn(
+✅ Anomaly e183e969-7c90-4ad3-92cc-29d4cd58f731 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly e183e969-7c90-4ad3-92cc-29d4cd58f731 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_read_bytes_total', 'timestamp': 1756722761.767, 'value': 161268736.0, 'collection_delay': 378.259, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008962740496767868, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.699717'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 83127d02-57ea-4d20-9999-c59c17d75299 indexed
+  warnings.warn(
+✅ Anomaly 83127d02-57ea-4d20-9999-c59c17d75299 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_read_time_seconds_total', 'timestamp': 1756722761.771, 'value': 7.126, 'collection_delay': 379.64, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008478830187778987, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.769051'}
+  warnings.warn(
+✅ Anomaly 2bfd257a-4d05-4aca-a0bc-3dd7ac3a1c82 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 2bfd257a-4d05-4aca-a0bc-3dd7ac3a1c82 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_reads_completed_total', 'timestamp': 1756722761.776, 'value': 3257.0, 'collection_delay': 379.751, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008489985196148237, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.826539'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 7968fb44-a896-4be7-8508-d9f5c99e51a1 indexed
+  warnings.warn(
+✅ Anomaly 7968fb44-a896-4be7-8508-d9f5c99e51a1 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_reads_merged_total', 'timestamp': 1756722761.792, 'value': 400.0, 'collection_delay': 379.855, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010314943686693097, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:13.891244'}
+  warnings.warn(
+✅ Anomaly 651b2857-e704-4977-985b-514eaaecc902 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 651b2857-e704-4977-985b-514eaaecc902 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_write_time_seconds_total', 'timestamp': 1756722761.796, 'value': 0.0, 'collection_delay': 379.968, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009341931968497332, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:13.948824'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 91d44ee1-9f78-484e-8db2-91eb25f469f3 indexed
+  warnings.warn(
+✅ Anomaly 91d44ee1-9f78-484e-8db2-91eb25f469f3 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_writes_completed_total', 'timestamp': 1756722761.8, 'value': 0.0, 'collection_delay': 380.079, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009914041037750003, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.025696'}
+  warnings.warn(
+✅ Anomaly 564701f3-3429-4b05-8cb9-93fe0505bda0 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 564701f3-3429-4b05-8cb9-93fe0505bda0 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_disk_writes_merged_total', 'timestamp': 1756722761.803, 'value': 0.0, 'collection_delay': 380.193, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008779192052406033, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.121309'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly e6281165-f66f-4904-b656-921dc4a04881 indexed
+  warnings.warn(
+✅ Anomaly e6281165-f66f-4904-b656-921dc4a04881 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_disk_written_bytes_total', 'timestamp': 1756722761.807, 'value': 0.0, 'collection_delay': 381.604, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009240571483270154, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.195897'}
+  warnings.warn(
+✅ Anomaly bfb56334-4282-4fe9-8980-a6777ca38e34 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly bfb56334-4282-4fe9-8980-a6777ca38e34 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Active_anon_bytes', 'timestamp': 1756722761.914, 'value': 1782779904.0, 'collection_delay': 385.498, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009421438049766688, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.259688'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly dac4c6b3-e970-4c0b-9279-ee477780c6e9 indexed
+  warnings.warn(
+✅ Anomaly dac4c6b3-e970-4c0b-9279-ee477780c6e9 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Active_bytes', 'timestamp': 1756722761.92, 'value': 2633003008.0, 'collection_delay': 385.604, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008383716494047299, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.320955'}
+  warnings.warn(
+✅ Anomaly 7e4ddda5-cd7c-4ed3-841b-5a10df003ed0 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 7e4ddda5-cd7c-4ed3-841b-5a10df003ed0 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Active_file_bytes', 'timestamp': 1756722761.927, 'value': 850223104.0, 'collection_delay': 385.709, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008604424035149508, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.402302'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 6ad3f1eb-782d-40e5-8f3e-aba28e114285 indexed
+  warnings.warn(
+✅ Anomaly 6ad3f1eb-782d-40e5-8f3e-aba28e114285 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_AnonHugePages_bytes', 'timestamp': 1756722761.931, 'value': 3586129920.0, 'collection_delay': 385.817, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.007724732013639295, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.481020'}
+  warnings.warn(
+✅ Anomaly bd262b62-6bcb-49c4-a17c-3126c9c9c4fb indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly bd262b62-6bcb-49c4-a17c-3126c9c9c4fb indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_AnonPages_bytes', 'timestamp': 1756722761.937, 'value': 5886799872.0, 'collection_delay': 385.925, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008967114306394287, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.564990'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 3002933b-015d-46b2-bc0a-b7790caf5340 indexed
+  warnings.warn(
+✅ Anomaly 3002933b-015d-46b2-bc0a-b7790caf5340 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Bounce_bytes', 'timestamp': 1756722761.944, 'value': 0.0, 'collection_delay': 386.032, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009057684089017172, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.630050'}
+  warnings.warn(
+✅ Anomaly b4d0922d-63e5-491e-a505-d30ea7658b03 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly b4d0922d-63e5-491e-a505-d30ea7658b03 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Buffers_bytes', 'timestamp': 1756722761.952, 'value': 54661120.0, 'collection_delay': 386.139, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009869856285723018, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.720556'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 21ebbbe0-b283-4943-84f9-61f0a47bf710 indexed
+  warnings.warn(
+✅ Anomaly 21ebbbe0-b283-4943-84f9-61f0a47bf710 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Cached_bytes', 'timestamp': 1756722761.957, 'value': 1155100672.0, 'collection_delay': 386.25, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008639385608492365, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.809721'}
+  warnings.warn(
+✅ Anomaly 09f03011-477b-44ba-a571-620a37b6f29e indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 09f03011-477b-44ba-a571-620a37b6f29e indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_CommitLimit_bytes', 'timestamp': 1756722761.963, 'value': 6266302464.0, 'collection_delay': 387.448, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010125661561639382, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:14.888833'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 3ac1faf9-859c-4305-9f92-eaac9f94d56e indexed
+  warnings.warn(
+✅ Anomaly 3ac1faf9-859c-4305-9f92-eaac9f94d56e indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Committed_AS_bytes', 'timestamp': 1756722761.97, 'value': 15199723520.0, 'collection_delay': 387.554, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008609663470263386, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:14.968701'}
+  warnings.warn(
+✅ Anomaly 83b84ea8-c547-4358-a0dd-28320f9404d4 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 83b84ea8-c547-4358-a0dd-28320f9404d4 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_DirectMap1G_bytes', 'timestamp': 1756722761.974, 'value': 9663676416.0, 'collection_delay': 387.664, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008131960008237498, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.057804'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 39f96b39-ed85-4738-843b-907223cdaa16 indexed
+  warnings.warn(
+✅ Anomaly 39f96b39-ed85-4738-843b-907223cdaa16 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_DirectMap2M_bytes', 'timestamp': 1756722761.98, 'value': 8222932992.0, 'collection_delay': 387.771, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008492234390091502, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.151567'}
+  warnings.warn(
+✅ Anomaly 2bda8e25-e843-4aba-b895-a1aaa18e26ff indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 2bda8e25-e843-4aba-b895-a1aaa18e26ff indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_DirectMap4k_bytes', 'timestamp': 1756722761.985, 'value': 271581184.0, 'collection_delay': 387.878, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008407698909276696, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.247454'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 9a2ccb9e-94a5-42b7-bd54-26a1edf75252 indexed
+  warnings.warn(
+✅ Anomaly 9a2ccb9e-94a5-42b7-bd54-26a1edf75252 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Dirty_bytes', 'timestamp': 1756722761.991, 'value': 356352.0, 'collection_delay': 387.986, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008656899668630716, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.322981'}
+  warnings.warn(
+✅ Anomaly a9e59f9f-8e47-4a0f-acfa-fd826f005497 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly a9e59f9f-8e47-4a0f-acfa-fd826f005497 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_HugePages_Free', 'timestamp': 1756722761.995, 'value': 0.0, 'collection_delay': 388.096, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009206833802769852, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.409868'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 34204770-32d6-4f9c-947e-2d2b0d006c9d indexed
+  warnings.warn(
+✅ Anomaly 34204770-32d6-4f9c-947e-2d2b0d006c9d indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_HugePages_Rsvd', 'timestamp': 1756722761.999, 'value': 0.0, 'collection_delay': 388.206, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010582561947799055, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:15.497526'}
+  warnings.warn(
+✅ Anomaly 3aef6c5a-0692-4d05-bded-9ca26de8e9e5 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 3aef6c5a-0692-4d05-bded-9ca26de8e9e5 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_HugePages_Surp', 'timestamp': 1756722762.003, 'value': 0.0, 'collection_delay': 388.321, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009637933340971735, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.591031'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly e8fe791c-3548-43f5-952f-29dd4dfaf6f4 indexed
+  warnings.warn(
+✅ Anomaly e8fe791c-3548-43f5-952f-29dd4dfaf6f4 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_HugePages_Total', 'timestamp': 1756722762.007, 'value': 0.0, 'collection_delay': 388.435, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008029978300048896, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.679830'}
+  warnings.warn(
+✅ Anomaly a793e0aa-d5e6-4ff2-a7f5-7b03e3cf4fad indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly a793e0aa-d5e6-4ff2-a7f5-7b03e3cf4fad indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Hugepagesize_bytes', 'timestamp': 1756722762.011, 'value': 2097152.0, 'collection_delay': 388.548, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008657435675377384, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.751300'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly e3ef49bb-cc3a-4238-903d-263e148506eb indexed
+  warnings.warn(
+✅ Anomaly e3ef49bb-cc3a-4238-903d-263e148506eb indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Inactive_anon_bytes', 'timestamp': 1756722762.015, 'value': 4508798976.0, 'collection_delay': 388.661, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00812430199274782, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.813830'}
+  warnings.warn(
+✅ Anomaly 86f3f89e-7f77-49c3-a0a3-df0f99c168eb indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 86f3f89e-7f77-49c3-a0a3-df0f99c168eb indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Inactive_bytes', 'timestamp': 1756722762.02, 'value': 4861538304.0, 'collection_delay': 388.772, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008764747054075404, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.877951'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 14341088-e373-4c4e-a110-98d105d36001 indexed
+  warnings.warn(
+✅ Anomaly 14341088-e373-4c4e-a110-98d105d36001 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Inactive_file_bytes', 'timestamp': 1756722762.024, 'value': 352739328.0, 'collection_delay': 388.883, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.007715115868767227, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:15.952278'}
+  warnings.warn(
+✅ Anomaly fc999a1f-d474-4134-a7e6-0b5b773504e0 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly fc999a1f-d474-4134-a7e6-0b5b773504e0 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_KernelStack_bytes', 'timestamp': 1756722762.028, 'value': 22675456.0, 'collection_delay': 388.994, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008510984872267785, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.020394'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 397cc3fa-066e-4568-a4e8-73dce0ecee86 indexed
+  warnings.warn(
+✅ Anomaly 397cc3fa-066e-4568-a4e8-73dce0ecee86 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Mapped_bytes', 'timestamp': 1756722762.033, 'value': 733016064.0, 'collection_delay': 389.103, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00777620811053339, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.096804'}
+  warnings.warn(
+✅ Anomaly 7e38fca7-7d75-4aaa-8c4d-8887adb17ce2 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 7e38fca7-7d75-4aaa-8c4d-8887adb17ce2 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_MemAvailable_bytes', 'timestamp': 1756722762.058, 'value': 1222602752.0, 'collection_delay': 389.19, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00847265739735268, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.164993'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly a63b8201-a0dd-470a-9fdc-5d879f308ce6 indexed
+  warnings.warn(
+✅ Anomaly a63b8201-a0dd-470a-9fdc-5d879f308ce6 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_MemFree_bytes', 'timestamp': 1756722762.063, 'value': 150949888.0, 'collection_delay': 391.348, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008222479204878598, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.236798'}
+  warnings.warn(
+✅ Anomaly 7c02a103-6d72-46dc-99e8-d08d6a12ecc9 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 7c02a103-6d72-46dc-99e8-d08d6a12ecc9 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_MemTotal_bytes', 'timestamp': 1756722762.071, 'value': 8237637632.0, 'collection_delay': 391.453, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00822749913202056, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.293742'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 001c85cb-d602-431d-b082-8952e20db1c3 indexed
+  warnings.warn(
+✅ Anomaly 001c85cb-d602-431d-b082-8952e20db1c3 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Mlocked_bytes', 'timestamp': 1756722762.082, 'value': 12288.0, 'collection_delay': 391.557, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008438862404998823, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.355520'}
+  warnings.warn(
+✅ Anomaly 194a9045-cfbc-482a-bf83-b729d19f6505 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 194a9045-cfbc-482a-bf83-b729d19f6505 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_NFS_Unstable_bytes', 'timestamp': 1756722762.087, 'value': 0.0, 'collection_delay': 391.668, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008250861593703376, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.418032'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 04513ef3-b859-4821-95f5-6eee6eac6832 indexed
+  warnings.warn(
+✅ Anomaly 04513ef3-b859-4821-95f5-6eee6eac6832 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_PageTables_bytes', 'timestamp': 1756722762.091, 'value': 38125568.0, 'collection_delay': 391.778, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00989220509290124, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.476683'}
+  warnings.warn(
+✅ Anomaly 6cd69a4f-0c4c-4e37-a6a1-0bbbb34359fa indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 6cd69a4f-0c4c-4e37-a6a1-0bbbb34359fa indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Percpu_bytes', 'timestamp': 1756722762.097, 'value': 5046272.0, 'collection_delay': 391.886, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008763433790411291, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.538577'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 2ad760f9-c99f-4bd0-8a03-0025343cf6dc indexed
+  warnings.warn(
+✅ Anomaly 2ad760f9-c99f-4bd0-8a03-0025343cf6dc indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_SReclaimable_bytes', 'timestamp': 1756722762.1, 'value': 176160768.0, 'collection_delay': 391.998, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009473439185522693, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.604832'}
+  warnings.warn(
+✅ Anomaly aef3ccbe-9e18-4be1-8429-7eb79a30173a indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly aef3ccbe-9e18-4be1-8429-7eb79a30173a indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_SUnreclaim_bytes', 'timestamp': 1756722762.104, 'value': 91729920.0, 'collection_delay': 392.109, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.01054331685609427, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:16.666645'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 2e115ee9-82c8-429b-9091-3a67328ba7fd indexed
+  warnings.warn(
+✅ Anomaly 2e115ee9-82c8-429b-9091-3a67328ba7fd indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_ShmemHugePages_bytes', 'timestamp': 1756722762.109, 'value': 0.0, 'collection_delay': 392.219, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.007960773613438055, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.732988'}
+  warnings.warn(
+✅ Anomaly 6a13185b-163f-4806-8e7c-63c7cc67c2d7 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 6a13185b-163f-4806-8e7c-63c7cc67c2d7 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_ShmemPmdMapped_bytes', 'timestamp': 1756722762.113, 'value': 0.0, 'collection_delay': 392.332, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.01005064306451759, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:16.795723'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 6796076a-f266-4756-b9ef-1ce04add9b99 indexed
+  warnings.warn(
+✅ Anomaly 6796076a-f266-4756-b9ef-1ce04add9b99 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_Shmem_bytes', 'timestamp': 1756722762.118, 'value': 6598656.0, 'collection_delay': 389.805, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008603199106466008, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:16.868811'}
+  warnings.warn(
+✅ Anomaly 8cbdfd81-0812-43b0-9df2-ad10601c6954 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 8cbdfd81-0812-43b0-9df2-ad10601c6954 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Slab_bytes', 'timestamp': 1756722762.122, 'value': 267890688.0, 'collection_delay': 389.929, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.011004959853524746, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:16.951039'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 07e5752c-1c96-4e8b-9ade-392e95076354 indexed
+  warnings.warn(
+✅ Anomaly 07e5752c-1c96-4e8b-9ade-392e95076354 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_SwapCached_bytes', 'timestamp': 1756722762.126, 'value': 189038592.0, 'collection_delay': 390.038, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010345042007619714, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:17.023048'}
+  warnings.warn(
+✅ Anomaly bf71dc92-ce98-4f71-9619-1ab30bc13c76 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly bf71dc92-ce98-4f71-9619-1ab30bc13c76 indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_SwapFree_bytes', 'timestamp': 1756722762.13, 'value': 0.0, 'collection_delay': 390.148, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008454222904533697, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.092252'}
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly 3192c16d-4998-4eda-a24f-d9b39bc9ee10 indexed
+  warnings.warn(
+✅ Anomaly 3192c16d-4998-4eda-a24f-d9b39bc9ee10 indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+📅 Received:: {'metric_name': 'node_memory_SwapTotal_bytes', 'timestamp': 1756722762.135, 'value': 2147483648.0, 'collection_delay': 390.257, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00952838394179391, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.157052'}
+  warnings.warn(
+✅ Anomaly dc794906-7e67-4df0-820c-a11f2ddc0fee indexed
+/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '51.83.77.21'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+✅ Anomaly dc794906-7e67-4df0-820c-a11f2ddc0fee indexed
+  warnings.warn(
+📅 Received:: {'metric_name': 'node_memory_Unevictable_bytes', 'timestamp': 1756722762.139, 'value': 12288.0, 'collection_delay': 390.366, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00897154708732269, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.229121'}
+✅ Anomaly eb536fdb-304a-4698-af68-d26c53a28852 indexed
+✅ Anomaly eb536fdb-304a-4698-af68-d26c53a28852 indexed
+📅 Received:: {'metric_name': 'node_memory_VmallocChunk_bytes', 'timestamp': 1756722762.143, 'value': 0.0, 'collection_delay': 390.475, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008681314361727132, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.289490'}
+✅ Anomaly 9c35a814-5a30-4ec1-81b9-2775e7329703 indexed
+✅ Anomaly 9c35a814-5a30-4ec1-81b9-2775e7329703 indexed
+📅 Received:: {'metric_name': 'node_memory_VmallocTotal_bytes', 'timestamp': 1756722762.147, 'value': 35184372087808.0, 'collection_delay': 390.585, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 1.5358667778531556, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:17.363163'}
+✅ Anomaly fc0d0e63-0816-4bf0-bb12-cf8123e1b68d indexed
+✅ Anomaly fc0d0e63-0816-4bf0-bb12-cf8123e1b68d indexed
+📅 Received:: {'metric_name': 'node_memory_VmallocUsed_bytes', 'timestamp': 1756722762.151, 'value': 46460928.0, 'collection_delay': 390.696, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.01079918180874401, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:17.427298'}
+✅ Anomaly def1fec5-6601-4d89-b60e-3d7ba8af7957 indexed
+✅ Anomaly def1fec5-6601-4d89-b60e-3d7ba8af7957 indexed
+📅 Received:: {'metric_name': 'node_memory_WritebackTmp_bytes', 'timestamp': 1756722762.154, 'value': 0.0, 'collection_delay': 390.807, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00853927857484826, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.487457'}
+✅ Anomaly 2ce3932f-4af4-48b3-87a6-88885e786619 indexed
+✅ Anomaly 2ce3932f-4af4-48b3-87a6-88885e786619 indexed
+📅 Received:: {'metric_name': 'node_memory_Writeback_bytes', 'timestamp': 1756722762.158, 'value': 0.0, 'collection_delay': 390.919, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008764026962858577, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.550229'}
+✅ Anomaly 7cb6dd2a-dd4a-49ce-882a-814df1673d1a indexed
+✅ Anomaly 7cb6dd2a-dd4a-49ce-882a-814df1673d1a indexed
+📅 Received:: {'metric_name': 'node_network_address_assign_type', 'timestamp': 1756722762.349, 'value': 3.0, 'collection_delay': 394.428, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009847595101238988, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.616689'}
+✅ Anomaly 85c2290e-7e79-4ec1-badb-cb4213a83f9d indexed
+✅ Anomaly 85c2290e-7e79-4ec1-badb-cb4213a83f9d indexed
+📅 Received:: {'metric_name': 'node_network_carrier', 'timestamp': 1756722762.353, 'value': 1.0, 'collection_delay': 396.422, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.010464189561448825, 'is_anomaly': True, 'detected_at': '2025-09-01T11:13:17.673066'}
+✅ Anomaly 817f234a-aaba-4bc4-b269-feba8c6a4793 indexed
+✅ Anomaly 817f234a-aaba-4bc4-b269-feba8c6a4793 indexed
+📅 Received:: {'metric_name': 'node_network_carrier_changes_total', 'timestamp': 1756722762.356, 'value': 2.0, 'collection_delay': 396.533, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.007948584175568315, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.731303'}
+✅ Anomaly b4a34556-0308-4574-af69-9651f7ecd1f8 indexed
+✅ Anomaly b4a34556-0308-4574-af69-9651f7ecd1f8 indexed
+📅 Received:: {'metric_name': 'node_network_carrier_down_changes_total', 'timestamp': 1756722762.361, 'value': 1.0, 'collection_delay': 396.643, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00786017282751343, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.789874'}
+✅ Anomaly 8864680c-693e-42e0-8d35-43e645fbf997 indexed
+✅ Anomaly 8864680c-693e-42e0-8d35-43e645fbf997 indexed
+📅 Received:: {'metric_name': 'node_network_carrier_up_changes_total', 'timestamp': 1756722762.366, 'value': 1.0, 'collection_delay': 396.752, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00870054399788429, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.858233'}
+✅ Anomaly 8efcfe23-4f93-4c4f-a2c7-7847262ef8da indexed
+✅ Anomaly 8efcfe23-4f93-4c4f-a2c7-7847262ef8da indexed
+📅 Received:: {'metric_name': 'node_network_device_id', 'timestamp': 1756722762.371, 'value': 0.0, 'collection_delay': 396.861, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009513731640538684, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.915947'}
+✅ Anomaly 4599a7c0-d683-4019-9ac5-a550a595dbe4 indexed
+✅ Anomaly 4599a7c0-d683-4019-9ac5-a550a595dbe4 indexed
+📅 Received:: {'metric_name': 'node_network_dormant', 'timestamp': 1756722762.376, 'value': 0.0, 'collection_delay': 396.97, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009558555788692484, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:17.974750'}
+✅ Anomaly 79cd3f04-c838-470f-af68-bb763700bb5c indexed
+✅ Anomaly 79cd3f04-c838-470f-af68-bb763700bb5c indexed
+📅 Received:: {'metric_name': 'node_network_flags', 'timestamp': 1756722762.38, 'value': 4099.0, 'collection_delay': 397.082, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00940617727362575, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.043202'}
+✅ Anomaly cfeb3d3f-bf71-4dca-baf8-47ce02b35d98 indexed
+✅ Anomaly cfeb3d3f-bf71-4dca-baf8-47ce02b35d98 indexed
+📅 Received:: {'metric_name': 'node_network_iface_id', 'timestamp': 1756722762.384, 'value': 2.0, 'collection_delay': 397.195, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008641566820241453, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.121677'}
+✅ Anomaly c378876d-e081-4cd0-8fde-94a91ba89d65 indexed
+✅ Anomaly c378876d-e081-4cd0-8fde-94a91ba89d65 indexed
+📅 Received:: {'metric_name': 'node_network_iface_link', 'timestamp': 1756722762.389, 'value': 14.0, 'collection_delay': 398.388, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00897829166790399, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.190352'}
+✅ Anomaly 669f929d-f476-4262-93dd-71ab861e2cf9 indexed
+✅ Anomaly 669f929d-f476-4262-93dd-71ab861e2cf9 indexed
+📅 Received:: {'metric_name': 'node_network_iface_link_mode', 'timestamp': 1756722762.394, 'value': 0.0, 'collection_delay': 398.496, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00838725055337941, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.292413'}
+✅ Anomaly 609268e0-7d8a-4805-a45f-ecdb19386d7b indexed
+✅ Anomaly 609268e0-7d8a-4805-a45f-ecdb19386d7b indexed
+📅 Received:: {'metric_name': 'node_network_info', 'timestamp': 1756722762.398, 'value': 1.0, 'collection_delay': 398.605, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008232794287438774, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.363253'}
+✅ Anomaly 96d4d68a-d04e-401c-8448-03fe40112f31 indexed
+✅ Anomaly 96d4d68a-d04e-401c-8448-03fe40112f31 indexed
+📅 Received:: {'metric_name': 'node_network_mtu_bytes', 'timestamp': 1756722762.402, 'value': 1500.0, 'collection_delay': 398.715, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008952479681939735, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.439245'}
+✅ Anomaly a05b1e56-783b-40e3-bf25-5f88c9c7c717 indexed
+✅ Anomaly a05b1e56-783b-40e3-bf25-5f88c9c7c717 indexed
+📅 Received:: {'metric_name': 'node_network_name_assign_type', 'timestamp': 1756722762.407, 'value': 4.0, 'collection_delay': 398.825, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008542582245673724, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.513117'}
+✅ Anomaly e5be2183-041a-4525-b308-bcaa0d00a505 indexed
+✅ Anomaly e5be2183-041a-4525-b308-bcaa0d00a505 indexed
+📅 Received:: {'metric_name': 'node_network_net_dev_group', 'timestamp': 1756722762.412, 'value': 0.0, 'collection_delay': 398.933, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008478688747570871, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.589579'}
+✅ Anomaly 33e979c5-4a9a-45b1-bf8e-43205c8f6e54 indexed
+✅ Anomaly 33e979c5-4a9a-45b1-bf8e-43205c8f6e54 indexed
+📅 Received:: {'metric_name': 'node_network_protocol_type', 'timestamp': 1756722762.416, 'value': 1.0, 'collection_delay': 399.044, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008664804040092962, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.675167'}
+✅ Anomaly 25f3e217-4cb1-49fe-85f0-97159620561d indexed
+✅ Anomaly 25f3e217-4cb1-49fe-85f0-97159620561d indexed
+📅 Received:: {'metric_name': 'node_network_receive_bytes_total', 'timestamp': 1756722762.42, 'value': 41039123.0, 'collection_delay': 399.156, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.007601789412249652, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.749722'}
+✅ Anomaly bccf502c-5050-45e7-9c13-72ec6a949f98 indexed
+✅ Anomaly bccf502c-5050-45e7-9c13-72ec6a949f98 indexed
+📅 Received:: {'metric_name': 'node_network_receive_compressed_total', 'timestamp': 1756722762.435, 'value': 0.0, 'collection_delay': 399.257, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.008793531149049271, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.825478'}
+✅ Anomaly 3492c312-7d20-424e-a482-f5c768d116ec indexed
+✅ Anomaly 3492c312-7d20-424e-a482-f5c768d116ec indexed
+📅 Received:: {'metric_name': 'node_network_receive_drop_total', 'timestamp': 1756722762.44, 'value': 0.0, 'collection_delay': 401.335, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00781887663668796, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:18.914378'}
+✅ Anomaly a85d3676-0cd7-423e-8239-4e84101e2eee indexed
+✅ Anomaly a85d3676-0cd7-423e-8239-4e84101e2eee indexed
+📅 Received:: {'metric_name': 'node_network_receive_errs_total', 'timestamp': 1756722762.445, 'value': 0.0, 'collection_delay': 401.448, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009614064521785379, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:19.003876'}
+✅ Anomaly 3b38199b-9bd2-48ba-abdc-0e1f2bb119eb indexed
+✅ Anomaly 3b38199b-9bd2-48ba-abdc-0e1f2bb119eb indexed
+📅 Received:: {'metric_name': 'node_network_receive_fifo_total', 'timestamp': 1756722762.449, 'value': 0.0, 'collection_delay': 401.562, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009924353250540375, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:19.088363'}
+✅ Anomaly b2c48ad2-3933-48bd-8e5c-9c27dbe9ed61 indexed
+✅ Anomaly b2c48ad2-3933-48bd-8e5c-9c27dbe9ed61 indexed
+📅 Received:: {'metric_name': 'node_network_receive_frame_total', 'timestamp': 1756722762.453, 'value': 0.0, 'collection_delay': 401.676, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.00822008320659044, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:19.202150'}
+✅ Anomaly 6a3b775c-0fa8-46dd-a791-deb2be0f0f2f indexed
+✅ Anomaly 6a3b775c-0fa8-46dd-a791-deb2be0f0f2f indexed
+📅 Received:: {'metric_name': 'node_network_receive_multicast_total', 'timestamp': 1756722762.458, 'value': 0.0, 'collection_delay': 401.786, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009096288921210892, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:19.290108'}
+✅ Anomaly cde4962a-956e-4ba4-8b86-e4a31803cfbe indexed
+✅ Anomaly cde4962a-956e-4ba4-8b86-e4a31803cfbe indexed
+📅 Received:: {'metric_name': 'node_network_receive_nohandler_total', 'timestamp': 1756722762.476, 'value': 0.0, 'collection_delay': 401.882, 'confidence': 0.6, 'instance': 'node-exporter:9100', 'anomaly_score': 0.009903248567247716, 'is_anomaly': False, 'detected_at': '2025-09-01T11:13:19.360567'}
+✅ Anomaly 947dfc1c-b431-4e50-96c9-696e792ab0ad indexed

@@ -1,0 +1,45 @@
+[runner] cmd=/home/ibrahim/fastapi-boilerplate/venv/bin/python3 -m app.coreAgents.Agents.rca_agent
+[runner] sys.executable=/home/ibrahim/fastapi-boilerplate/venv/bin/python3
+[runner] cwd=/home/ibrahim/fastapi-boilerplate
+[runner] VIRTUAL_ENV=/home/ibrahim/fastapi-boilerplate/venv
+[runner] PATH=/home/ibrahim/fastapi-boilerplate/venv/bin:/home/ibrahim/fastapi-boilerplate/venv/bin:/home/ibrahim/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/c/Windows/System32:/c/Windows:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files (x86)/VMware/VMware Workstation/bin/:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files/Eclipse Adoptium/jdk-17.0.4.101-hotspot/bin:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0/:/c/Windows/System32/OpenSSH/:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/instantclient12_2:/c/oraclexe/app/oracle/admin/XE:/c/oraclexe:/c/Strawberry/c/bin:/c/Strawberry/perl/site/bin:/c/Strawberry/perl/bin:/c/Program Files/Git/cmd:/c/Program Files/TortoiseGit/bin:/c/xampp/php:/c/ProgramData/chocolatey/bin:/c/composer:/c/Program Files/Java/jdk1.8.0_202/bin/java.exe:/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/c/Program Files/dotnet/:/c/Program Files/Kubernetes/Minikube:/c/Program Files/Docker/Docker/resources/bin:/c/Program Files/nodejs/:/c/Python312/:/c/Users/MSI/Desktop/Pointeuse-jump/venv/Scripts/:/c/Users/MSI/Desktop/sascode/tuto-test/Django-React-Full-Stack-App-main/venv/Scripts:/c/Program Files/Graphviz/bin:/c/Program Files/apache-maven-3.9.9/bin:/c/Users/MSI/scoop/shims:/c/Users/MSI/AppData/Local/Microsoft/WindowsApps:/c/Users/MSI/AppData/Local/GitHubDesktop/bin:/c/Users/MSI/AppData/Roaming/Composer/vendor/bin:/c/Users/MSI/.dotnet/tools:/c/Program Files/JetBrains/IntelliJ IDEA 2023.3.3/bin:/c/Users/MSI/AppData/Roaming/npm:/c/Users/MSI/AppData/Local/Programs/Microsoft VS Code/bin:/c/Users/MSI/AppData/Roaming/Python/Python312/Scripts:/snap/bin
+[runner] PYTHONPATH=/home/ibrahim/fastapi-boilerplate:
+🔎 Found 1 incident(s) needing RCA.
+2025-09-01 22:19:42.904492: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+🛰️ Fetching logs for 'Payment Gateway' near 2025-09-01 20:50:00.078000...
+2025-09-01 22:19:42.904794: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+📄 Retrieved 4 logs.
+2025-09-01 22:19:42.999716: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+🧾 Log 1: DNS lookup started for api.payments.internal (resolver=10.0.0.10)
+/home/ibrahim/fastapi-boilerplate/app/langchain/graphs/rca_graph.py:32: LangChainDeprecationWarning: The class `LLMChain` was deprecated in LangChain 0.1.17 and will be removed in 1.0. Use :meth:`~RunnableSequence, e.g., `prompt | llm`` instead.
+🧾 Log 2: DNSSEC validation failed for api.payments.internal (rcode=SERVFAIL)
+  chain = LLMChain(llm=llm, prompt=root_cause_prompt)
+🧾 Log 3: Conflicting A records for api.payments.internal (10.12.3.45 vs 172.22.14.9) from resolvers 10.0.0.10/10.0.0.11
+🧾 Log 4: Upstream requests failing after DNS resolution; suspected cache poisoning. HTTP 503 spike observed
+🧠 Running RCA on incident 16ec29cc-5add-4142-84eb-4fc81795da18 (type=DNSIntegrityAnomaly)...
+🔍 Running Analyze Logs node...
+📝 Raw LLM response:
+ {
+  "root_cause": "Conflicting A records for api.payments.internal (10.12.3.45 vs 172.22.14.9) from resolvers 10.0.0.10/10.0.0.11, leading to DNSSEC validation failure and suspected cache poisoning.",
+  "recommendations": [
+    {
+      "text": "Implement DNSSEC validation and cache poisoning protection for the Payment Gateway service.",
+      "confidence": 0.95
+    },
+    {
+      "text": "Verify and correct the conflicting A records for api.payments.internal to ensure consistency across resolvers.",
+      "confidence": 0.85
+    },
+    {
+      "text": "Monitor DNS resolver performance and configuration to prevent similar issues in the future.",
+      "confidence": 0.7
+    }
+  ]
+}
+🧠 RCA Result: {'logs': ['DNS lookup started for api.payments.internal (resolver=10.0.0.10)', 'DNSSEC validation failed for api.payments.internal (rcode=SERVFAIL)', 'Conflicting A records for api.payments.internal (10.12.3.45 vs 172.22.14.9) from resolvers 10.0.0.10/10.0.0.11', 'Upstream requests failing after DNS resolution; suspected cache poisoning. HTTP 503 spike observed'], 'root_cause': 'Conflicting A records for api.payments.internal (10.12.3.45 vs 172.22.14.9) from resolvers 10.0.0.10/10.0.0.11, leading to DNSSEC validation failure and suspected cache poisoning.', 'recommendations': [{'text': 'Implement DNSSEC validation and cache poisoning protection for the Payment Gateway service.', 'confidence': 0.95}, {'text': 'Verify and correct the conflicting A records for api.payments.internal to ensure consistency across resolvers.', 'confidence': 0.85}, {'text': 'Monitor DNS resolver performance and configuration to prevent similar issues in the future.', 'confidence': 0.7}], 'confidence': 0.95, 'service_name': 'Payment Gateway', 'incident_type': 'DNSIntegrityAnomaly', 'metric_type': 'Generic'}
+👨‍💻 Human review required (confidence too low).
+✅ RCAAnalysis saved and linked to incident 16ec29cc-5add-4142-84eb-4fc81795da18.
+🧠 Auto-learn: New RCA embedded and indexed.
+📝 Markdown RCA report saved: rca_reports/incident_16ec29cc-5add-4142-84eb-4fc81795da18_rca.md
+📡 MCP rca_report sent for incident 16ec29cc-5add-4142-84eb-4fc81795da18: {'status': 'ok', 'file': 'incident_16ec29cc-5add-4142-84eb-4fc81795da18_rca_report.json', 'result': None}
+🤝 MCP remediation_request sent. Result: {'status': 'ok', 'file': 'incident_16ec29cc-5add-4142-84eb-4fc81795da18_remediation_request.json', 'result': {'incident_id': '16ec29cc-5add-4142-84eb-4fc81795da18', 'service': 'Payment Gateway', 'incident_type_id': 'c48d11b6-c2b2-418c-aa31-204e81c842ff', 'root_cause': 'Conflicting A records for api.payments.internal (10.12.3.45 vs 172.22.14.9) from resolvers 10.0.0.10/10.0.0.11, leading to DNSSEC validation failure and suspected cache poisoning.', 'recommendation_text': 'Implement DNSSEC validation and cache poisoning protection for the Payment Gateway service.', 'recommendation_confidence': 0.95, 'decision': {'auto': False, 'why': 'FAISS sim 0.34 < 0.4', 'job': None, 'scores': {'rec_conf': 0.95, 'faiss_sim': 0.34073033928871155, 'ensemble': 0.7672191017866133}}, 'human_required': True}}

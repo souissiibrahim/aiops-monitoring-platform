@@ -69,6 +69,7 @@ from typing import Dict, List, Tuple, Optional
 import requests
 import numpy as np
 import pandas as pd
+from app.monitor.heartbeat import start_heartbeat
 
 try:
     import yaml
@@ -77,6 +78,7 @@ except Exception as e:
         "PyYAML is required. Install with: pip install pyyaml"
     ) from e
 
+hb = start_heartbeat("scripts/fetch_and_clean_for_prophet.py", interval_s=30, version="dev")
 
 # ---------- Defaults & helpers ----------
 MAX_CHUNK_HOURS = 24

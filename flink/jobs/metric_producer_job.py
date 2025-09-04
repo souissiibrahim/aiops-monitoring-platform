@@ -6,6 +6,11 @@ from kafka import KafkaProducer
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+#from app.monitor.heartbeat import start_heartbeat
+
+
+#hb = start_heartbeat("metric_producer_job.py", interval_s=20, version="1.0")
+
 #PROMETHEUS_BASE_URL = "https://prometheus.u-cloudsolutions.xyz/api/v1"
 #VERIFY_SSL = False
 

@@ -2,6 +2,8 @@ from pyflink.datastream import StreamExecutionEnvironment
 import requests
 import json
 
+
+
 PROM_URL = "https://prometheus.u-cloudsolutions.xyz/api/v1/query"
 METRIC_QUERY = 'node_cpu_seconds_total'  # change to a valid metric on your setup
 

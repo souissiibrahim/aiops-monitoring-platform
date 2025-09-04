@@ -4,6 +4,10 @@
 import os, json, glob, argparse, pickle, time
 import pandas as pd
 from kafka import KafkaProducer
+from app.monitor.heartbeat import start_heartbeat
+
+hb = start_heartbeat("scripts/stream_forecasts_to_kafka.py", interval_s=30, version="dev")
+
 
 DEFAULT_MODEL_ROOT = "models/prophet"
 DEFAULT_HORIZON    = "48h"

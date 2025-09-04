@@ -7,6 +7,9 @@ from datetime import datetime, timezone
 
 import requests
 from kafka import KafkaConsumer
+from app.monitor.heartbeat import start_heartbeat
+
+hb = start_heartbeat("scripts/predicted_incidents_to_fastapi.py", interval_s=30, version="dev")
 
 # ---------- Config ----------
 API_BASE = os.getenv("POWEROPS_API", "http://localhost:8000")

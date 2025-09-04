@@ -1,0 +1,7 @@
+[node_cpu_utilization | node-exporter:9100] Best: cps_0.1_sps_0.1
+  RMSE(mean): 0.0123
+  MAE(mean):  0.0104
+  sMAPE(%):   0.10
+  Coverage:   0.822
+  Bias (ME):  0.002286
+  Acceptance: PASS ✅

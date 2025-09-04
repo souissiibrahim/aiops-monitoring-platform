@@ -22,7 +22,9 @@ import argparse
 from datetime import datetime, timezone, timedelta
 from sqlalchemy import text
 from app.db.session import SessionLocal
+from app.monitor.heartbeat import start_heartbeat
 
+hb = start_heartbeat("scripts/expire_predictions.py", interval_s=30, version="dev")
 DEFAULT_GRACE_MIN = int(os.getenv("EXPIRE_PREDICTIONS_GRACE_MIN", "5"))
 STATUS_PENDING = os.getenv("PREDICTION_STATUS_PENDING", "Pending")
 STATUS_EXPIRED = os.getenv("PREDICTION_STATUS_EXPIRED", "Expired")

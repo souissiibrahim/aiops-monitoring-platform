@@ -1,0 +1,23 @@
+{
+  "metric": "node_memory_utilization",
+  "instance": "node-exporter:9100",
+  "best_candidate": "cps_0.05_sps_0.1",
+  "model_path": "models/prophet/node_memory_utilization/node-exporter:9100/best_model_cps_0.05_sps_0.1.pkl",
+  "rmse_mean": 0.1212683075407994,
+  "mae_mean": 0.1054629873735342,
+  "mape_mean": 0.11826635838624941,
+  "smape_mean_pct": 0.12003985166022828,
+  "coverage_mean": 0.8060824592074592,
+  "mean_error_bias": -0.00521390679348965,
+  "acceptance_thresholds": {
+    "MAE": 0.05,
+    "RMSE": 0.05,
+    "COVERAGE": [
+      0.75,
+      0.9
+    ],
+    "sMAPE": 0.1
+  },
+  "passed_acceptance": false,
+  "notes": "Thresholds assume utilization in [0,1]; adjust as needed."
+}

@@ -4,6 +4,11 @@ import requests
 from datetime import datetime, timedelta
 from kafka import KafkaProducer
 import re
+from app.monitor.heartbeat import start_heartbeat
+
+
+
+hb = start_heartbeat("scripts/log_poller_to_kafka.py", interval_s=30, version="dev")
 
 # --- Configuration ---
 LOKI_URL = "http://172.24.68.64:3100/loki/api/v1/query_range"

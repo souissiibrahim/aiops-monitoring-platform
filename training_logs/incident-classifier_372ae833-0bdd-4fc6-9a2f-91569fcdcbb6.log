@@ -1,0 +1,24 @@
+✅ Accuracy: 1.0000  |  F1 (weighted): 1.0000
+              precision    recall  f1-score   support
+
+           0      1.000     1.000     1.000        26
+           1      1.000     1.000     1.000        27
+           2      1.000     1.000     1.000        22
+           3      1.000     1.000     1.000        26
+           4      1.000     1.000     1.000        25
+           5      1.000     1.000     1.000        25
+           6      1.000     1.000     1.000        25
+           7      1.000     1.000     1.000        24
+
+    accuracy                          1.000       200
+   macro avg      1.000     1.000     1.000       200
+weighted avg      1.000     1.000     1.000       200
+
+💾 Saved: scripts/incident_type_classifier.pkl, scripts/incident_type_label_encoder.pkl, scripts/incident_type_feature_columns.pkl
+{
+  "model": "xgb-incident-classifier",
+  "status": "succeeded",
+  "accuracy": 1.0,
+  "f1_weighted": 1.0,
+  "trained_at": "2025-08-30T13:01:28.006858+00:00"
+}

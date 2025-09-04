@@ -5,9 +5,18 @@ from app.services.elasticsearch.connection import test_elasticsearch_connection
 from app.services.postgres.connection import test_postgres_connection
 from app.db.session import engine, Base, update_existing_tables
 from fastapi.middleware.cors import CORSMiddleware
+from app.monitor.watchdog import start_watchdog
+import sys, pkgutil, logging
 
-
+start_watchdog()
 app = FastAPI()
+
+
+
+logging.getLogger("uvicorn.error").info(f"[env] API sys.executable = {sys.executable}")
+logging.getLogger("uvicorn.error").info(
+    f"[env] tensorflow importable = {pkgutil.find_loader('tensorflow') is not None}"
+)
 
 app.add_middleware(
     CORSMiddleware,

@@ -5,6 +5,10 @@ import os, json, argparse
 from datetime import datetime, timezone
 from collections import defaultdict
 from kafka import KafkaConsumer, KafkaProducer
+from app.monitor.heartbeat import start_heartbeat
+
+hb = start_heartbeat("scripts/predict_incidents_from_forecasts.py", interval_s=30, version="dev")
+
 
 DEFAULT_BOOTSTRAP = "localhost:29092"
 IN_TOPIC  = "prophet-forecasts"

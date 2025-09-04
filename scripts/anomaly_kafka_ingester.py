@@ -20,7 +20,10 @@ from app.db.models.severity_level import SeverityLevel
 from app.db.models.service_endpoint import ServiceEndpoint
 from app.services.elasticsearch.anomaly_service import index_anomaly
 from app.db.models.incident_status import IncidentStatus
+from app.monitor.heartbeat import start_heartbeat
 
+
+hb = start_heartbeat("scripts/anomaly_kafka_ingester.py", interval_s=30, version="dev")
 model = joblib.load("scripts/incident_type_classifier.pkl")
 label_encoder = joblib.load("scripts/incident_type_label_encoder.pkl")
 feature_columns = joblib.load("scripts/incident_type_feature_columns.pkl")

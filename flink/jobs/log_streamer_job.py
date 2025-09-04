@@ -6,6 +6,9 @@ from datetime import datetime, timedelta
 from pyflink.datastream import StreamExecutionEnvironment, SourceFunction
 from pyflink.common.typeinfo import Types
 from kafka import KafkaProducer
+#from app.monitor.heartbeat import start_heartbeat
+
+#hb = start_heartbeat("log_streamer_job.py", interval_s=20, version="1.0")
 
 # --- Config ---
 LOKI_URL = "http://172.24.68.64:3100/loki/api/v1/query_range"

@@ -1,0 +1,7 @@
+[node_memory_utilization | node-exporter:9100] Best: cps_0.05_sps_0.1
+  RMSE(mean): 0.1213
+  MAE(mean):  0.1055
+  sMAPE(%):   0.12
+  Coverage:   0.806
+  Bias (ME):  -0.005214
+  Acceptance: FAIL ❌

@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from app.db.base import Base, TimestampMixin
 from sqlalchemy.orm import relationship
@@ -13,6 +13,10 @@ class Model(TimestampMixin, Base):
     type = Column(String, nullable=False)
     version = Column(String, nullable=True)
     accuracy = Column(String, nullable=True)
+
+
+    last_trained_at = Column(DateTime(timezone=True), nullable=True, index=True)
+    last_training_status = Column(String(16), nullable=True, index=True)  
 
 
     predictions = relationship("Prediction", back_populates="model")

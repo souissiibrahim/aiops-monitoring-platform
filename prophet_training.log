@@ -1,0 +1,62 @@
+2025-09-03 02:10:32,506 - __main__ - INFO - Training models for 3 metric types
+2025-09-03 02:10:32,506 - __main__ - INFO - Processing 1 instances for metric 'node_cpu_utilization'
+2025-09-03 02:10:32,652 - prophet - INFO - Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+2025-09-03 02:10:32,702 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp6ke8ffin/89vwdv1r.json
+2025-09-03 02:10:33,360 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp6ke8ffin/6n4nniwq.json
+2025-09-03 02:10:33,361 - cmdstanpy - DEBUG - idx 0
+2025-09-03 02:10:33,362 - cmdstanpy - DEBUG - running CmdStan, num_threads: None
+2025-09-03 02:10:33,362 - cmdstanpy - DEBUG - CmdStan args: ['/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=46412', 'data', 'file=/tmp/tmp6ke8ffin/89vwdv1r.json', 'init=/tmp/tmp6ke8ffin/6n4nniwq.json', 'output', 'file=/tmp/tmp6ke8ffin/prophet_modelki1udwxv/prophet_model-20250903021033.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+2025-09-03 02:10:33,362 - cmdstanpy - INFO - Chain [1] start processing
+2025-09-03 02:10:43,668 - cmdstanpy - INFO - Chain [1] done processing
+2025-09-03 02:10:43,692 - __main__ - ERROR - Training failed for data/prophet_ready_csv/node_cpu_utilization/node-exporter:9100.csv: "['cap', 'floor'] not in index"
+2025-09-03 02:10:43,693 - __main__ - INFO - Processing 1 instances for metric 'node_filesystem_usage'
+2025-09-03 02:10:43,779 - prophet - INFO - Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+2025-09-03 02:10:43,830 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp6ke8ffin/r0uvq8ma.json
+2025-09-03 02:10:44,737 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp6ke8ffin/j_pdqnda.json
+2025-09-03 02:10:44,738 - cmdstanpy - DEBUG - idx 0
+2025-09-03 02:10:44,738 - cmdstanpy - DEBUG - running CmdStan, num_threads: None
+2025-09-03 02:10:44,738 - cmdstanpy - DEBUG - CmdStan args: ['/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=65288', 'data', 'file=/tmp/tmp6ke8ffin/r0uvq8ma.json', 'init=/tmp/tmp6ke8ffin/j_pdqnda.json', 'output', 'file=/tmp/tmp6ke8ffin/prophet_modelmsc2sbyp/prophet_model-20250903021044.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+2025-09-03 02:10:44,738 - cmdstanpy - INFO - Chain [1] start processing
+2025-09-03 02:11:04,117 - cmdstanpy - INFO - Chain [1] done processing
+2025-09-03 02:11:04,150 - __main__ - ERROR - Training failed for data/prophet_ready_csv/node_filesystem_usage/node-exporter:9100.csv: "['cap', 'floor'] not in index"
+2025-09-03 02:11:04,152 - __main__ - INFO - Processing 1 instances for metric 'node_memory_utilization'
+2025-09-03 02:11:04,234 - prophet - INFO - Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+2025-09-03 02:11:04,284 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp6ke8ffin/d668551q.json
+2025-09-03 02:11:05,237 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp6ke8ffin/1np_qi6o.json
+2025-09-03 02:11:05,238 - cmdstanpy - DEBUG - idx 0
+2025-09-03 02:11:05,238 - cmdstanpy - DEBUG - running CmdStan, num_threads: None
+2025-09-03 02:11:05,238 - cmdstanpy - DEBUG - CmdStan args: ['/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=13551', 'data', 'file=/tmp/tmp6ke8ffin/d668551q.json', 'init=/tmp/tmp6ke8ffin/1np_qi6o.json', 'output', 'file=/tmp/tmp6ke8ffin/prophet_model_kt0ibv6/prophet_model-20250903021105.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+2025-09-03 02:11:05,238 - cmdstanpy - INFO - Chain [1] start processing
+2025-09-03 02:11:26,464 - cmdstanpy - INFO - Chain [1] done processing
+2025-09-03 02:11:26,494 - __main__ - ERROR - Training failed for data/prophet_ready_csv/node_memory_utilization/node-exporter:9100.csv: "['cap', 'floor'] not in index"
+2025-09-03 02:16:26,509 - __main__ - INFO - Training models for 3 metric types
+2025-09-03 02:16:26,509 - __main__ - INFO - Processing 1 instances for metric 'node_cpu_utilization'
+2025-09-03 02:16:26,956 - prophet - INFO - Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+2025-09-03 02:16:27,008 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp0b2ywd0c/w5voi9jw.json
+2025-09-03 02:16:27,633 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp0b2ywd0c/sq5yz_gh.json
+2025-09-03 02:16:27,639 - cmdstanpy - DEBUG - idx 0
+2025-09-03 02:16:27,639 - cmdstanpy - DEBUG - running CmdStan, num_threads: None
+2025-09-03 02:16:27,639 - cmdstanpy - DEBUG - CmdStan args: ['/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=19761', 'data', 'file=/tmp/tmp0b2ywd0c/w5voi9jw.json', 'init=/tmp/tmp0b2ywd0c/sq5yz_gh.json', 'output', 'file=/tmp/tmp0b2ywd0c/prophet_modelo63ba9rz/prophet_model-20250903021627.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+2025-09-03 02:16:27,639 - cmdstanpy - INFO - Chain [1] start processing
+2025-09-03 02:16:37,972 - cmdstanpy - INFO - Chain [1] done processing
+2025-09-03 02:16:38,104 - __main__ - WARNING - Cross-validation failed: Less data than horizon after initial window. Make horizon or initial shorter.
+2025-09-03 02:16:38,131 - __main__ - INFO - Processing 1 instances for metric 'node_filesystem_usage'
+2025-09-03 02:16:38,208 - prophet - INFO - Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+2025-09-03 02:16:38,309 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp0b2ywd0c/8r5r6m1t.json
+2025-09-03 02:16:39,215 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp0b2ywd0c/m2060y8v.json
+2025-09-03 02:16:39,222 - cmdstanpy - DEBUG - idx 0
+2025-09-03 02:16:39,222 - cmdstanpy - DEBUG - running CmdStan, num_threads: None
+2025-09-03 02:16:39,222 - cmdstanpy - DEBUG - CmdStan args: ['/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=31791', 'data', 'file=/tmp/tmp0b2ywd0c/8r5r6m1t.json', 'init=/tmp/tmp0b2ywd0c/m2060y8v.json', 'output', 'file=/tmp/tmp0b2ywd0c/prophet_modeldxiphu3c/prophet_model-20250903021639.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+2025-09-03 02:16:39,222 - cmdstanpy - INFO - Chain [1] start processing
+2025-09-03 02:16:57,973 - cmdstanpy - INFO - Chain [1] done processing
+2025-09-03 02:16:58,274 - __main__ - WARNING - Cross-validation failed: Less data than horizon after initial window. Make horizon or initial shorter.
+2025-09-03 02:16:58,312 - __main__ - INFO - Processing 1 instances for metric 'node_memory_utilization'
+2025-09-03 02:16:58,392 - prophet - INFO - Disabling yearly seasonality. Run prophet with yearly_seasonality=True to override this.
+2025-09-03 02:16:58,439 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp0b2ywd0c/ra4g68um.json
+2025-09-03 02:16:59,343 - cmdstanpy - DEBUG - input tempfile: /tmp/tmp0b2ywd0c/oxgly8hw.json
+2025-09-03 02:16:59,353 - cmdstanpy - DEBUG - idx 0
+2025-09-03 02:16:59,354 - cmdstanpy - DEBUG - running CmdStan, num_threads: None
+2025-09-03 02:16:59,354 - cmdstanpy - DEBUG - CmdStan args: ['/home/ibrahim/fastapi-boilerplate/venv/lib/python3.11/site-packages/prophet/stan_model/prophet_model.bin', 'random', 'seed=55494', 'data', 'file=/tmp/tmp0b2ywd0c/ra4g68um.json', 'init=/tmp/tmp0b2ywd0c/oxgly8hw.json', 'output', 'file=/tmp/tmp0b2ywd0c/prophet_model9sy4t5ah/prophet_model-20250903021659.csv', 'method=optimize', 'algorithm=lbfgs', 'iter=10000']
+2025-09-03 02:16:59,354 - cmdstanpy - INFO - Chain [1] start processing
+2025-09-03 02:17:20,155 - cmdstanpy - INFO - Chain [1] done processing
+2025-09-03 02:17:20,519 - __main__ - WARNING - Cross-validation failed: Less data than horizon after initial window. Make horizon or initial shorter.

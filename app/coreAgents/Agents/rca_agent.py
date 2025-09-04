@@ -13,6 +13,9 @@ from app.db.models.rca_analysis import RCAAnalysis
 from app.db.models.telemetry_source import TelemetrySource  # kept if you later use it
 from app.utils.slack_notifier import send_to_slack  # optional: used for ops signals
 from app.services.rca.update_faiss_index import append_to_faiss
+from app.monitor.heartbeat import start_heartbeat
+
+hb = start_heartbeat("rca_agent", interval_s=20, version="1.0")
 
 # -------------------------------------------------------------------
 # Config

@@ -1,0 +1,438 @@
+[runner] cmd=/home/ibrahim/fastapi-boilerplate/venv/bin/python3 -m scripts.log_poller_to_kafka
+[runner] sys.executable=/home/ibrahim/fastapi-boilerplate/venv/bin/python3
+[runner] cwd=/home/ibrahim/fastapi-boilerplate
+[runner] VIRTUAL_ENV=/home/ibrahim/fastapi-boilerplate/venv
+[runner] PATH=/home/ibrahim/fastapi-boilerplate/venv/bin:/home/ibrahim/fastapi-boilerplate/venv/bin:/home/ibrahim/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/c/Windows/System32:/c/Windows:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files (x86)/VMware/VMware Workstation/bin/:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files/Eclipse Adoptium/jdk-17.0.4.101-hotspot/bin:/c/oraclexe/app/oracle/product/11.2.0/server/bin:/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0/:/c/Windows/System32/OpenSSH/:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/instantclient12_2:/c/oraclexe/app/oracle/admin/XE:/c/oraclexe:/c/Strawberry/c/bin:/c/Strawberry/perl/site/bin:/c/Strawberry/perl/bin:/c/Program Files/Git/cmd:/c/Program Files/TortoiseGit/bin:/c/xampp/php:/c/ProgramData/chocolatey/bin:/c/composer:/c/Program Files/Java/jdk1.8.0_202/bin/java.exe:/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/c/Program Files/dotnet/:/c/Program Files/Kubernetes/Minikube:/c/Program Files/Docker/Docker/resources/bin:/c/Program Files/nodejs/:/c/Python312/:/c/Users/MSI/Desktop/Pointeuse-jump/venv/Scripts/:/c/Users/MSI/Desktop/sascode/tuto-test/Django-React-Full-Stack-App-main/venv/Scripts:/c/Program Files/Graphviz/bin:/c/Program Files/apache-maven-3.9.9/bin:/c/Users/MSI/scoop/shims:/c/Users/MSI/AppData/Local/Microsoft/WindowsApps:/c/Users/MSI/AppData/Local/GitHubDesktop/bin:/c/Users/MSI/AppData/Roaming/Composer/vendor/bin:/c/Users/MSI/.dotnet/tools:/c/Program Files/JetBrains/IntelliJ IDEA 2023.3.3/bin:/c/Users/MSI/AppData/Roaming/npm:/c/Users/MSI/AppData/Local/Programs/Microsoft VS Code/bin:/c/Users/MSI/AppData/Roaming/Python/Python312/Scripts:/snap/bin
+[runner] PYTHONPATH=/home/ibrahim/fastapi-boilerplate:
+✅ Starting Loki log polling every 1s...
+
+📡 Querying logs from 2025-09-01T12:56:25.334463 to 2025-09-01T12:56:26.446516
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:26.446516 to 2025-09-01T12:56:27.658653
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:27.658653 to 2025-09-01T12:56:28.675602
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:28.675602 to 2025-09-01T12:56:29.701052
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:29.701052 to 2025-09-01T12:56:30.714828
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:30.714828 to 2025-09-01T12:56:31.728500
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:31.728500 to 2025-09-01T12:56:32.740480
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:32.740480 to 2025-09-01T12:56:33.753310
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:33.753310 to 2025-09-01T12:56:34.766722
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:34.766722 to 2025-09-01T12:56:35.783624
+📤 Sent 6 logs to Kafka ✅
+
+📡 Querying logs from 2025-09-01T12:56:35.783624 to 2025-09-01T12:56:36.826503
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:36.826503 to 2025-09-01T12:56:37.854868
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:37.854868 to 2025-09-01T12:56:38.889818
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:38.889818 to 2025-09-01T12:56:39.930171
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:39.930171 to 2025-09-01T12:56:40.944972
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:40.944972 to 2025-09-01T12:56:41.959346
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:41.959346 to 2025-09-01T12:56:42.972236
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:42.972236 to 2025-09-01T12:56:42.973236
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:42.973236 to 2025-09-01T12:56:42.974236
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:42.974236 to 2025-09-01T12:56:43.358111
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:43.358111 to 2025-09-01T12:56:44.370381
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:44.370381 to 2025-09-01T12:56:45.393374
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:45.393374 to 2025-09-01T12:56:46.404028
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:46.404028 to 2025-09-01T12:56:47.414448
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:47.414448 to 2025-09-01T12:56:48.440160
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:48.440160 to 2025-09-01T12:56:49.450180
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:49.450180 to 2025-09-01T12:56:50.461089
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:50.461089 to 2025-09-01T12:56:51.506698
+📤 Sent 1 logs to Kafka ✅
+
+📡 Querying logs from 2025-09-01T12:56:51.506698 to 2025-09-01T12:56:52.539933
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:52.539933 to 2025-09-01T12:56:53.571673
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:53.571673 to 2025-09-01T12:56:54.601869
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:54.601869 to 2025-09-01T12:56:55.620293
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:55.620293 to 2025-09-01T12:56:56.631529
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:56.631529 to 2025-09-01T12:56:57.645742
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:57.645742 to 2025-09-01T12:56:58.656406
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:58.656406 to 2025-09-01T12:56:59.666803
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:56:59.666803 to 2025-09-01T12:57:00.679385
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:00.679385 to 2025-09-01T12:57:01.693179
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:01.693179 to 2025-09-01T12:57:02.707336
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:02.707336 to 2025-09-01T12:57:03.726288
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:03.726288 to 2025-09-01T12:57:04.737834
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:04.737834 to 2025-09-01T12:57:05.749022
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:05.749022 to 2025-09-01T12:57:06.759271
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:06.759271 to 2025-09-01T12:57:07.770933
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:07.770933 to 2025-09-01T12:57:08.784651
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:08.784651 to 2025-09-01T12:57:09.796229
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:09.796229 to 2025-09-01T12:57:10.810356
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:10.810356 to 2025-09-01T12:57:11.820896
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:11.820896 to 2025-09-01T12:57:12.840002
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:12.840002 to 2025-09-01T12:57:12.841002
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:12.841002 to 2025-09-01T12:57:12.842002
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:12.842002 to 2025-09-01T12:57:13.025511
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:13.025511 to 2025-09-01T12:57:14.038423
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:14.038423 to 2025-09-01T12:57:15.049985
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:15.049985 to 2025-09-01T12:57:16.060318
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:16.060318 to 2025-09-01T12:57:17.071433
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:17.071433 to 2025-09-01T12:57:18.094111
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:18.094111 to 2025-09-01T12:57:19.110122
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:19.110122 to 2025-09-01T12:57:20.122247
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:20.122247 to 2025-09-01T12:57:21.135584
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:21.135584 to 2025-09-01T12:57:22.146385
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:22.146385 to 2025-09-01T12:57:23.161781
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:23.161781 to 2025-09-01T12:57:24.174165
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:24.174165 to 2025-09-01T12:57:25.223613
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:25.223613 to 2025-09-01T12:57:26.234359
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:26.234359 to 2025-09-01T12:57:27.246565
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:27.246565 to 2025-09-01T12:57:28.257183
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:28.257183 to 2025-09-01T12:57:29.270001
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:29.270001 to 2025-09-01T12:57:30.282919
+📤 Sent 6 logs to Kafka ✅
+
+📡 Querying logs from 2025-09-01T12:57:30.282919 to 2025-09-01T12:57:31.295769
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:31.295769 to 2025-09-01T12:57:32.307300
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:32.307300 to 2025-09-01T12:57:33.318111
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:33.318111 to 2025-09-01T12:57:34.335712
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:34.335712 to 2025-09-01T12:57:35.351964
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:35.351964 to 2025-09-01T12:57:36.363035
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:36.363035 to 2025-09-01T12:57:37.375781
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:37.375781 to 2025-09-01T12:57:38.386716
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:38.386716 to 2025-09-01T12:57:39.398774
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:39.398774 to 2025-09-01T12:57:40.410887
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:40.410887 to 2025-09-01T12:57:41.426175
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:41.426175 to 2025-09-01T12:57:42.440038
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:42.440038 to 2025-09-01T12:57:42.441038
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:42.441038 to 2025-09-01T12:57:42.442038
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:42.442038 to 2025-09-01T12:57:42.674906
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:42.674906 to 2025-09-01T12:57:43.689130
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:43.689130 to 2025-09-01T12:57:44.700437
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:44.700437 to 2025-09-01T12:57:45.712983
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:45.712983 to 2025-09-01T12:57:46.723076
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:46.723076 to 2025-09-01T12:57:47.733359
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:47.733359 to 2025-09-01T12:57:48.751432
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:48.751432 to 2025-09-01T12:57:49.762196
+📤 Sent 1 logs to Kafka ✅
+
+📡 Querying logs from 2025-09-01T12:57:49.762196 to 2025-09-01T12:57:50.773776
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:50.773776 to 2025-09-01T12:57:51.786025
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:51.786025 to 2025-09-01T12:57:52.796803
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:52.796803 to 2025-09-01T12:57:53.806132
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:53.806132 to 2025-09-01T12:57:54.817188
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:54.817188 to 2025-09-01T12:57:55.829182
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:55.829182 to 2025-09-01T12:57:56.841196
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:56.841196 to 2025-09-01T12:57:57.854959
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:57.854959 to 2025-09-01T12:57:58.865989
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:58.865989 to 2025-09-01T12:57:59.878765
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:57:59.878765 to 2025-09-01T12:58:00.889578
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:00.889578 to 2025-09-01T12:58:01.902426
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:01.902426 to 2025-09-01T12:58:02.918539
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:02.918539 to 2025-09-01T12:58:03.929503
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:03.929503 to 2025-09-01T12:58:04.940661
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:04.940661 to 2025-09-01T12:58:05.954579
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:05.954579 to 2025-09-01T12:58:06.966526
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:06.966526 to 2025-09-01T12:58:07.977279
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:07.977279 to 2025-09-01T12:58:08.991533
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:08.991533 to 2025-09-01T12:58:10.002882
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:10.002882 to 2025-09-01T12:58:11.014809
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:11.014809 to 2025-09-01T12:58:11.015809
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:11.015809 to 2025-09-01T12:58:11.016809
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:11.016809 to 2025-09-01T12:58:11.180299
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:11.180299 to 2025-09-01T12:58:12.196339
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:12.196339 to 2025-09-01T12:58:13.209876
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:13.209876 to 2025-09-01T12:58:14.222738
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:14.222738 to 2025-09-01T12:58:15.252029
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:15.252029 to 2025-09-01T12:58:16.264056
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:16.264056 to 2025-09-01T12:58:17.274352
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:17.274352 to 2025-09-01T12:58:18.287645
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:18.287645 to 2025-09-01T12:58:19.300301
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:19.300301 to 2025-09-01T12:58:20.312502
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:20.312502 to 2025-09-01T12:58:21.331847
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:21.331847 to 2025-09-01T12:58:22.347112
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:22.347112 to 2025-09-01T12:58:23.361890
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:23.361890 to 2025-09-01T12:58:24.373659
+📤 Sent 6 logs to Kafka ✅
+
+📡 Querying logs from 2025-09-01T12:58:24.373659 to 2025-09-01T12:58:25.388963
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:25.388963 to 2025-09-01T12:58:26.400203
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:26.400203 to 2025-09-01T12:58:27.413296
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:27.413296 to 2025-09-01T12:58:28.425259
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:28.425259 to 2025-09-01T12:58:29.443329
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:29.443329 to 2025-09-01T12:58:30.462158
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:30.462158 to 2025-09-01T12:58:31.480613
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:31.480613 to 2025-09-01T12:58:32.506499
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:32.506499 to 2025-09-01T12:58:33.526167
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:33.526167 to 2025-09-01T12:58:34.538956
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:34.538956 to 2025-09-01T12:58:35.552201
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:35.552201 to 2025-09-01T12:58:36.569436
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:36.569436 to 2025-09-01T12:58:37.587793
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:37.587793 to 2025-09-01T12:58:38.600611
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:38.600611 to 2025-09-01T12:58:39.614071
+⚠️  No logs in this window.
+
+📡 Querying logs from 2025-09-01T12:58:39.614071 to 2025-09-01T12:58:40.625439

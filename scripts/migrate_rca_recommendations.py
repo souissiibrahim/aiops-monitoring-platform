@@ -5,6 +5,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.db.session import SessionLocal
 from app.db.models.rca_analysis import RCAAnalysis
 
+
+
 def migrate_old_rca_recommendations():
     db = SessionLocal()
     try:

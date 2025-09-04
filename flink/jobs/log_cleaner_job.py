@@ -6,6 +6,9 @@ from pyflink.datastream.connectors.kafka import KafkaSource, KafkaSink, KafkaRec
 from pyflink.common.serialization import SimpleStringSchema
 from pyflink.common.typeinfo import Types
 from pyflink.common.watermark_strategy import WatermarkStrategy
+#from app.monitor.heartbeat import start_heartbeat
+
+#hb = start_heartbeat("log_cleaner_job.py", interval_s=20, version="1.0")
 
 # --- Kafka Topics ---
 KAFKA_INPUT_TOPIC = "logs-streamed"
