@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import argparse, json, os
 from pathlib import Path
 from itertools import product
@@ -13,8 +10,69 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import joblib
 
+        
+_hb = None
+try:
+    from app.monitor.heartbeat import start_heartbeat
+    _hb = start_heartbeat("scripts/train_prophet_models.py", interval_s=30, version="cv-grid")
+except Exception:
+    _hb = None
+
+# -------------------------
+# Best-effort DB status hooks (no CLI arg)
+# -------------------------
+_DB_ENABLED = False
+_SessionLocal = None
+_Model = None
+
+def _try_init_db():
+    global _DB_ENABLED, _SessionLocal, _Model
+    try:
+        from app.db.session import SessionLocal
+        from app.db.models.model import Model
+        _SessionLocal = SessionLocal
+        _Model = Model
+        _DB_ENABLED = True
+    except Exception:
+        _DB_ENABLED = False
+
+def _metric_to_model_name(metric: str) -> str:
+    m = (metric or "").lower()
+    if "cpu" in m:
+        return "prophet-cpu"
+    if "memory" in m or "mem" in m:
+        return "prophet-memory"
+    if any(k in m for k in ["filesystem", "disk", "fs", "storage"]):
+        return "prophet-disk"
+    return f"prophet-{m}".replace(" ", "-")
+
+def _set_model_status(model_name: str, status: str, set_trained_at: bool = False):
+    if not _DB_ENABLED:
+        return
+    db = _SessionLocal()
+    try:
+        model = (
+            db.query(_Model)
+              .filter(_Model.name == model_name, _Model.is_deleted == False)  # noqa: E712
+              .first()
+        )
+        if not model:
+            return
+        model.last_training_status = status
+        if set_trained_at:
+            from datetime import datetime, timezone
+            model.last_trained_at = datetime.now(timezone.utc)
+        db.add(model)
+        db.commit()
+    except Exception:
+        db.rollback()
+    finally:
+        db.close()
+
+# -------------------------
+# Your original training logic (unchanged)
+# -------------------------
 def find_csvs(data_root: Path):
-    # If data_root itself contains CSVs, treat it as a single metric dir
     csvs_here = list(data_root.glob("*.csv"))
     if csvs_here:
         metric = data_root.name
@@ -22,8 +80,6 @@ def find_csvs(data_root: Path):
             instance = csv_path.stem
             yield metric, instance, csv_path
         return
-
-    # Otherwise, assume data_root contains metric directories
     for metric_dir in sorted(data_root.glob("*")):
         if not metric_dir.is_dir():
             continue
@@ -34,7 +90,6 @@ def find_csvs(data_root: Path):
 
 def load_series(csv_path: Path):
     df = pd.read_csv(csv_path)
-    # Expect ds,y,metric,instance but only ds,y are required
     need = {"ds","y"}
     if not need.issubset(df.columns):
         raise ValueError(f"{csv_path} must have columns ds,y,... ; got {df.columns.tolist()}")
@@ -114,8 +169,8 @@ def train_and_cv_one(
     best_cv["error"] = best_cv["yhat"] - best_cv["y"]
     mean_error = float(best_cv["error"].mean())
 
-    mae_ok = best_metrics["mae"].mean()  <= acceptance["MAE"]
-    rmse_ok= best_metrics["rmse"].mean() <= acceptance["RMSE"]
+    mae_ok   = best_metrics["mae"].mean()  <= acceptance["MAE"]
+    rmse_ok  = best_metrics["rmse"].mean() <= acceptance["RMSE"]
     smape_ok = (best_metrics["smape"].mean()/100.0) <= acceptance["sMAPE"]
     cov_mean = float(best_metrics["coverage"].mean())
     cov_low, cov_high = acceptance["COVERAGE"]
@@ -148,7 +203,13 @@ def train_and_cv_one(
          f"  Acceptance: {'PASS ✅' if passed else 'FAIL ❌'}\n")
     )
 
+# -------------------------
+# Main (status always attempted, no flag)
+# -------------------------
 def main():
+    # Always try to init DB for status updates (no CLI arg)
+    _try_init_db()
+
     p = argparse.ArgumentParser(description="Train Prophet with rolling CV on (ds,y,metric,instance) CSVs.")
     p.add_argument("--data_root", type=str, default="data/prophet_ready_csv")
     p.add_argument("--out_root",  type=str, default="models/prophet")
@@ -177,7 +238,6 @@ def main():
         "S MAPE".replace(" ",""): args.smape_thr,  # keep key as 'sMAPE'
         "COVERAGE": (args.coverage_low, args.coverage_high),
     }
-    # fix sMAPE key name
     acceptance["sMAPE"] = acceptance.pop("SMAPE")
 
     any_found = False
@@ -185,13 +245,18 @@ def main():
         any_found = True
         print(f"\n=== Training [{metric}] on [{instance}] ===")
         print(f"CSV: {csv_path}")
-        df = load_series(csv_path)
-        if len(df) < 100:
-            print(f"WARNING: only {len(df)} points; CV may be unstable.")
-        # colon can be awkward in path names on some systems
-        safe_instance = instance.replace("/", "_")
-        out_dir = out_root / metric / safe_instance
+
+        # Mark RUNNING before this metric family
+        model_name = _metric_to_model_name(metric)
+        _set_model_status(model_name, "running", set_trained_at=False)
+
         try:
+            df = load_series(csv_path)
+            if len(df) < 100:
+                print(f"WARNING: only {len[df]} points; CV may be unstable.")
+            safe_instance = instance.replace("/", "_")
+            out_dir = out_root / metric / safe_instance
+
             train_and_cv_one(
                 df=df, metric=metric, instance=instance, out_dir=out_dir,
                 initial=args.initial, horizon=args.horizon, period=args.period,
@@ -205,8 +270,14 @@ def main():
             sj = out_dir / "SUMMARY.json"
             if sj.exists():
                 print(sj.read_text())
+
+            # Success → SUCCEEDED + last_trained_at
+            _set_model_status(model_name, "succeeded", set_trained_at=True)
+
         except Exception as e:
             print(f"ERROR training {metric} / {instance}: {e}")
+            # Failure → FAILED (no last_trained_at)
+            _set_model_status(model_name, "failed", set_trained_at=False)
 
     if not any_found:
         print(f"No CSVs found under {data_root}. Expected: <metric>/<instance>.csv")

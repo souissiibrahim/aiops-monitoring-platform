@@ -1,14 +1,14 @@
 {
   "metric": "node_filesystem_usage",
   "instance": "node-exporter:9100",
-  "best_candidate": "cps_0.1_sps_0.1",
-  "model_path": "models/prophet/node_filesystem_usage/node-exporter:9100/best_model_cps_0.1_sps_0.1.pkl",
-  "rmse_mean": 0.11415614877338781,
-  "mae_mean": 0.06765190154071236,
-  "mape_mean": 0.09004433294771776,
-  "smape_mean_pct": 0.07825344265546619,
-  "coverage_mean": 0.8609166585729087,
-  "mean_error_bias": 0.0561461089904229,
+  "best_candidate": "cps_0.5_sps_5.0",
+  "model_path": "models/prophet/node_filesystem_usage/node-exporter:9100/best_model_cps_0.5_sps_5.0.pkl",
+  "rmse_mean": 0.03764156008177804,
+  "mae_mean": 0.014735055340413581,
+  "mape_mean": 0.019582207521652486,
+  "smape_mean_pct": 0.017946045249080816,
+  "coverage_mean": 0.8213663615723003,
+  "mean_error_bias": 0.00888844679647774,
   "acceptance_thresholds": {
     "MAE": 0.05,
     "RMSE": 0.05,
@@ -18,6 +18,6 @@
     ],
     "sMAPE": 0.1
   },
-  "passed_acceptance": false,
+  "passed_acceptance": true,
   "notes": "Thresholds assume utilization in [0,1]; adjust as needed."
 }

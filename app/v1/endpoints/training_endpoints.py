@@ -1,17 +1,64 @@
-import os, uuid, time, threading, subprocess, sys
+import os, uuid, time, threading, subprocess, sys, signal, platform
 from collections import deque
 from fastapi import APIRouter
 
 router = APIRouter()
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
 
-# Only store module names and args; interpreter is resolved at runtime
+
 TRAINER_TEMPLATES = {
-    "prophet-cpu":         ("scripts.train_prophet_models", ["--target", "cpu"]),
-    "prophet-memory":      ("scripts.train_prophet_models", ["--target", "memory"]),
-    "prophet-disk":        ("scripts.train_prophet_models", ["--target", "disk"]),
-    "incident-classifier": ("scripts.train_incident_classifier", []),
-    "autoencoder":         ("flink.train_autoencoder", []),
+    # === Prophet trainers (args mirror your CLI examples) ===
+    "prophet-cpu": (
+        "scripts.train_prophet_models",
+        [
+            "--data_root", "data/prophet_ready_csv/node_cpu_utilization",
+            "--out_root",  "models/prophet",
+            "--initial",   "7 days",
+            "--horizon",   "2 days",
+            "--period",    "12 hours",
+            "--cps",       "0.05,0.1,0.2,0.3",
+            "--sps",       "0.1,1.0,5.0",
+            "--seasonality_mode", "additive",
+            "--interval_width", "0.9",
+            "--mae_thr", "0.05", "--rmse_thr", "0.05", "--smape_thr", "0.10",
+            "--coverage_low", "0.75", "--coverage_high", "0.90",
+        ],
+    ),
+    "prophet-disk": (
+        "scripts.train_prophet_models",
+        [
+            "--data_root", "data/prophet_ready_csv/node_filesystem_usage",
+            "--out_root",  "models/prophet",
+            "--initial",   "7 days",
+            "--horizon",   "12 hours",
+            "--period",    "6 hours",
+            "--cps",       "0.1,0.2,0.3,0.5,1.0",
+            "--sps",       "0.1,1.0,5.0",
+            "--seasonality_mode", "additive",
+            "--interval_width", "0.9",
+            "--mae_thr", "0.05", "--rmse_thr", "0.05", "--smape_thr", "0.10",
+            "--coverage_low", "0.75", "--coverage_high", "0.90",
+        ],
+    ),
+    "prophet-memory": (
+        "scripts.train_prophet_models",
+        [
+            "--data_root", "data/prophet_ready_csv/node_memory_utilization",
+            "--out_root",  "models/prophet",
+            "--initial",   "7 days",
+            "--horizon",   "12 hours",
+            "--period",    "6 hours",
+            "--cps",       "0.3,0.5,0.8,1.0",
+            "--sps",       "0.1,1.0,5.0",
+            "--seasonality_mode", "multiplicative",
+            "--interval_width", "0.9",
+            "--mae_thr", "0.05", "--rmse_thr", "0.05", "--smape_thr", "0.10",
+            "--coverage_low", "0.75", "--coverage_high", "0.90",
+        ],
+    ),
+
+    # === Autoencoder stays the same ===
+    "autoencoder": ("flink.train_autoencoder", []),
 }
 
 TRAINING_MAX_CONCURRENT = int(os.getenv("TRAINING_MAX_CONCURRENT", "2"))
@@ -195,6 +242,7 @@ def _start_trainer(trainer: str) -> dict:
                     "trainer": trainer,
                     "cmd": cmd,
                     "pid": None,
+                    "proc": proc,
                     "status": "failed",
                     "started_at": started,
                     "finished_at": int(time.time()),
@@ -214,6 +262,7 @@ def _start_trainer(trainer: str) -> dict:
             bufsize=1,
             cwd=PROJECT_ROOT,
             env=env,
+            start_new_session=True,
         )
 
         started = int(time.time())
@@ -223,6 +272,7 @@ def _start_trainer(trainer: str) -> dict:
             "trainer": trainer,
             "cmd": cmd,
             "pid": proc.pid,
+            "proc": proc,
             "status": "running",
             "started_at": started,
             "finished_at": None,
@@ -253,6 +303,45 @@ def _serialize_job(job: dict) -> dict:
         "error": job["error"],
     }
 
+def _terminate_job(job: dict, hard: bool = False) -> tuple[bool, str | None]:
+    """Terminate a running job. Return (ok, error_message_or_None)."""
+    proc: subprocess.Popen | None = job.get("proc")
+    pid = job.get("pid")
+
+    try:
+        if proc and proc.poll() is None:
+            # soft stop
+            if hard:
+                # POSIX: kill -9 pgid ; Windows: proc.kill()
+                if os.name == "posix":
+                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+                else:
+                    proc.kill()
+            else:
+                if os.name == "posix":
+                    os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+                else:
+                    proc.terminate()
+            return True, None
+
+        # Fallback via PID (no handle stored)
+        if pid:
+            if os.name == "posix":
+                try:
+                    pgid = os.getpgid(pid)
+                    os.killpg(pgid, signal.SIGTERM if not hard else signal.SIGKILL)
+                except Exception:
+                    # if no group, target the single pid
+                    os.kill(pid, signal.SIGTERM if not hard else signal.SIGKILL)
+            else:
+                # Windows fallback: try to terminate the process
+                os.kill(pid, signal.SIGTERM)  # works on recent Python/Windows; otherwise use psutil
+            return True, None
+
+        return False, "no_proc_or_pid"
+
+    except Exception as e:
+        return False, f"terminate_failed:{e}"
 
 @router.get("/training/jobs", tags=["training"])
 def list_training_jobs():
@@ -285,11 +374,24 @@ def start_train_prophet_disk():
     return _start_trainer("prophet-disk")
 
 
-@router.post("/training/incident-classifier/start", tags=["training"])
-def start_train_incident_classifier():
-    return _start_trainer("incident-classifier")
-
-
 @router.post("/training/autoencoder/start", tags=["training"])
 def start_train_autoencoder():
     return _start_trainer("autoencoder")
+
+@router.post("/training/jobs/{job_id}/cancel", tags=["training"])
+def cancel_training_job(job_id: str):
+    with _LOCK:
+        job = _JOBS.get(job_id)
+        if not job:
+            return {"ok": False, "error": "not_found"}
+        if job["status"] != "running":
+            return {"ok": False, "error": f"job_not_running (status={job['status']})"}
+
+        ok, err = _terminate_job(job, hard=False)
+        if not ok:
+            return {"ok": False, "error": err}
+
+        job["status"] = "cancelled"
+        job["finished_at"] = int(time.time())
+        job["return_code"] = -1
+        return {"ok": True, "job_id": job_id, "status": "cancelled"}

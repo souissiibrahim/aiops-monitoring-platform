@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Dict, Any
 
 
 class ModelBase(BaseModel):
@@ -9,6 +9,8 @@ class ModelBase(BaseModel):
     type: str
     version: Optional[str] = None
     accuracy: Optional[float] = None
+
+    metrics: Optional[Dict[str, Any]] = None   
 
     last_trained_at: Optional[datetime] = None
     last_training_status: Optional[str] = None
@@ -30,5 +32,4 @@ class ModelOut(ModelBase):
     deleted_at: Optional[datetime] = None
 
     class Config:
-        #orm_mode = True
         from_attributes = True

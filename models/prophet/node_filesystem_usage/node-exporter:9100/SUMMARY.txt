@@ -1,7 +1,7 @@
-[node_filesystem_usage | node-exporter:9100] Best: cps_0.1_sps_0.1
-  RMSE(mean): 0.1142
-  MAE(mean):  0.0677
-  sMAPE(%):   0.08
-  Coverage:   0.861
-  Bias (ME):  0.056146
-  Acceptance: FAIL ❌
+[node_filesystem_usage | node-exporter:9100] Best: cps_0.5_sps_5.0
+  RMSE(mean): 0.0376
+  MAE(mean):  0.0147
+  sMAPE(%):   0.02
+  Coverage:   0.821
+  Bias (ME):  0.008888
+  Acceptance: PASS ✅

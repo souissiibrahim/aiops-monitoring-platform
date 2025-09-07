@@ -42,7 +42,7 @@ from sqlalchemy.orm import Session
 MODEL_NAME = os.getenv("AE_MODEL_NAME", "ae-metric-anomaly")
 
 CSV_PATH   = os.getenv("AE_TRAIN_CSV", "/home/ibrahim/fastapi-boilerplate/flink/cleanCSV/cleaned_historical_metrics.csv")
-LABELS_CSV = os.getenv("AE_LABELS_CSV", "")  # optional labeled eval
+LABELS_CSV = os.getenv("AE_LABELS_CSV", "")  
 
 MODEL_DIR  = os.getenv("AE_MODEL_DIR", "model")
 os.makedirs(MODEL_DIR, exist_ok=True)

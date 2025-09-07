@@ -126,7 +126,7 @@ def serialize_cleaned(record):
         "timestamp": timestamp,
         "value": val,
         "collection_delay": delay,
-        "confidence": confidence,
+        "data_quality": confidence,
         "instance": instance
     })
 

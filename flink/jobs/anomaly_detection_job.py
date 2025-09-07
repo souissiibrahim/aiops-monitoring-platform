@@ -11,7 +11,6 @@ from pyflink.common.serialization import SimpleStringSchema
 from pyflink.common.typeinfo import Types
 from pyflink.common.watermark_strategy import WatermarkStrategy
 
-# --- Constants & env ---
 MODEL_DIR = "/opt/flink/pyjobs/model"
 MODEL_PATH = os.path.join(MODEL_DIR, "autoencoder_model")
 THRESHOLD_PATH = os.path.join(MODEL_DIR, "threshold.json")
@@ -23,18 +22,22 @@ KAFKA_INPUT_TOPIC = os.getenv("K_IN", "cleaned-metrics")
 KAFKA_OUTPUT_TOPIC = os.getenv("K_OUT", "anomalies")
 KAFKA_BOOTSTRAP = os.getenv("K_BOOT", "kafka:9092")
 
-# Decision rules (configurable via env)
 N_CONSECUTIVE = int(os.getenv("AE_N_CONSEC", "3"))          # need N points above enter threshold
 COOLDOWN_SEC  = int(os.getenv("AE_COOLDOWN_SEC", "300"))    # suppress duplicates for 5 min
 MAX_DELAY_SEC = int(os.getenv("AE_MAX_DELAY_SEC", "120"))   # drop points arriving >2 min late
 
-# --- Load model and preprocessing assets ---
+W_LOSS    = float(os.getenv("AE_CONF_W_LOSS", "0.6"))       # weight for loss overshoot
+W_STREAK  = float(os.getenv("AE_CONF_W_STREAK", "0.4"))     # weight for streak progress
+W_DQ      = float(os.getenv("AE_CONF_W_DQ", "0.0"))         # optional weight for data_quality (0..1)
+CONF_EMIT_FLOOR = float(os.getenv("AE_CONF_EMIT_FLOOR", "0.85"))  # min conf when an alarm emits
+LOSS_SCALE_FRAC = float(os.getenv("AE_CONF_LOSS_SCALE_FRAC", "0.25"))  # scale = enter_th * frac
+
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
     scaler = joblib.load(SCALER_PATH)
     encoder = joblib.load(ENCODER_PATH)
 
-    # threshold.json can be old (single "threshold") or new (global/by_metric/hysteresis/epsilon)
+    
     with open(THRESHOLD_PATH, "r") as f:
         th_conf = json.load(f)
 
@@ -43,7 +46,7 @@ try:
         BY_METRIC = th_conf.get("by_metric", {}) or {}
         EPSILON   = float(th_conf.get("epsilon", 1e-6))
         HYS       = th_conf.get("hysteresis", {"high_pct": 99, "low_pct": 95})
-        # enter uses the stored (typically p99), exit slightly lower (p95/p99 ratio)
+        # enter uses stored (typically p99), exit slightly lower (p95/p99 ratio)
         EXIT_FACTOR = (HYS.get("low_pct", 95) / HYS.get("high_pct", 99)) if HYS else 0.96
     else:
         # legacy file with only one threshold
@@ -76,6 +79,9 @@ def _get_state(key):
         _state[key] = s
     return s
 
+def _clip01(x: float) -> float:
+    return 0.0 if x < 0.0 else 1.0 if x > 1.0 else x
+
 # --- Anomaly Detection Function (keeps the SAME OUTPUT SCHEMA) ---
 def detect_anomaly(json_str):
     try:
@@ -85,6 +91,7 @@ def detect_anomaly(json_str):
         instance    = str(data.get("instance", ""))  # may be empty
         value       = float(data.get("value", 0.0))
         delay       = float(data.get("collection_delay", 0.0))
+        data_quality = float(data.get("data_quality", 1.0))  # from cleaner; 0..1
 
         # Delay-guard: prefer event timestamp if provided
         now = time.time()
@@ -100,27 +107,20 @@ def detect_anomaly(json_str):
         if event_ts is None:
             event_ts = now
 
-        if now - event_ts > MAX_DELAY_SEC:
-            # Too late → drop silently by returning the original (non-anomaly) with score only
-            # (keep output shape stable; mark normal)
-            numeric_features = scaler.transform([[value, delay]])
-            categorical_features = encoder.transform([[metric_name]])
-            features = np.concatenate([numeric_features, categorical_features], axis=1)
-            reconstruction = model.predict(features, verbose=0)
-            loss = float(np.mean(np.square(features - reconstruction)))
-            data["anomaly_score"] = loss
-            data["is_anomaly"] = False
-            data["detected_at"] = datetime.utcnow().isoformat()
-            return json.dumps(data)
-
-        # Encode numeric + one-hot
+        # Encode numeric + one-hot FIRST (so even late records get a score)
         numeric_features = scaler.transform([[value, delay]])
         categorical_features = encoder.transform([[metric_name]])
         features = np.concatenate([numeric_features, categorical_features], axis=1)
-
-        # Predict reconstruction and compute MSE loss
         reconstruction = model.predict(features, verbose=0)
         loss = float(np.mean(np.square(features - reconstruction)))
+
+        # If too late -> mark non-anomalous & non-actionable
+        if now - event_ts > MAX_DELAY_SEC:
+            data["anomaly_score"] = loss
+            data["is_anomaly"] = False
+            data["detected_at"] = datetime.utcnow().isoformat()
+            data["confidence"] = 0.0
+            return json.dumps(data)
 
         # Decision logic with per-metric threshold, hysteresis, N-consecutive, cooldown
         enter_th, exit_th = resolve_threshold(metric_name)
@@ -147,10 +147,34 @@ def detect_anomaly(json_str):
             else:
                 st["streak"] = 0
 
-        # Annotate result (SAME OUTPUT FIELDS)
+        # ---------- Confidence computation ----------
+        # 1) Loss-based component: how far above enter_th (sigmoid on normalized overshoot)
+        scale = max(enter_th * LOSS_SCALE_FRAC, EPSILON)
+        conf_loss = 1.0 / (1.0 + np.exp(-(loss - enter_th) / scale))  # 0..1
+
+        # 2) Streak-based component: progress to N_CONSECUTIVE
+        conf_streak = _clip01(st["streak"] / max(1, N_CONSECUTIVE))   # 0..1
+
+        # 3) Optional data_quality contribution (from cleaner)
+        conf_dq = _clip01(data_quality)
+
+        # Blend (renormalize weights if W_DQ > 0)
+        w_sum = W_LOSS + W_STREAK + max(0.0, W_DQ)
+        w_loss = W_LOSS / w_sum
+        w_streak = W_STREAK / w_sum
+        w_dq = max(0.0, W_DQ) / w_sum
+
+        confidence = (w_loss * conf_loss) + (w_streak * conf_streak) + (w_dq * conf_dq)
+
+        # If we actually emitted (entered alarm), enforce a confidence floor
+        if emitted:
+            confidence = max(confidence, CONF_EMIT_FLOOR)
+
+        # Annotate result (SAME OUTPUT FIELDS + confidence)
         data["anomaly_score"] = loss
         data["is_anomaly"] = bool(emitted)  # only True when we actually trigger
         data["detected_at"] = datetime.utcnow().isoformat()
+        data["confidence"] = float(_clip01(confidence))
 
         return json.dumps(data)
 
@@ -158,7 +182,8 @@ def detect_anomaly(json_str):
         return json.dumps({
             "error": str(e),
             "raw": json_str,
-            "detected_at": datetime.utcnow().isoformat()
+            "detected_at": datetime.utcnow().isoformat(),
+            "confidence": 0.0
         })
 
 # --- Flink environment ---
@@ -194,4 +219,4 @@ ds = ds.map(detect_anomaly, output_type=Types.STRING())
 ds.sink_to(sink)
 
 # --- Execute Flink Job ---
-env.execute("Real-Time Anomaly Detection with Row-Based AutoEncoder (+hysteresis/N/cooldown)")
+env.execute("Real-Time Anomaly Detection with Row-Based AutoEncoder (+hysteresis/N/cooldown + confidence)")

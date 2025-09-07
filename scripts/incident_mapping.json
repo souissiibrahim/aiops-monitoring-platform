@@ -1,0 +1,46 @@
+{
+    "node_filesystem_size_bytes": "HighDiskUsage",
+    "node_filesystem_free_bytes": "DiskSpaceLow",
+    "node_disk_read_bytes_total": "DiskIOIssue",
+    "node_disk_written_bytes_total": "DiskIOIssue",
+    "node_disk_read_time_seconds_total": "DiskLatency",
+    "node_disk_write_time_seconds_total": "DiskLatency",
+    "node_filesystem_files_free": "FilesystemCorruption",
+  
+    "node_memory_memtotal_bytes": "HighMemoryUsage",
+    "node_memory_memavailable_bytes": "MemoryPressure",
+    "node_memory_memfree_bytes": "MemoryPressure",
+    "container_memory_usage_bytes": "MemoryLeak",
+  
+    "node_cpu_seconds_total": "HighCPUUsage",
+    "node_load1": "HighCPUUsage",
+    "node_load5": "HighCPUUsage",
+    "node_load15": "HighCPUUsage",
+    "container_cpu_usage_seconds_total": "ContainerCPUThrottling",
+  
+    "node_network_receive_bytes_total": "HighNetworkLatency",
+    "node_network_transmit_bytes_total": "HighNetworkLatency",
+    "node_network_receive_errs_total": "NetworkDrop",
+    "node_network_transmit_errs_total": "NetworkDrop",
+    "node_network_receive_drop_total": "NetworkDrop",
+    "node_network_transmit_drop_total": "NetworkDrop",
+    "node_network_latency_seconds": "HighNetworkLatency",
+    "coredns_dns_request_duration_seconds": "DNSResolutionFailure",
+    "coredns_dns_responses_total": "DNSIntegrityAnomaly",
+  
+    "up": "ServiceUnavailable",
+    "http_requests_total": "ServiceUnavailable",
+    "nginx_ingress_controller_requests": "APILatencySpike",
+    "container_restarts_total": "CrashLoopBackOff",
+    "kube_pod_container_status_restarts_total": "CrashLoopBackOff",
+    "kube_deployment_status_replicas_unavailable": "ServiceUnavailable",
+  
+    "apiserver_request_duration_seconds": "APILatencySpike",
+    "tls_handshake_errors_total": "TLSHandshakeFailure",
+    "audit_log_events_total": "ConfigurationDrift",
+  
+    "prometheus_tsdb_head_series": "MetricsAgentDown",
+    "logging_errors_total": "LoggingDisruption",
+    "fluentd_output_status_retry_count": "LoggingDisruption"
+  }
+  

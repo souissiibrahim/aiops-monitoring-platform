@@ -123,7 +123,7 @@ AGENT_REGISTRY = [
         "name": "Incident Predictor",
         "version": "v1",
         "type": "prediction",
-        "status": "Training",
+        "status": "Active",
         "capabilities": ["Forecasting", "Anomaly detection", "Early warnings"],
         "data_loader": get_incident_predictor_data
     },
