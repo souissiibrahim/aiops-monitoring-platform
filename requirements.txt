@@ -1,10 +1,43 @@
-fastapi
-uvicorn
-python-dotenv
-redis
-psycopg2-binary
-elasticsearch
-faiss-cpu
-langgraph
-email-validator
+# --- Core web framework ---
+fastapi==0.116.1
+uvicorn==0.30.6
 
+# --- Database / Cache ---
+psycopg2-binary==2.9.10
+SQLAlchemy==2.0.43
+redis==5.0.8
+alembic==1.16.1
+
+# --- Search / Vector DB ---
+elasticsearch==8.15.1
+faiss-cpu==1.11.0
+sentence-transformers==4.1.0
+
+# --- Messaging / Streaming ---
+kafka-python==2.2.15
+pyflink==1.0
+
+# --- Machine Learning / DL ---
+numpy==2.3.2
+scikit-learn==1.7.1
+joblib==1.5.1
+xgboost==3.0.5
+tensorflow==2.15.0
+keras==2.15.0
+matplotlib==3.10.6
+
+# --- LangChain / RCA pipeline ---
+langgraph==0.6.7
+langchain-groq==0.3.7
+
+# --- Atlassian integrations ---
+atlassian-python-api==4.0.4
+jira==3.8.0
+
+# --- Utils ---
+python-dotenv==1.1.1
+python-dateutil==2.9.0.post0
+PyYAML==6.0.2
+requests==2.32.5
+urllib3==2.5.0
+email-validator==2.2.0
