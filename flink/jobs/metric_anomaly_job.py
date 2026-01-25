@@ -4,7 +4,7 @@ import json
 
 
 
-PROM_URL = "https://prometheus.u-cloudsolutions.xyz/api/v1/query"
+PROM_URL = "prometh_Path/api/v1/query"
 METRIC_QUERY = 'node_cpu_seconds_total'  # change to a valid metric on your setup
 
 def fetch_metrics():

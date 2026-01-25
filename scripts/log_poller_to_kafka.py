@@ -11,7 +11,7 @@ from app.monitor.heartbeat import start_heartbeat
 hb = start_heartbeat("scripts/log_poller_to_kafka.py", interval_s=30, version="dev")
 
 # --- Configuration ---
-LOKI_URL = "http://172.24.68.64:3100/loki/api/v1/query_range"
+LOKI_URL = "http://adress_loc:3100/loki/api/v1/query_range"
 QUERY = '{job="varlogs"}'  # Adjust to match your Promtail config
 WINDOW_SECONDS = 1
 POLL_INTERVAL = 1  # seconds

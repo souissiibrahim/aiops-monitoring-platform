@@ -7,7 +7,7 @@
     0,
     1
   ],
-  "prom_url": "https://prometheus.u-cloudsolutions.xyz",
+  "prom_url": "prometh_Path",
   "promql": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)\n/ node_memory_MemTotal_bytes\n",
   "query_step": "60s",
   "rate_window": "5m",

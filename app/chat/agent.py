@@ -16,7 +16,7 @@ RAG_TOP_K = int(os.getenv("RAG_TOP_K", "6"))
 RAG_FETCH_K = int(os.getenv("RAG_FETCH_K", "24"))
 RUNBOOK_HINTS = ("runbook", "runbooks", "playbook", "run book")
 
-API = os.getenv("POWEROPS_API", "http://172.24.68.64:8000").rstrip("/")
+API = os.getenv("POWEROPS_API", "http://adress_loc:8000").rstrip("/")
 VERIFY_SSL = os.getenv("VERIFY_SSL", "true").lower() in ("1", "true", "yes")
 TOKEN = os.getenv("POWEROPS_TOKEN")
 

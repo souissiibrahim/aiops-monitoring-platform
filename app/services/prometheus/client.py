@@ -1,6 +1,6 @@
 import requests, math, re
 
-PROM_URL = "http://172.24.68.64:9090"
+PROM_URL = "http://adress_loc:9090"
 VERIFY_SSL = True
 TIMEOUT = 5
 

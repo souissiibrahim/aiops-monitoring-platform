@@ -7,7 +7,7 @@
     0,
     1
   ],
-  "prom_url": "https://prometheus.u-cloudsolutions.xyz",
+  "prom_url": "prometh_Path",
   "promql": "1 - (\n  node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|squashfs\"}\n  / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|squashfs\"}\n)\n",
   "query_step": "60s",
   "rate_window": "5m",

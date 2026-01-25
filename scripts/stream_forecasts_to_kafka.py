@@ -56,15 +56,43 @@ def forecast_df(pkl_path: str, horizon: str, freq: str) -> pd.DataFrame:
         blob = pickle.load(f)
     m = blob["model"]
     meta = blob.get("meta", {})
+
+    # --- Détection robuste des bornes nécessaires ---
+    # 1) Si meta indique bounded_0_1
     bounded = bool(meta.get("bounded_0_1", False))
+
+    # 2) Sinon, introspection du modèle / historique
+    try:
+        history_cols = set(getattr(m, "history", getattr(m, "stan_backend", None) and getattr(m, "history", [])).columns)
+    except Exception:
+        history_cols = set()
+    needs_cap = (getattr(m, "growth", "linear") == "logistic") or ("cap" in history_cols)
+    needs_floor = bool(getattr(m, "logistic_floor", False)) or ("floor" in history_cols)
 
     n_periods = periods_from(horizon, freq)
     future = m.make_future_dataframe(periods=n_periods, freq=freq, include_history=False)
-    if bounded:
-        future["cap"] = 1.0
-        future["floor"] = 0.0
 
-    fc = m.predict(future)[["ds", "yhat", "yhat_lower", "yhat_upper"]].copy()
+    # Cas usuels: métriques [0,1] (utilization)
+    if bounded or needs_cap:
+        if "cap" not in future.columns:
+            future["cap"] = 1.0
+    if bounded or needs_floor:
+        if "floor" not in future.columns:
+            future["floor"] = 0.0
+
+    # Filet de sécurité : retry si Prophet râle
+    try:
+        fc = m.predict(future)[["ds", "yhat", "yhat_lower", "yhat_upper"]].copy()
+    except Exception as e:
+        msg = str(e).lower()
+        if "floor" in msg and "floor" not in future.columns:
+            future["floor"] = 0.0
+            fc = m.predict(future)[["ds", "yhat", "yhat_lower", "yhat_upper"]].copy()
+        elif "cap" in msg and "cap" not in future.columns:
+            future["cap"] = 1.0
+            fc = m.predict(future)[["ds", "yhat", "yhat_lower", "yhat_upper"]].copy()
+        else:
+            raise
     return fc, meta
 
 def json_records(metric: str, instance: str, fc: pd.DataFrame, source: str = "prophet"):

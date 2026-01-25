@@ -11,7 +11,7 @@ from kafka import KafkaProducer
 #hb = start_heartbeat("log_streamer_job.py", interval_s=20, version="1.0")
 
 # --- Config ---
-LOKI_URL = "http://172.24.68.64:3100/loki/api/v1/query_range"
+LOKI_URL = "http://adress_loc:3100/loki/api/v1/query_range"
 QUERY = '{job="varlogs"}'  # Adjust based on your Promtail config
 WINDOW_SECONDS = 1           # Poll every second for near real-time streaming
 KAFKA_TOPIC = "logs-streamed"

@@ -1,7 +1,7 @@
 import os, requests, datetime as dt
-API  = os.getenv("POWEROPS_API", "http://172.24.68.64:8000")
-PROM = os.getenv("PROM_URL", "http://172.24.68.64:9090")
-LOKI = os.getenv("LOKI_URL", "http://172.24.68.64:3100")
+API  = os.getenv("POWEROPS_API", "http://adress_loc:8000")
+PROM = os.getenv("PROM_URL", "http://adress_loc:9090")
+LOKI = os.getenv("LOKI_URL", "http://adress_loc:3100")
 
 def get_incident(incident_id):
     r = requests.get(f"{API}/incidents/{incident_id}", timeout=10); r.raise_for_status(); return r.json()["data"]

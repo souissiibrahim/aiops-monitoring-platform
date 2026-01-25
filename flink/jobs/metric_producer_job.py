@@ -11,10 +11,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 #hb = start_heartbeat("metric_producer_job.py", interval_s=20, version="1.0")
 
-#PROMETHEUS_BASE_URL = "https://prometheus.u-cloudsolutions.xyz/api/v1"
+#PROMETHEUS_BASE_URL = "prometh_Path/api/v1"
 #VERIFY_SSL = False
 
-PROMETHEUS_BASE_URL = "http://172.24.68.64:9090/api/v1"
+PROMETHEUS_BASE_URL = "http://adress_loc:9090/api/v1"
 VERIFY_SSL = True
 
 

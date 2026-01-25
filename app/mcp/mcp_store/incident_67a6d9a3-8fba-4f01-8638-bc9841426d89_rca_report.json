@@ -4,11 +4,11 @@
   "payload": {
     "incident_id": "67a6d9a3-8fba-4f01-8638-bc9841426d89",
     "service": "Payment Gateway",
-    "timestamp": "2025-08-17T21:49:45.587697Z",
-    "root_cause": "Insufficient disk space on /var, causing disk latency issues in the Payment Gateway service.",
-    "recommendation": "- Increase disk space on /var by expanding the partition or adding a new disk. (confidence: 0.9)\n- Regularly clean up temporary files and logs in /var/tmp and /var/log to prevent disk space issues. (confidence: 0.8)\n- Configure log rotation and compression to reduce log file size and free up disk space. (confidence: 0.7)",
+    "timestamp": "2025-09-16T20:37:40.361237Z",
+    "root_cause": "High disk latency on /dev/sda1 caused by high I/O wait, leading to potential service outage.",
+    "recommendation": "- Monitor and optimize disk I/O wait by adjusting the I/O scheduler or adding more storage resources. (confidence: 0.9)\n- Run a disk check and repair on /dev/sda1 to ensure it's in a healthy state. (confidence: 0.8)\n- Consider replacing the disk or adding a redundant storage solution to prevent future outages. (confidence: 0.7)",
     "confidence": 0.9,
     "model": "LangGraph"
   },
-  "timestamp": "2025-08-17T21:49:45.587697Z"
+  "timestamp": "2025-09-16T20:37:40.361237Z"
 }

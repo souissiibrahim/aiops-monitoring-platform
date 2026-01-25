@@ -2,11 +2,12 @@ import os, re, uuid, time, threading, subprocess, sys
 from collections import deque
 from typing import Dict, List, Optional
 from fastapi import APIRouter, Query
+import json
 
 router = APIRouter()
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
-
+TERMINAL = {"FINISHED", "FAILED", "CANCELED"}
 FLINK_JOBMANAGER_CONTAINER = os.getenv("FLINK_JOBMANAGER_CONTAINER", "flink-jobmanager")
 FLINK_BIN_IN_CONTAINER     = os.getenv("FLINK_BIN_IN_CONTAINER", "/opt/flink/bin/flink")
 FLINK_PYJOBS_DIR_IN_CONT   = os.getenv("FLINK_PYJOBS_DIR_IN_CONTAINER", "/opt/flink/pyjobs")
@@ -117,6 +118,71 @@ _JOBID_PATTERNS = [
     re.compile(r"Submitted job\s+([0-9a-fA-F\-]{8,})"),                          
 ]
 _JOBID_HEX = re.compile(r"\b([0-9a-fA-F]{32})\b")
+
+def _flink_get_job_state(cluster_job_id: str) -> Optional[str]:
+    """
+    Ask the JobManager REST API for the job state.
+    Returns one of: CREATED, RUNNING, FINISHED, CANCELED, FAILED, RECONCILING, or None if unknown.
+    """
+    try:
+        # Query via REST on the JobManager container
+        cmd = [
+            "docker", "exec", "-i", FLINK_JOBMANAGER_CONTAINER,
+            "bash", "-lc",
+            f"curl -s http:/adress_loc/:8081/jobs/{cluster_job_id}"
+        ]
+        out = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=8  )
+        if out.returncode != 0 or not out.stdout:
+            return None
+        data = json.loads(out.stdout)
+        # Flink 1.17 returns {"state":"RUNNING", ...}
+        return data.get("state")
+    except Exception:
+        return None
+
+
+def _set_local(job_key: str, cluster_job_id: str, status: str, rc: int = 0):
+    active_key = f"flink:{job_key}"
+    now = int(time.time())
+    with _LOCK:
+        # latest record for this key/id
+        target = None
+        for rec in sorted(_JOBS.values(), key=lambda j: j["started_at"], reverse=True):
+            if rec.get("active_key") == active_key and rec.get("cluster_job_id") == cluster_job_id:
+                target = rec
+                break
+        if target:
+            target["status"] = status
+            if status in {"canceled", "failed", "finished"}:
+                target["finished_at"] = now
+                target["return_code"] = rc
+        if status in {"canceled", "failed", "finished"}:
+            _ACTIVE.pop(active_key, None)
+
+def _reconcile_flink_job(active_key: str, cluster_job_id: str):
+    """
+    Sync local _JOBS/_ACTIVE with real Flink job state.
+    """
+    state = _flink_get_job_state(cluster_job_id)
+    if not state:
+        return
+    finished_states = {"FINISHED", "FAILED", "CANCELED"}
+    with _LOCK:
+        # find the most recent record for this active_key
+        target = None
+        for rec in sorted(_JOBS.values(), key=lambda j: j["started_at"], reverse=True):
+            if rec.get("active_key") == active_key and rec.get("cluster_job_id") == cluster_job_id:
+                target = rec
+                break
+        if not target:
+            return
+        if state in finished_states:
+            target["status"] = state.lower()  # "finished"/"failed"/"canceled"
+            target["finished_at"] = int(time.time())
+            target["return_code"] = 0 if state != "FAILED" else 1
+            _ACTIVE.pop(active_key, None)
+        elif state == "RUNNING":
+            target["status"] = "running"
 
 def _try_parse_cluster_job_id(text: str) -> Optional[str]:
     for pat in _JOBID_PATTERNS:
@@ -374,7 +440,8 @@ def start_flink_job(job_key: str):
 
     def _resolve_later():
         time.sleep(2)
-        _resolve_cluster_job_id_from_list(job_key, job_name)
+        #_resolve_cluster_job_id_from_list(job_key, job_name)
+        _resolve_cluster_job_id_from_list(job_name)
 
     threading.Thread(target=_resolve_later, daemon=True).start()
     return resp
@@ -385,18 +452,17 @@ def cancel_flink_job(job_key: str):
     if not cfg:
         return {"ok": False, "error": f"unknown_job:{job_key}"}
     job_name = cfg.get("job_name", job_key)
+    active_key = f"flink:{job_key}"
 
-    
+    # 1) find cluster_job_id
     with _LOCK:
-        active_key = f"flink:{job_key}"
         job_id = _ACTIVE.get(active_key)
         job = _JOBS.get(job_id) if job_id else None
         cluster_job_id = (job or {}).get("cluster_job_id")
 
-    
+    latest = None
     if not cluster_job_id:
         with _LOCK:
-            latest = None
             for rec in sorted(_JOBS.values(), key=lambda j: j["started_at"], reverse=True):
                 if rec.get("active_key") == active_key and rec.get("cluster_job_id"):
                     latest = rec
@@ -404,30 +470,78 @@ def cancel_flink_job(job_key: str):
         if latest:
             cluster_job_id = latest["cluster_job_id"]
 
-    
     if not cluster_job_id:
-        cluster_job_id = _resolve_cluster_job_id_from_list(job_key, job_name)
-
+        cluster_job_id = _resolve_cluster_job_id_from_list(job_name)
     if not cluster_job_id:
         return {"ok": False, "error": "cluster_job_id_unknown"}
 
+    # 2) issue cancel
     cancel_cmd = _build_flink_cancel_cmd(cluster_job_id)
     out = subprocess.run(cancel_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-    
+    # 3) poll REST up to ~5s for terminal state
+    noted_state = None
     if out.returncode == 0:
-        with _LOCK:
-            
-            target = job or latest
-            now = int(time.time())
-            if target:
-                target["status"] = "canceled"
-                target["finished_at"] = now
-                target["return_code"] = 0
-            _ACTIVE.pop(active_key, None)
+        # optimistic local flip to "canceled" to avoid UI showing "running"
+        _set_local(job_key, cluster_job_id, "canceled", rc=0)
 
-    return {"ok": True, "cluster_job_id": cluster_job_id, "cancel_cmd": " ".join(cancel_cmd),
-            "stdout": out.stdout, "stderr": out.stderr}
+        deadline = time.time() + 5.0
+        while time.time() < deadline:
+            st = _flink_get_job_state(cluster_job_id)
+            if st:
+                noted_state = st
+                if st in TERMINAL:
+                    # normalize and finalize local state precisely
+                    if st == "CANCELED":
+                        _set_local(job_key, cluster_job_id, "canceled", rc=0)
+                    elif st == "FAILED":
+                        _set_local(job_key, cluster_job_id, "failed", rc=1)
+                    else:
+                        _set_local(job_key, cluster_job_id, "finished", rc=0)
+                    break
+            time.sleep(0.25)
+    else:
+        # cancel command failed; still try to reconcile
+        st = _flink_get_job_state(cluster_job_id)
+        noted_state = st
+        if st in TERMINAL:
+            if st == "CANCELED":
+                _set_local(job_key, cluster_job_id, "canceled", rc=0)
+            elif st == "FAILED":
+                _set_local(job_key, cluster_job_id, "failed", rc=1)
+            else:
+                _set_local(job_key, cluster_job_id, "finished", rc=0)
+
+    # 4) read back local status for response
+    with _LOCK:
+        status = None
+        for rec in sorted(_JOBS.values(), key=lambda j: j["started_at"], reverse=True):
+            if rec.get("active_key") == active_key and rec.get("cluster_job_id") == cluster_job_id:
+                status = rec.get("status")
+                break
+
+    combined = (out.stderr or "") + (out.stdout or "")
+    already_terminal = (
+        "already reached another terminal state" in combined
+        or "is not running" in combined
+        or (noted_state in TERMINAL)
+        or (status in {"canceled", "failed", "finished"})
+    )
+
+    return {
+        "ok": True if (out.returncode == 0 or already_terminal) else False,
+        "cluster_job_id": cluster_job_id,
+        "status_after_reconcile": status,
+        "observed_flink_state": noted_state,
+        "cancel_cmd": " ".join(cancel_cmd),
+        "stdout": out.stdout,
+        "stderr": out.stderr,
+        "note": (
+            "transition detected and synced"
+            if status in {"canceled", "failed", "finished"}
+            else "cancel acknowledged; waiting for REST to flip"
+        ),
+    }
 
 @router.post("/flink/{job_key}/kill-client", tags=["running"])
 def kill_flink_client(job_key: str):

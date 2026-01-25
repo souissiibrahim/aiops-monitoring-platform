@@ -7,7 +7,7 @@
     0,
     1
   ],
-  "prom_url": "https://prometheus.u-cloudsolutions.xyz",
+  "prom_url": "prometh_Path",
   "promql": "1 - avg by(instance) (\n  rate(node_cpu_seconds_total{mode=\"idle\"}[5m])\n)\n",
   "query_step": "60s",
   "rate_window": "5m",

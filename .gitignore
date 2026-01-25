@@ -12,5 +12,23 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
+# Environment variables (IMPORTANT)
+.env
+.env.*
+
+# Local / sensitive data
+data/old_prophet_ready/
+
+# Logs (optional but recommended)
+flink_logs/
+*.log
+
+# Generated artifacts (optional if you don't want them)
+queue_incident.jsonl
+prometheus_metrics.json
+rca_reports/
+app/mcp/mcp_store/
+faiss_index/
+
 # Others
 *.sqlite3

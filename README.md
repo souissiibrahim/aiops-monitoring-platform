@@ -21,8 +21,4 @@ It is built using [FastAPI](https://fastapi.tiangolo.com/) and serves as a modul
 
 ## 🛠️ Setup & Run Instructions
 
-### 1. Clone the repository
 
-```bash
-git clone git@scm.artificial-insight.xyz:insight-projects/xops/ai-sec-ops/fastapi-boilerplate.git
-cd fastapi-boilerplate

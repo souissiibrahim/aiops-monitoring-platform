@@ -1,12 +1,12 @@
-import requests
-import json
+    import requests
+    import json
 
-# === Config ===
-RUNDECK_API_TOKEN = "NZIWlISZmUyrhoD1LR2LCmsFXVogs91Q"
-RUNDECK_BASE_URL = "http://172.24.68.64:4440"
-PROJECT_NAME = "AutoRemediation"
-API_VERSION = "45"
-OUTPUT_PATH = "runbook_catalog.jsonl"
+    # === Config ===
+    RUNDECK_API_TOKEN = "LPqUO7vloCLtAGAWoRJ6GfNfyDhLhrmq"
+    RUNDECK_BASE_URL = "http://adress_loc:4440"
+    PROJECT_NAME = "AutoRemediation"
+    API_VERSION = "45"
+    OUTPUT_PATH = "runbook_catalog.jsonl"
 
 headers = {
     "X-Rundeck-Auth-Token": RUNDECK_API_TOKEN,
