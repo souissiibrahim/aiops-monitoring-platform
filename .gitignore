@@ -32,3 +32,6 @@ faiss_index/
 
 # Others
 *.sqlite3
+
+# Flink binaries (CRITICAL)
+flink/jars/
